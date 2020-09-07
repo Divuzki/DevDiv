@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+<title>{% block title %}Logout{% endblock title %}</title>
+{% block content %}
+ <div id="box" style="width: 0px;">
+            <div id="main" style="left:70%"></div>
+                <div id="loginform">
+                    {% csrf_token %}
+                <h1 class="VBH" style="color:red;">You have been logged out!</h1>
+                    <button><a class="LA-LINK" href="{% url 'login' %}">Login Again</a></button>
+            </div>
+                <div id="signup_msg">Don't have an account?</div>
+            <button id="signup_btn" onclick="window.location.href = {% url 'register' %}">SIGNUP</button>
+</div>
+<style>
+#sidebar{
+    display:none !important
+}
+.container{
+    height:50vh;
+}
+</style>
+{%endblock content%}

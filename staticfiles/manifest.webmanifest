@@ -1,0 +1,24 @@
+{
+  "name": "DevDiv Blog",
+  "short_name": "DEVDIV",
+  "lang": "en-US",
+  "display": "standalone",
+  "theme_color": "#000A",
+  "description": "Post And Enjoy",
+  "start_url": ".",
+  "scope": "/",
+  "orientation": "Portrait",
+  "background_color": "#FFF",
+  "icons": [
+    {
+      "src": "/static/logo.png",
+      "sizes": "257x300",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/white%20logo.png",
+      "sizes": "257x300",
+      "type": "image/png"
+    }
+  ]
+}

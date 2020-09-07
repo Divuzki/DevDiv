@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+<title>{% block title %}{{object.title}}{% endblock title %}</title>
+{% block content %}
+<h2 class="mb-4">{{object.title}} | {{object.date_posted|date:"d"}},{{object.date_posted|date:"F"}}</h2>
+<div class="_img">
+  {% if object.image_url == None or '/divdev+pictures/default.png' %}
+  <img src="/static/default.png" width="240px"  alt="{{object.title}} image">
+  {% else %}
+  <img src="{{object.image_url}}" width="240px" alt="{{object.title}} image"></div>
+{% endif %}
+<p style="overflow: auto;">{{object.content}} -<b> by {% if object.author == user %}You{%else%} <a
+      href="{% url 'user-posts' object.author.username %}">{{object.author}}{% endif %}</a></b></p>
+{% if object.author == user %}
+<div class="actions-detail">
+  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+  <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+</div>
+{% endif %}
+<style>
+  ._img {
+    text-align: center;
+  }
+
+  ._img img {
+    width: 50%;
+  }
+
+  .pt-5 {
+    padding-top: 5rem !important;
+  }
+</style>
+{% endblock content %}

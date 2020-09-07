@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+<title>{% block title %}Profile{% endblock title %}</title>
+{% load crispy_forms_tags %} {% block content %}
+<div class="content-section">
+  <div class="box" style="width: 0;">
+    <div id="main">
+      <div class="text-center">
+        <!-- <img
+          src="{{ user.profile.image.url }}"
+          class="rounded-circle account-img"
+          alt="{{user.username}} dp"
+        /> -->
+        <div class="media-body">
+          <h2 class="text-primary">{{ user.username }}</h2>
+          <h4 class="text-secondary">
+            {{ user.first_name }} {{ user.last_name }}
+          </h4>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  #main {
+    width: 500px;
+    height: 450px;
+    left: 50%;
+   z-index: -1;
+  }
+  .text-center {
+    position: initial;
+  }
+</style>
+{% endblock content %}

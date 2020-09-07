@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <!-- Path to manifest.json -->
+  <link rel="manifest" href="{% static 'manifest.webmanifest' %}" />
+  <!-- Icons for Apple Devices -->
+
+  <link rel="apple-touch-icon" href="/" sizes="160x160" />
+  <!-- META -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="DEVDIV" />
+  <meta name="apple-mobile-web-app-title" content="DEVDIV" />
+  <meta name="theme-color" content="#000A" />
+  <meta name="msapplication-navbutton-color" content="#000" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="msapplication-starturl" content="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="icon" type="image/png" sizes="257x300" href="{% static '/logo.png' %}" />
+  <link rel="apple-touch-icon" type="image/png" sizes="257x300" href="{%static '/logo.png' %}" />
+  <meta charset="UTF-8" />
+  <!-- STYLESHEETS -->
+  <link rel="stylesheet" href="{% static '/css/Main.css'%}" />
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  <link rel="stylesheet" href="{% static '/css/style.css'%}" />
+
+  <!-- FAVICON -->
+  <link rel="icon" href="{% static '/logo.png' %}" />
+  <script type="text/javascript">
+    // Initialize the service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/serviceworker.js', {
+            scope: '.' // <--- THIS BIT IS REQUIRED
+        }).then(function (registration) {
+            // Registration was successful
+            console.log('django-progressive-web-app: ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+            // registration failed :(
+            console.log('django-progressive-web-app: ServiceWorker registration failed: ', err);
+        });
+    }
+</script>
+  <title>DevDiv | {% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+  <div id="app">
+    <header class="top">{% include 'navbar.html' %}</header>
+    <main style="position: relative; top: 0px;">
+      <!-- container d-md-flex align-items-stretch -->
+      <div class="#">
+        <div id="content" class="p-4 p-md-5 pt-5">
+          {% block content %}{% endblock content%}
+        </div>
+      </div>
+    </main>
+    <footer class="footers">
+      <p>
+        <small><em><a href="/"> DivDev </a> Blog</em></small>
+      </p>
+      <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i>Top</a>
+    </footer>
+  </div>
+  <style>
+    .footers {
+      width: 100%;
+      height: 5vh;
+      background-color: #313943;
+      position: fixed;
+      bottom: 0;
+      text-align: center;
+      font-size: 18px;
+      z-index: 9;
+    }
+
+    textarea.form-control {
+      height: auto !important;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 3em;
+      right: 3em;
+      background-color: rgba(225, 225, 225, 0.9);
+      color: #313943;
+      border: none;
+      border-radius: 5px;
+      padding: 1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease-in-out;
+      display: inline-block;
+      opacity: 0;
+      text-decoration: none;
+      font-size: 0.75em;
+    }
+
+    .back-to-top:hover {
+      background: #efede8a1;
+      padding: 1em 3em;
+      color: #333;
+      border: 1px solid;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+    }
+
+    .content {
+      width: 100%;
+      height: 95vh;
+    }
+  </style>
+  <!-- SCRIPT -->
+  <script src="{% static '/js/scroll.js' %}" defer></script>
+  <script src="{% static '/js/jquery-3.2.1.min.js' %}"></script>
+  <script src="{% static '/js/navbar.js' %}" defer></script>
+  <!-- <script src="{% static '/js/popper.js' %}"></script> -->
+  <!-- <script src="{% static '/js/bootstrap.min.js' %}"></script> -->
+  <script src="{% static '/js/jquery.min.js' %}"></script>
+  <script src="{% static '/js/main.js' %}"></script>
+  
+<script type="text/javascript">//<![CDATA[ 
+    (function() {
+        var configuration = {
+        "token": "11059980f273b3c6b9e4adae5a58266c",
+        "domains": [
+            "devdiv.herokuapp.com"
+        ],
+        "capping": {
+            "limit": 5,
+            "timeout": 24
+        },
+        "exitScript": {
+            "enabled": true
+        },
+        "popUnder": {
+            "enabled": true
+        }
+    };
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '//cdn.shorte.st/link-converter.min.js';
+        script.onload = script.onreadystatechange = function () {var rs = this.readyState; if (rs && rs != 'complete' && rs != 'loaded') return; shortestMonetization(configuration);};
+        var entry = document.getElementsByTagName('script')[0];
+        entry.parentNode.insertBefore(script, entry);
+    })();
+    //]]></script>
+</body>
+
+</html>

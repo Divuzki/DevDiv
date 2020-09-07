@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+<title>{% block title %}Home{% endblock title %}</title>
+{% block content %}
+<div class="wrapper">
+  <div class="divdev_posts-slider">
+    <div class="divdev_posts-slider__wrp swiper-wrapper">
+      {%for post in posts %}
+      <div class="divdev_posts-slider__item swiper-slide">
+        <!-- <div class="user-posts">
+            <a href="{% url 'user-posts' post.author.username %}">
+            <img src="{{ post.author.profile.image_url }}" class="mb-4 rounded-circle" alt="author's user image">
+        </a>
+          </div> -->
+        <a href="{%url 'post-detail' post.id%}" class="divdev_posts__item">
+
+          <div class="divdev_posts-date">
+            <span class="divdev_posts-date__title">{{post.date_posted|date:"d"}}</span>
+            <span class="divdev_posts-date__txt">{{post.date_posted|date:"F"}}</span>
+          </div>
+          <div class="divdev_posts__title"> {{post.title}}
+          </div>
+
+          <p class="divdev_posts__txt">
+            {{post.content | truncatechars:91 | safe}} <div class="author-name-content"> <strong
+                style="font-style: italic;"> - by {{post.author}} </strong></div>
+          </p>
+          <div class="divdev_posts__img">
+            {% if post.image_url == None or '/divdev+pictures/default.png' %}
+            <img src="/static/default.png" class="post-img" alt="{{object.title}}">
+            {% else %}
+            <img src="{{ post.image_url }}" class="post-img" alt="{{object.title}}">
+            {% endif %}
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+      {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+      <a href="?page=1" class="btn btn-outline-info mb-4">1</a>
+      <a href="?page={{page_obj.previous_page_number}}" class="btn btn-outline-info mb-4">Previous</a>
+      {% endif %}
+    </div>
+
+  </div>
+  {% for num in page_obj.paginator.page_range %}
+  {% if page_obj.number == num %}
+  <a href="?page={{ num }}" class="btn btn-info mb-4">{{ num }}</a>
+  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+  <a href="?page={{ num }}" class="btn btn-outline-info mb-4">{{ num }}</a>
+  {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-info mb-4">Next</a>
+  <a href="?page={{page_obj.paginator.num_pages}}" class="btn btn-outline-info mb-4">Last</a>
+  {% endif %}
+
+  {% endif %}
+</div>
+<script>
+  var img = document.querySelector('.post-img');
+  var tess = img.src;
+  if (tess = null) {
+    var img = document.querySelector('.divdev_posts__img');
+  }
+</script>
+<style>
+  .divdev_posts__item {
+    color: #333 !important;
+  }
+
+  .divdev_posts-slider__item.swiper-slide {
+    opacity: 1 !important;
+  }
+
+  .divdev_posts-slider__item.swiper-slide {
+    pointer-events: all !important;
+  }
+
+  .rounded-circle {
+    cursor: pointer;
+    width: 120px;
+    height: 120px;
+    border: 3px solid #84eaeabd !important;
+    padding: 15px;
+    transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .rounded-circle:hover {
+    border: 1px !important;
+  }
+</style>
+{% endblock content%}

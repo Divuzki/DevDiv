@@ -1,0 +1,83 @@
+{% load static %}
+<img src="{% static 'logo.png' %}" class="logo_pc" alt="logo" />
+<nav class="nav npc">
+  <a href="{% url 'home' %}" class="nav-item" active-color="orange">Home</a>
+  {% if user.is_authenticated %}
+  <a href="{%url 'post-create' %}" class="nav-item" active-color="green"
+    >New Post</a
+  >
+  <!-- <a href="#" class="nav-item" active-color="blue">Donations</a> -->
+  <!-- <a href="#" class="nav-item" active-color="rebeccapurple">Contact</a> -->
+  <!-- <a href="{% url 'profile' %}" class="nav-item" active-color="aqua">Profile</a> -->
+  <a href="#" class="nav-item logout" onclick="logout_show()" active-color="red"
+    >Logout</a
+  >
+  {% else %}
+  <!-- <a href="{% url 'donate' %}" class="nav-item" active-color="blue">Donations</a> -->
+  <!-- <a href="#" class="nav-item" active-color="rebeccapurple">Contact</a> -->
+  <a href="{% url 'login' %}" class="nav-item" active-color="aqua">Login</a>
+  <a href="{% url 'register' %}" class="nav-item" active-color="purple"
+    >SignUp</a
+  >
+  {% endif %}
+  <span class="nav-indicator"></span>
+</nav>
+<!-- # {% url 'logout' %} -->
+<div class="logout-popup">
+  <div class="content">
+    <h3>Are You Sure You Want To Logout?</h3>
+    <a href="{% url 'logout' %}" class="btn btn-danger">Yes</a>
+    <a href="#" class="btn btn-secondary" onclick="logout_close()">No</a>
+  </div>
+</div>
+<!-- mobile -->
+<header class="cd-header">
+  <div class="header-wrapper">
+    <div class="logo-wrap">
+      <a href="{%url 'home' %}" class="hover-target">
+        <img src="{% static 'logo.png' %}" style="height: 40px;" alt="logo" />
+        <br />
+        <span>dev</span>div</a
+      >
+    </div>
+    <div class="nav-but-wrap">
+      <div class="menu-icon hover-target">
+        <span class="menu-icon__line menu-icon__line-left"></span>
+        <span class="menu-icon__line"></span>
+        <span class="menu-icon__line menu-icon__line-right"></span>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="nav-overlay"></div>
+<div class="nav nmb">
+  <div class="nav__content">
+    <ul class="nav__list">
+      <li class="nav__list-item">
+        <a href="{%url 'home' %}" class="hover-target">Home</a>
+      </li>
+      {% if user.is_authenticated %}
+      <li class="nav__list-item">
+        <a href="{%url 'post-create' %}" class="hover-target">New Post</a>
+      </li>
+      <!-- <li class="nav__list-item">
+        <a href="{% url 'profile'%}" class="hover-target">Profile</a>
+      </li> -->
+      <li class="nav__list-item" onclick="logout_show()">
+        <a href="#" class="hover-target logout" id="logout">Logout</a>
+      </li>
+      <!-- <li class="nav__list-item"><a href="#" class="hover-target">Contact</a></li> -->
+      <!-- <li class="nav__list-item"><a href="{% url 'donate' %}" class="hover-target">Donations</a></li> -->
+      {% else %}
+      <!-- <li class="nav__list-item"><a href="#" class="hover-target">Donations</a></li> -->
+      <!-- <li class="nav__list-item"><a href="#" class="hover-target">Contact</a></li> -->
+      <li class="nav__list-item">
+        <a href="{%url 'register' %}" class="hover-target">SignUp</a>
+      </li>
+      <li class="nav__list-item">
+        <a href="{%url 'login' %}" class="hover-target">Login</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>

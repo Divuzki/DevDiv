@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}Thank You{% endblock title %}</title>
+{% block content %}
+<div class="content-section">
+    <div class="box" style="width: 0;">
+        <div id="main">
+        <div class="text-center">
+        <h1>Thank You</h1>
+        <div class="media-body">
+            <h4>Thank You for your contribution of N{{amount}}!</h4>
+            <p>Your support helps to improve the website, you should receive a receipt to the email you provided shortly :)</p>
+            <hr>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+<style>
+    #main{
+        top: 29% !important;
+        transform: translate(-50%, -50%);
+        left: 50%;
+    }
+    .text-center{
+        position: relative;
+        top: inherit;
+    }
+</style>
+{% endblock content %}

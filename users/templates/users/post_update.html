@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+<title>{% block title %}Update Post{% endblock title %}</title>
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="contant-section">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Update Post</legend>
+            <!-- <p><a href="http://devdiv-file.000webhostapp/blogUploader/?show" target="_blank">Want To Upload Image</a></p> -->
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

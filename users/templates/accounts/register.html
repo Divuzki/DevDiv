@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+<title>{% block title %}SignUp{% endblock title %}</title>
+{% block content %}
+   
+<div id="box">
+
+            <div id="main" style="left:40%"></div>
+                <form method="POST" action="" id="signupform">
+                    {% csrf_token %}
+                <h1>SIGN UP</h1>
+                    {{form.errors.first_name}}
+                    {{form.errors.last_name}}
+                    {{form.errors.username}}
+                    {{form.errors.email}}
+                    {{form.errors.password1}}
+                    {{form.errors.password2}}
+                    {{form.first_name}}
+                    {{form.last_name}}
+                    {{form.username}}
+                    {{form.email}}
+                    {{form.password1}}
+                    {{form.password2}}
+                    <span class="NMS">Already Have an account? <a href="{% url 'login' %}" style="color: blue;">Login</a></span>
+                <button type="submit">SIGN UP</button>
+            </form>
+                <div id="login_msg">Have an account?</div>
+            <button id="login_btn">LOGIN</button>
+</div>
+
+<script>
+    var login_btn = document.getElementById("login_btn");
+    login_btn.addEventListener("click",
+    function() {
+        window.location.href = "{% url 'login'%}";
+    });
+    var f = document.getElementsByTagName('input');
+    f[1].placeholder = 'First Name';
+    f[2].placeholder = 'Last Name';
+    f[3].placeholder = 'Username';
+    f[4].placeholder = 'Email';
+    f[5].placeholder = 'Password';
+    f[6].placeholder = 'Re-type Password';
+</script>
+<style>
+.errorlist{
+    background: #e62e2e;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    top: -37px;
+    left: 33%;
+}
+@media screen and(max-width: 1024){
+ #main{
+     animation: none;
+ }
+}
+#main, #signupform{
+    animation: comer 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes comer {
+    0%{
+        left:70%
+    }
+}
+#sidebar{
+    display:none !important
+}
+.container{
+    height:50vh;
+}
+</style>
+{%endblock content%}
