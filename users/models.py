@@ -20,11 +20,6 @@ class Category(models.Model):
         verbose_name_plural = "categories"
 
 
-categories = Category.objects.all().values_list('name', 'name')
-category_list = []
-for item in categories:
-    category_list.append(item)
-
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
 CategoryList = (('World', 'World'), ('Politics', 'Politics'), ('Tech/Sci',
