@@ -1,0 +1,117 @@
+#devdiv__video {
+  width: 100%;
+}
+
+.devdiv__video__player {
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  overflow: hidden;
+}
+
+.devdiv__video__controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  background-color: rgba(0, 0, 0, 0.7);
+  -webkit-transform: translateY(100%) translateY(-2px);
+  transform: translateY(100%) translateY(-2px);
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.devdiv__video__player:hover .devdiv__video__controls {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+.devdiv__video__player:hover .devdiv__videoBar input[type="range"]{
+  text-align: none;
+}
+.devdiv__videoBtns {
+  padding: 10px;
+}
+
+.devdiv__videoBtns button {
+  background: none;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+.devdiv__videoBtns button:before {
+  content: '\f144';
+  font-family: "Font Awesome 5 Free";
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  font-size: 28px;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+.devdiv__videoBtns button.play:before {
+  content: '\f144';
+}
+
+.devdiv__videoBtns button.pause:before {
+  content: '\f28b';
+}
+
+.devdiv__videoBar {
+  height: 2px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #333;
+  cursor: pointer;
+}
+
+.devdiv__videoBar__juice {
+  height: 3px;
+  top: -30px;
+  width: 0;
+  position: relative;
+  background: orangered;
+  -webkit-transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.devdiv__videoBar input[type="range"] {
+  position: relative;
+  height: 3px;
+  top: -18px;
+  background: #e0e0e0;
+  width: 100%;
+  cursor: pointer;
+  outline: 0;
+  text-align: none;
+  transition: all 200ms;
+  -webkit-appearance: none !important;
+}
+.devdiv__videoBar input[type="range"]:hover{
+  text-align: -webkit-right;
+}
+
+.devdiv__videoBar input[type="range"]::-webkit-slider-thumb {
+  position: relative;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: orangered;
+}
+
+.devdiv__videoBar input[type="range"]:hover::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+.devdiv__video__timing {
+  position: absolute;
+  color: #fff;
+  right: 15px;
+  top: 17px;
+}

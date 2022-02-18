@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/__devdiv__video__style__.css'%}">
+<title>{% block title %}{{object.title}}{% endblock title %}</title>
+<!-- <link rel="stylesheet" href="{% static 'css/debug.css'%}"> -->
+<link rel="stylesheet" href="{% static 'css/reset.css'%}">
+<link rel="stylesheet" href="{% static 'css/post.css'%}">
+<article id="blog-post">
+  <span>
+    <em><a href="{% url 'category' object.category|slugify %}">in {{object.category}}</a></em>
+    {% if object.hashtag %}
+    <em style="background-color: #ccc;border-radius: 24px;padding: 10px;
+  width: max-content;text-transform: capitalize;font-style: italic;"><a
+        href="{% url 'hashtag' object.hashtag|slugify %}">{{object.hashtag}}</a></em>
+        {% elif object.hashtag == "#" %}
+        <em style="background-color: #ccc;border-radius: 24px;padding: 10px;
+        width: max-content;text-transform: capitalize;font-style: italic;"><a
+              href="#">{{object.hashtag}}</a></em>
+        {% endif %}
+  </span>
+  <br />
+  <br />
+  <h1><a href="//azoaltou.com/afu.php?zoneid=3657953" target="_blank"><em>{{object.title}}</em></a></h1>
+  <!-- <h2>or ever was, or ever will be</h2> -->
+  <style>
+    p {
+      line-break: anywhere;
+    }
+  </style>
+  <time datetime='{{object.date_posted|date:"M"}}-{{object.date_posted|date:"d"}}-{{object.date_posted|date:"Y"}}'>{{object.date_posted|date:"M"}},{{object.date_posted|date:"d"}}
+    {{object.date_posted|date:"Y"}}</time>
+  <p>
+    <em>{% if object.description %}{{object.description}}{% endif %}</em>
+  </p>
+  {% if object.image_url %}
+  <!-- Post Image -->
+  <figure class="size-4">
+
+    {% if object.image_url == None or '' %}
+    <img src="/static/default.png" alt="{{object.title}} image">
+    {% else %}
+    <img src="{{object.image_url}}" alt="{{object.title}} image">
+    {% endif %}
+  </figure>
+  <figcaption>
+    <p>{% if object.description %}{{object.description}}{% endif %} <em>Image</em>.</p>
+  </figcaption>
+  {% endif %}
+  <p> {{object.content|safe}} -
+    <strong>by {% if object.author == user %}You{%else%}<em> <a
+          href="{% url 'user-posts' object.author.username %}">{{object.author}}{% endif %}</a></em></strong>
+  </p>
+  {% if object.video_url %}
+  <!-- Post Video -->
+  {% if object.video_url == None or '' %}
+  <p>no video here or video not working...</p>
+  {% else %}
+  <!-- Video Player -->
+  <div class="devdiv__video__player">
+    <video src="{{object.video_url}}" id="devdiv__video"></video>
+    <div class="devdiv__video__controls">
+      <div class="devdiv__videoBar">
+        <input type="range" id="devdiv__videoBar__seek" value="0" max="100" min="0" name="devdiv__videoBar__seek
+                " />
+        <div class="devdiv__videoBar__juice"></div>
+      </div>
+      <div class="devdiv__videoBtns">
+        <button id="devdiv__play__pause"></button>
+      </div>
+      <div class="devdiv__video__timing">
+        <span id="current-time"></span> / <span id="duration-time"></span>
+      </div>
+    </div>
+    </video>
+  </div>
+  {% endif %}
+  {% endif %}
+  <hr style="height: 0.1%;">
+  <br>
+  <div class="share">
+    <div class="share-post">
+      <div class="ld">
+        <!-- Like Btn -->
+        {% if user.is_authenticated %}
+        <button type="submit" name="post_id" id="like_btn" value="{{ object.id }}" class="btn btn-info mb-4">Like <span
+            class="like_span">{{ total_likes }}</span></button>
+        <!-- Dislike -->
+        <button type="submit" name="post_id" id="dislike_btn" value="{{ object.id }}"
+          class="btn btn-danger mb-4">Dislike <span class="dislike_span">{{ total_dislikes }}</span></button>
+
+        <!-- <a href="{% url 'flag' object.id %}" style="box-shadow: none;"><button type="submit"
+            class="btn btn-secondary mb-4">Report</button></a> -->
+        {% else %}
+        <a href="{% url 'login' %}?next=/post/{{object.id}}/" style="box-shadow: none;"><button type="submit"
+            class="btn btn-info mb-4">Like
+            <span class="like_span">{{ total_likes }}</span></button></a>
+        {% endif %}
+        <br />
+        {% if object.author == user %}
+        <a class="btn btn-secondary btn-sm" style="height: fit-content;" href="{% url 'post-update' object.id %}">Update</a>
+        <a class="btn btn-danger btn-sm" style="height: fit-content;" href="{% url 'post-delete' object.id %}">Delete</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</article>
+<style>
+  article{
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+  }
+</style>
+<!-- <div class="post-overlay">
+        <div class="post-popup">
+            <span>Share</span>
+            <input type="text" id="myInp" style="padding: 5px;" disabled>
+            <button id="btnCopy">Copy</button>
+        </div>
+    </div> -->
+{% block js %}
+{% if user.is_authenticated %}
+<script>
+  $("#like_btn").click(function () {
+    $.ajax({
+      type: "POST",
+      url: "{% url 'like_post' object.pk %}",
+      data: {
+        'post_id': "{{ object.id }}",
+        'csrfmiddlewaretoken': '{{ csrf_token }}'
+      },
+      dataType: "json",
+      success: function (response) {
+        var like_span = document.querySelector(".like_span");
+        var dislike_span = document.querySelector(".dislike_span");
+        like_span.innerHTML = response.message
+        like_span.innerHTML = response.likes_count
+        dislike_span.innerHTML = response.dislikes_count
+      },
+      error: function (rs, e) {
+        alert(rs.responseText);
+      }
+    });
+  })
+  $("#dislike_btn").click(function () {
+    $.ajax({
+      type: "POST",
+      url: "{% url 'dislike_post' object.pk %}",
+      data: {
+        'post_id': "{{ object.id }}",
+        'csrfmiddlewaretoken': '{{ csrf_token }}'
+      },
+      dataType: "json",
+      success: function (response) {
+        var like_span = document.querySelector(".like_span");
+        var dislike_span = document.querySelector(".dislike_span");
+        like_span.innerHTML = response.message
+        like_span.innerHTML = response.likes_count
+        dislike_span.innerHTML = response.dislikes_count
+      },
+      error: function (rs, e) {
+        alert(rs.responseText);
+      }
+    });
+  })
+</script>
+{% endif %}
+<script>
+  const myInp = document.getElementById("myInp");
+  const btnCopy = document.getElementById("btnCopy");
+  btnCopy.onclick = function () {
+    // Select Text
+    myInp.select();
+    //  Copy text
+    document.execCommand("Copy");
+    alert("post has been copyed")
+  }
+</script>
+{% if object.video_url %}
+<script src="{% static 'js/__devdiv__video__.js' %}"></script>
+{% endif %}
+{% endblock js %}
+{% endblock content %}

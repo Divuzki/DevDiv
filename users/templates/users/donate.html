@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}Donations{% endblock title %}</title>
+{% block content %}
+<script src="https://js.stripe.com/v3/"></script>
+
+<style>
+    .StripeElement {
+        box-sizing: border-box;
+        height: 40px;
+        padding: 10px 10px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 #e6ebf1;
+        -webkit-transition: box-shadow 150ms ease;
+        transition: box-shadow 150ms ease;
+    }
+    .StripeElement--focus {
+        box-shadow: 0 1px 3px 0 #cfd7df;
+    }
+    .StripeElement--invalid {
+        border-color: #fa755a;
+    }
+    .StripeElement--webkit-autofill {
+        background-color: #fefde5 !important;
+    }
+    #main{
+        top: 29% !important;
+        transform: translate(-50%, -50%);
+        left: 50%;
+    }
+    .text-center{
+        position: relative;
+        top: inherit;
+    }
+</style>
+
+
+
+
+
+
+<div class="content-section">
+    <div class="box" style="width: 0;">
+        <div id="main">
+        <div class="text-center">
+        <h1>Donations</h1>
+        <div class="media-body">
+            <form action="{% url 'donate_charge' %}" method="post" id="payment-form">
+                {% csrf_token %}
+
+                <input type="text" name="email" placeholder="email...">
+                <input type="text" name="nickname" placeholder="nickname...">
+                <div class="form-row">
+                    <label for="card-element">
+                        Credit or debit card
+                    </label>
+                    <div class="card-element">
+
+                    </div>
+                    <div class="card-errors" role="alert"></div>
+                </div>
+                <button>Pay</button>
+            </form>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+    var stripe = Stripe('');
+    var element = stripe.element();
+    var style = {
+        base: {
+            color: '#3235d',
+            fontFamily: '"Helvetica Neue", sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+                color: '#aab7c4'
+            }
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+        }
+    };
+    var card = element.create('card', {style: style});
+
+    card.mount('#card-element');
+    card.addEventListener('change', function(event) {
+        var display = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        }else{
+            displayError.textContent = '';
+        }
+    });
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        stripe.createToken(card).then(function(result) {
+            if(result.error) {
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            }else{
+                stripeTokenHandler(result.token);
+            }
+        });
+    });
+    function stripeTokenHandler(token) {
+        var form = document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+
+        form.submit();
+    }
+</script>
+{% endblock content %}

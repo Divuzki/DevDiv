@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+<title>{% block title %}Login{% endblock title %}</title>
+{% block content %}
+   <div id="box" onload="is_active()">
+            <div id="main" style="left:70%;height: 500px;"></div>
+                <form method="POST" action="" id="loginform">
+                    {% csrf_token %}
+{%for message in messages%}
+<div class="success-box">{{message}}</div>
+{%endfor%}
+                <h1>LOGIN</h1>
+                    {{form}}
+                    <span class="NMS">Need an account? <a href="{% url 'register' %}" style="color: blue;">SignUp</a></span>
+                    <span class="#">forgot password? <a href="{% url 'pwdreset' %}" style="color: blue;">Request</a></span>
+                <button type="submit">LOGIN</button>
+            </form>
+                <div id="signup_msg">Don't have an account?</div>
+            <button id="signup_btn">SIGNUP</button>
+            
+</div>
+{% block js %}
+<script>
+    var signup_btn = document.getElementById("signup_btn");
+    signup_btn.addEventListener("click",
+    function() {
+        window.location.href = "{% url 'register' %}";
+    });
+    var username = document.getElementById('id_username');
+    var password = document.getElementById('id_password');
+    username.placeholder = 'username';
+    password.placeholder = 'password';
+</script>
+{% endblock js %}
+<style>
+    @media screen and(max-width: 1024){
+ #main{
+     animation: none;
+ }
+}
+#main, #loginform{
+    animation: comer 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes comer {
+    0%{
+        left:40%
+    }
+}
+#sidebar{
+    display:none !important
+}
+.container{
+    height:50vh;
+}
+</style>
+{% endblock content%}

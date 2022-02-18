@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+<title>{% block title %}Profile{% endblock title %}</title>
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/profile-style.css' %}">
+<div class="profile">
+  <div class="profile-left">
+    <img src="{{ user.profile.image_url }}" alt="{{user.username}} image" width="100">
+    <h4>{{user.first_name}} {{user.last_name}}</h4>
+    <p>{{user.profile.status}}</p>
+  </div>
+
+  <!-- Right Side -->
+  <div class="profile-right">
+    <div class="info">
+      <h3>Infomation</h3>
+      <div class="info_data">
+        <div class="data">
+          <h4>Email</h4>
+          <p>{{user.email}}</p>
+        </div>
+        <div class="data">
+          <h4>Location</h4>
+          <p style="text-align: center;">{{user.profile.location}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- About Me -->
+    <div class="aboutme">
+      <h3>About Me</h3>
+      <div class="ab_data">
+        <div class="data">
+          <p>{{user.profile.about_me | truncatechars:120 | safe}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- User Recent Post -->
+    <div class="profile-post">
+      <div class="info">
+        <h3></h3>
+        <div class="info_data">
+          <div class="data">
+            <h4> <a href="{% url 'user-posts' user.username %}">Posts</a></h4>
+            <p>{{ post_qs.title }}</p>
+          </div>
+          <div class="data">
+            <h4> <a href="{% url 'history' %}">History</a></h4>
+            <p>{{user.history.object_id}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="social_links">
+        {% if user.profile.facebook_link and user.profile.twitter_link and user.profile.instagram_link %}
+        <ul>
+          {% if user.profile.facebook_link %}
+          <li><a href="{{user.profile.facebook_link}}"><i class="fab fa-facebook-f"></i></a></li>
+          {% endif %}
+          {% if user.profile.twitter_link %}
+          <li><a href="{{user.profile.twitter_link}}"><i class="fab fa-twitter"></i></a></li>
+          {% endif %}
+          {% if user.profile.instagram_link %}
+          <li><a href="{{user.profile.instagram_link}}"><i class="fab fa-instagram"></i></a></li>
+          {% endif %}
+        </ul>
+        {% else %}
+        <li>No Social Media Added</li>
+        {% endif %}
+      </div>
+    </div>
+    <a href="{% url 'profile-update' %}">Edit</a>
+  </div>
+  {%for message in messages%}
+  <div class="side-msg">
+    <span class="success-box">{{message}}</span>
+  </div>
+  {%endfor%}
+  <style>
+    .side-msg {
+      position: absolute;
+      left: .5rem;
+      top: 50%;
+      opacity: 0;
+      animation: side-img-op 10s;
+    }
+    @keyframes side-img-op {
+      0%{
+        opacity: 1;
+      }
+      90%{
+        opacity: 1;
+      }
+      100%{
+        opacity: 0;
+      }
+    }
+  </style>
+  {% endblock content %}

@@ -1,0 +1,17 @@
+certifi
+chardet
+dj-database-url
+Django
+django-ckeditor
+django-crispy-forms
+django-js-asset
+django-heroku
+djangorestframework
+gunicorn
+idna
+pytz
+requests
+sqlparse
+stripe
+urllib3
+whitenoise

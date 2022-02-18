@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %} {{tags}} {% endblock title %}</title>
+{% block content %}
+<div class="containter">
+    <div class="row">
+        <div class="col-ig-12">
+            <div class="heading">
+                <h1 style="text-transform: capitalize;">{{tags}} |
+                    <a href="{% url 'user-posts' first_user %}">{{first_user}}</a></h1>
+                <p>
+                    {{total_tags}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        {% for obj in posts %}
+        <div class="col-lg-4">
+            <div class="blog">
+                <div class="blog-inf">
+                    <h3>{{obj.title}}</h3>
+                    <span>by {{obj.author}}</span>
+                    {% if obj.description %}
+                    <p>{{obj.description | safe | truncatechars:50}}.
+                    </p>
+                    {% else %}
+                    <p>{{obj.content | truncatechars:150 | safe}}.
+                    </p>
+                    {% endif %}
+                    <a href="{% url 'post-detail' obj.id%}">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+<style>
+    body {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        font-weight: 400 !important;
+    }
+
+    .blog {
+        margin: 15px 0;
+    }
+
+    p {
+        text-align: left;
+        opacity: 0.7;
+        line-height: 1.6;
+    }
+
+    .heading {
+        padding: 20px 0;
+    }
+
+    .heading h1 {
+        font-size: 2rem;
+    }
+
+    .blog img {
+        width: 100%;
+        height: auto;
+        background-color: #c3c3c3;
+    }
+
+    .blog-inf {
+        background-color: #fff;
+        padding: 20px;
+    }
+
+    .blog-inf h3 {
+        font-size: 1.5rem;
+        margin: 10px 0;
+        text-transform: capitalize;
+    }
+
+    .blog-inf span {
+        display: block;
+        margin: 20px 0;
+        color: #343a40;
+        text-transform: capitalize;
+        font-weight: 600;
+    }
+</style>
+{% endblock content %}

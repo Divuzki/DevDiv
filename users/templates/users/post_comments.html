@@ -1,0 +1,177 @@
+{% load static %}  
+<link rel="stylesheet" href="{% static 'css/comment-section.css' %}">
+<!-- Vue.js Comment Section -->
+<div class="comment-section">
+  <div id="comments-form" class="comments-form">
+    <h2>Leave a Comment</h2> 
+    <form v-on:submit.prevent="addComment" action="{% url 'create-comment' object.pk %}" id="comment_form" method="POST">
+        {% csrf_token %}
+        <div class="field-wrapper">
+          <div class="d-none alert alert-danger" id="comment-create-form-error"></div>
+        </div>
+        
+      <div class="field-wrapper">
+        <input type="text" name="body" id="c_body" v-model="newComment.text" />
+      </div>
+    
+      <div class="field-wrapper">
+        <input class="btn" type="submit" value="Add Comment" />
+      </div>
+      
+    </form>
+  </div>
+  {% if not object.comments.all %}
+  <span v-if="comments.length === 0">Be the first to comment!</span>
+  {% endif %}
+  <footer id="comments" class="comments-wrapper">
+      <h2>
+          <span v-else-if="comments.length !== 1">{{object.comments.count}}  Comments</span>
+        </h2>
+        <transition-group name="fade-up" tag="ul" class="comments">
+      {% for comment in object.comments.all %}
+      <li v-for="(comment, index) in comments" v-bind:key="comment" v-bind:id="index">
+        <div class="comment-author-meta">
+          <div class="avatar">
+            <img src="{{ comment.user.profile.image_url }}" class="c_img" alt="{{comment.user}} image" />
+          </div>
+          <div class="user">{{comment.user}}</div>
+          <div class="reaction-to-comment"><i class="fa fa-heart"></i><span>0</span></div>
+        </div>
+        <div class="comment-text">
+          <p style="white-space: pre-line" class="c_body">{{ comment.body }}</p>
+        </div>
+        <div class="comment-meta">
+          <span class="comment-date">{{comment.date_added}}</span>
+        </div>
+      </li>
+      {% endfor %}
+    </transition-group>
+
+  </footer>
+  <!-- <a href="#comments-form" v-scroll-to="'#comments-form'">Write a Comment</a> -->
+</div>
+
+
+<script type="text/javascript">
+  // Handling Skit Form Error
+  function handleCommentFormError(msg, display) {
+    var myErrorDiv = document.getElementById("comment-create-form-error")
+    if (display === true){
+      // show error
+      myErrorDiv.setAttribute("class", "d-block alert alert-danger")
+      myErrorDiv.innerText = msg
+  } else{
+    //  Hide Error
+    myErrorDiv.setAttribute("class", "d-none alert alert-danger")
+  }
+}
+  // Handle Comment Create Form
+  function handleCommentCreateFormDidSumbit(event) {
+    event.preventDefault()
+    const myForm = event.target
+    const myFormData = new FormData(myForm)
+    const url = myForm.getAttribute("action")
+    const method = myForm.getAttribute("method")
+    const xhr = new XMLHttpRequest()
+    const responseType = "json"
+    xhr.responseType = responseType
+    xhr.open(method, url)
+    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+    xhr.onload = function() {
+      // Handling Status
+        if (xhr.status === 201) { // 201 Status == Create Item
+          handleCommentFormError("", false)
+            const newCommentJson = xhr.response
+            const newCommentElement = formatCommentElement(newCommentJson)
+            const ogHtml = commentsContainerElement.innerHTML
+            commentsContainerElement.innerHTML = newCommentElement + ogHtml
+            myForm.reset()
+        } else if (xhr.status === 400){ // 400 Status == Bad Request
+          const errorJson = xhr.response
+          const contentError = errorJson.content
+          let contentErrorMsg
+          if (contentError){
+            contentErrorMsg = contentError[0]
+            if (contentErrorMsg) {
+              handleCommentFormError(contentErrorMsg, true)
+            }else {
+              alert("An error occured. Please try again.")
+            }
+          } else { // Incase of other errors
+            alert("An error occured. Please try again.")
+          }
+        } else if (xhr.status === 401){ // 401 Status == UNAUTHENTICATED USER
+          alert("You need to login!")
+          window.location.href = '/login'
+        } else if (xhr.status === 403){ // 403 Status == FORBIDDEN
+          alert("You need to login!")
+          window.location.href = '/login'
+        } else if (xhr.status === 500){ // 500 Status == Error From Server
+          //alert("There was a Server Error!, please try again.")
+          handleCommentFormError("There was a Server Error!, please try again.", true)
+        }
+        
+    }
+    xhr.onerror = function() { // Incase of other errors
+      //alert("An error occurred. Please try again later")
+      handleCommentFormError("An error occured, Check your network connection", true)
+    }
+    xhr.send(myFormData) // Sending data to server
+}
+const commentCreateFormEl = document.getElementById("comment_form")
+commentCreateFormEl.addEventListener("submit", handleCommentCreateFormDidSumbit)
+
+
+const commentsContainerElement = document.querySelector(".comments") 
+
+window.addEventListener('offline', () => handleCommentFormError("You are offline, Check your network connection", true));
+
+// Load Comments
+function loadComments(commentElement) {
+  const xhr = new XMLHttpRequest()
+  const method = 'GET' // "GET"
+  const url = '{% url "list-comment" object.pk %}'
+  const responseType = "json"
+  xhr.responseType = responseType
+  xhr.open(method, url)
+  xhr.onload = function() {
+      const serverResponse = xhr.response
+      const listedItems = serverResponse // array
+      var finalCommentStr = ""
+      var i;
+      for (i=0;i<listedItems.length; i++) {
+          var commentObj = listedItems[i]
+          var currentItem = formatCommentElement(commentObj)
+          finalCommentStr += currentItem
+      }
+      commentElement.innerHTML = finalCommentStr
+  }
+  xhr.send()
+}
+
+loadComments(commentsContainerElement) // Loading Comments
+
+
+ // Comment Html Element Formats
+function formatCommentElement(comment) {
+  var formattedSkit = `
+  <li v-for="(comment, index) in comments" v-bind:key="${comment.id}" v-bind:id="index">
+    <div class="comment-author-meta">
+      <div class="avatar">
+        <img src="${comment.img}" class="c_img" alt="" />
+      </div>
+      <div class="user">${comment.user}</div>
+      <!-- <div class="reaction-to-comment"><i class="fa fa-heart"></i><span>${comment.likes}</span></div>-->
+    </div>
+    <div class="comment-text">
+      <p style="white-space: pre-line" class="c_body">${comment.body}</p>
+    </div>
+    <div class="comment-meta">
+      <span class="comment-date">${comment.date}</span>
+    </div>
+  </li>
+  `
+  return formattedSkit
+}
+</script>

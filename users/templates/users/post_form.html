@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+<title>{% block title %}New Post{% endblock title %}</title>
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+{% block js %}
+<script src="{% static 'js/forms.js' %}"></script>
+<script>
+  var Createbtn = document.querySelector(".enableBtn");
+  Createbtn.addEventListener("click", function () {
+    Createbtn.innerHTML = "Loading...";
+    Createbtn.addEventListener("click", function () {
+    Createbtn.innerHTML = "Wait...";
+    Createbtn.disabled = "disabled";
+    if (Createbtn.disabled) {
+      Createbtn.innerHTML = "Creating...";
+      Createbtn.innerHTML = "Redirecting...";
+    }
+  })
+  })
+</script>
+<script>
+    var hashtag_field = document.getElementById("id_hashtag");
+  hashtag_field.placeholder = "#hashtag, then space";
+</script>
+{% endblock %}
+<div class="contant-section">
+  <form method="POST" id="id_form" data-hashtag-url="{% url 'autocomplete' %}" token="{{ csrf_token }}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">New Post</legend>
+      <!-- <p><a href="http://localhost/blogUploader/?show" target="_blank">Want To Upload Image</a></p> -->
+      {{ form.media }}
+      {{ form|crispy }}
+    </fieldset>
+    <div class="form-group">
+      <button class="btn btn-outline-info enableBtn" type="submit">Create</button>
+    </div>
+  </form>
+<style>
+body {
+  overflow-x: visible !important;
+}
+</style>
+</div>
+{% endblock content %}

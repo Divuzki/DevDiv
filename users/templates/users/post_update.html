@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+<title>{% block title %}Update Post{% endblock title %}</title>
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+{% block js %}
+<script src="{% static 'js/forms.js' %}"></script>
+<script>
+  var Createbtn = document.querySelector(".enableBtn");
+  Createbtn.addEventListener("click", function () {
+    Createbtn.innerHTML = "Updating...";
+    Createbtn.addEventListener("click", function () {
+    Createbtn.innerHTML = "Wait...";
+    Createbtn.disabled = "disabled";
+  })
+  })
+</script>
+<script>
+    var hashtag_field = document.getElementById("id_hashtag");
+    var fh = document.getElementById("fh");
+  hashtag_field.placeholder = "#hashtag, then space";
+  fh.value = hashtag_field.value
+</script>
+{% endblock js %}
+<div class="contant-section">
+    <form method="POST" token="{{ csrf_token }}" data-hashtag-url="{% url 'autocomplete' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Update Post</legend>
+            {{ form.media }}
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info enableBtn" type="submit">Update</button>
+        </div>
+    </form>
+    <style>
+    body {
+            overflow-x: visible !important;
+        }
+    </style>
+</div>
+{% endblock content %}

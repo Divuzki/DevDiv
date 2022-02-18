@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<title>
+    {% block title %}{{user.username}}
+    {% if history_list > 0 %}
+    Histories
+    {% else %}
+    History{% endif %}{% endblock title %}
+</title>
+{% if history_list %}
+<div class="container">
+    <div class="row">
+        {% for history in history_list %}
+        <a href="{% url 'post-detail' history.object_id %}">
+            <div class="history-product-card">
+                <div class="history-badge">{{history.content_object.hashtag}}</div>
+                <div class="history-product-tumb">
+                    <img src="{{history.content_object.image_url}}" alt="{{history.content_object}} image">
+                </div>
+                <div class="history-product-details">
+                    <span class="history-product-catagory">viewed on {{history.viewed_on}}</span>
+                    <h4><a href="">{{history.content_object.author}}</a></h4>
+                    <p>{{history.content_object.content | truncatechars:200 | safe}}</p>
+                    <div class="history-product-bottom-details">
+                        <div class="history-product-links">
+                            <a href="{% url 'history_del' history.pk %}"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<center><p>NO History</p></center>
+{% endif %}
+<style>
+    .container {
+        transform: translateY(4pc);
+    }
+</style>
+{% endblock content %}

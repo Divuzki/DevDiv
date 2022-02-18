@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+<title>{% block title %}Flagging | {{post.title}}{% endblock title %}</title>
+{% block content %}
+<br />
+<br />
+<div class="flag">
+    <h3>Tell us why you are Reporting/Flagging '{{post.title | truncatechars:80 }}'</h3>
+    <hr />
+    <form action="{% url 'flagging' post_uuid %}" method="POST">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="hidden" name="post_id" value="{{post.id}}">
+        <button type="submit" class="btn btn-danger">Submit</button>
+    </form>
+</div>
+<style>
+    .flag {
+        position: sticky;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        background: #fffa;
+    }
+
+    form {
+        line-height: 25px;
+        position: relative;
+        width: 100%;
+    }
+
+    form input {
+        border-top: 2px solid #ccc;
+    }
+</style>
+{% endblock content %}
