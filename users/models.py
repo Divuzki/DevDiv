@@ -27,6 +27,10 @@ class Category(models.Model):
 
 # CHECKING DB FOR CAT TABLE
 category_list = []
+categories = Category.objects.all().values_list('name', 'name')
+
+for item in categories:
+    category_list.append(item)
 # connect to database
 con = sqlite3.connect('../divdev.sqlite3')
 

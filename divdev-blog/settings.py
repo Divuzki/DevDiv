@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = "j%vr*5iu43ks_w6j4#op223o96$p=#r7)jdevdiv%vr*5iudivineik43ks_w6j4#op223o96$p=#r7)"
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['devdiv.herokuapp.com', 'localhost']
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = "/login/"
