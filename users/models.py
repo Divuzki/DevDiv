@@ -9,14 +9,9 @@ from rest_framework.reverse import reverse as api_reverse
 import os
 # from PIL import Image
 
-# import required module
-import sqlite3
-
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -25,42 +20,15 @@ class Category(models.Model):
         verbose_name_plural = "categories"
 
 
-# CHECKING DB FOR CAT TABLE
-category_list = []
 categories = Category.objects.all().values_list('name', 'name')
-
+category_list = []
 for item in categories:
     category_list.append(item)
-# connect to database
-con = sqlite3.connect('../divdev.sqlite3')
-
-# create cursor object
-cur = con.cursor()
-
-# check if table exists
-print('Check if users_category table exists in the database:')
-listOfTables = cur.execute(
-"""SELECT name FROM sqlite_master WHERE type='table'
-AND name='users_category'; """).fetchall()
-
-if listOfTables == []:
-	print('Table not found!')
-else:
-    categories = Category.objects.all().values_list('name', 'name')
-    
-    for item in categories:
-        category_list.append(item)
-	# print('Table found!')
-
-# commit changes
-con.commit()
-
-# terminate the connection
-con.close()
-
 
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
+CategoryList = (('World', 'World'), ('Politics', 'Politics'), ('Tech/Sci',
+                'Tech/Sci'), ('How To', 'How To'), ('LifeStyle', 'LifeStyle'), ('Art & Entertainment', 'Art & Entertainment'))
 
 
 class HashTag(models.Model):
@@ -73,7 +41,7 @@ class HashTag(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
-    
+
     def serialize(self):
         return {
             "name": self.name,
@@ -107,7 +75,8 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, max_length=255)
     image_url = models.CharField(max_length=3038, null=True, blank=True)
     video_url = models.CharField(max_length=3000, null=True, blank=True)
-    category = models.CharField(choices=category_list, max_length=50, default='uncategorized')
+    category = models.CharField(
+        choices=CategoryList, max_length=50, default='uncategorized')
     hashtag = models.CharField(max_length=150, null=True, blank=True)
     likes = models.ManyToManyField(User, related_name="likes", blank=True)
     dislikes = models.ManyToManyField(
@@ -147,9 +116,10 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
-    
+
     def get_api_url(self, request=None):
-        api_reverse("post-api:post-api-rud", kwargs={'pk': self.pk}, request=request)
+        api_reverse("post-api:post-api-rud",
+                    kwargs={'pk': self.pk}, request=request)
 
 
 class Comment(models.Model):

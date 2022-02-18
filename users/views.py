@@ -75,19 +75,14 @@ def hashtag_view(request, tags):
 def category_view(request, cats):
     category_posts = Post.objects.filter(
         category=cats).order_by('-date_posted')
-    try:
-        treading_tag = Post.objects.filter(category=cats).first().hashtag
-        treading_tag = HashTag.objects.filter(name=treading_tag)
-        return render(request, 'categories.html', {
-            'cats': cats,
-            'posts': category_posts,
-            'treading_tag': treading_tag,
-        })
-    except:
-        return render(request, 'categories.html', {
-            'cats': cats,
-            'posts': category_posts,
-        })
+    treading_tag = category_posts.first()
+    print(treading_tag)
+    treading_tag = HashTag.objects.filter(name=treading_tag)
+    return render(request, 'categories.html', {
+        'cats': cats,
+        'posts': category_posts,
+        'treading_tag': treading_tag,
+    })
 
 
 def donate(request):
@@ -239,6 +234,7 @@ def hashtag_autocomplete(request, *args, **kwargs):
         for name in qs:
             names.append(name.name)
 
+
         names = list(dict.fromkeys(names))
         return JsonResponse(names, safe=False)
 
@@ -250,26 +246,26 @@ def hashtag_autocomplete(request, *args, **kwargs):
         hashtag = hashtag.split(",")
         hashtag.sort()
         for hashtags in hashtag:
-            if hashtags[0] == "#":  # Checking if the hashtag text contains the '#' symbol at the begin
-                # checking if the hashtag exists to avoid double hashtag in db
-                if not HashTag.objects.filter(name__iexact=hashtags).exists():
-                    # returning it as json data for js to proccess
-                    HashTag.objects.create(
-                        user=user,
-                        post=post,
-                        name=hashtags
-                    )  # Add it to db
-                    ctx = {
-                        "data":
-                            {
-                                "tag": hashtag,
+                if hashtags[0] == "#":  # Checking if the hashtag text contains the '#' symbol at the begin
+                    # checking if the hashtag exists to avoid double hashtag in db
+                    if not HashTag.objects.filter(name__iexact=hashtags).exists():
+                        # returning it as json data for js to proccess
+                        HashTag.objects.create(
+                            user=user,
+                            post=post,
+                            name=hashtags
+                        ) # Add it to db
+                        ctx = {
+                            "data":
+                                {
+                                "tag":hashtag,
                                 "post": post
-                            }
-                    }
-                    return JsonResponse(ctx, safe=False)
-                    # then return as json data
-            elif not hashtags[0] == "#":  # else error
-                return JsonResponse({"data": {"error": f"This is a hashtag, You need to add the symbol '#' in {hashtags}"}}, safe=False)
+                                }
+                        }
+                        return JsonResponse(ctx, safe=False)
+                        # then return as json data
+                elif not hashtags[0] == "#": # else error
+                    return JsonResponse({"data": {"error": f"This is a hashtag, You need to add the symbol '#' in {hashtags}"}}, safe=False)
         return JsonResponse(hashtag, safe=False)
 
 
@@ -384,7 +380,7 @@ class ConfirmPasswordView(UpdateView):
         return self.request.user
 
     def get_success_url(self):
-        return self.request.get_full_path()  # Getting the full url
+        return self.request.get_full_path() # Getting the full url
 
 
 # Creating a new user
