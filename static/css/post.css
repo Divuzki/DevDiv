@@ -12,6 +12,7 @@ article * {
 @media (max-width: 8.5in) {
   article {
     grid-template-columns: 1fr 5% [start] 15% 60% 15% [end] 5% 1fr;
+    transform: translateX(-33px);
   }
 }
 .size-1 {

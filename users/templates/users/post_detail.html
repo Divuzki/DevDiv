@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="{% static 'css/post.css'%}">
 
 <!-- SLIDER -->
-<div class="section-content mb-4">
+<div class="wrapper">
+<div class="section-content mt-4">
   <div class="row align-center">
     <div class="col medium-12" id="slick-container-shoutouts">
     {% for posts in posts %}
@@ -287,6 +288,9 @@
   article{
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
+  }
+  .devdiv-content{
+    flex-direction: column !important;
   }
 </style>
 <!-- <div class="post-overlay">

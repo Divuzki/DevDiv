@@ -7,7 +7,7 @@
   "description": "Join A Community Where People Share There Thought",
   "start_url": "/",
   "id": "/?homescreen",
-  "scope": "/",
+  "start_url": "/?homescreen",
   "orientation": "Portrait",
   "background_color": "#FFFA",
 

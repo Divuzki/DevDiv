@@ -105,11 +105,10 @@ textarea.form-control {
 #app,
 .nav-overlay {
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 .nav-overlay {
-  width: 100%;
   position: fixed;
   left: 0;
   visibility: hidden;
@@ -888,7 +887,6 @@ a:hover {
   }
 }
 .divdev_posts-slider__item {
-  border: 1px solid;
   width: 400px;
   flex-shrink: 0;
   padding: 15px;
@@ -982,6 +980,7 @@ a:hover {
   }
 }
 .divdev_posts__item {
+  border: 1px solid;
   padding: 30px;
   color: #fff;
   border-radius: 10px;
@@ -1664,7 +1663,7 @@ a {
 
 .section-content.relative {
   position: relative;
-  top: 6pc;
+  top: 4pc;
 }
 
 .slick-prev:before,
@@ -1800,8 +1799,8 @@ a {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
   background: #fff;
   z-index: 9999;

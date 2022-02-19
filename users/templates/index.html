@@ -2,7 +2,7 @@
 <title onload='document.getElementsByTagName(`title`)[0].innerHTML = `DevDiv`;'>{% block title %}Home{% endblock title %}</title>
 {% block content %}
 <div class="wrapper">
-  <div class="section-content">
+  <div class="section-content relative">
     <div class="row align-center">
       <div class="col medium-12" id="slick-container-shoutouts">
       {% for posts in posts %}
@@ -246,6 +246,7 @@
       {% endif %}
     </div>
   </div>
+
   <style>
     .divdev_posts__item {
       color: #333 !important;
@@ -257,33 +258,6 @@
 
     .divdev_posts-slider__item.swiper-slide {
       pointer-events: all !important;
-    }
-
-    .rounded-circle {
-      cursor: pointer;
-      width: 100px;
-      height: 100px;
-      border: 3px solid #84eaeabd !important;
-      padding: 15px;
-      transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .user-posts {
-      -webkit-transform: translate(59px, 210px);
-      transform: translate(60px, 210px);
-      text-align: center;
-      padding: 10px;
-    }
-
-    @media (max-width: 500px) {
-      .user-posts {
-        -webkit-transform: translate(70px, 150px);
-        transform: translate(70px, 150px);
-      }
-    }
-
-    .rounded-circle:hover {
-      border: 1px !important;
     }
   </style>
   {% block js %}

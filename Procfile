@@ -1,1 +1,1 @@
-web: gunicorn divdev-blog.wsgi
+web: gunicorn devdiv.wsgi

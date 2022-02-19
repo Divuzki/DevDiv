@@ -1,4 +1,3 @@
-import re
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -7,7 +6,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from rest_framework.reverse import reverse as api_reverse
-# from PIL import Image
+from django.utils.translation import gettext_lazy as _
+from devdiv.utils import image_resize, clean_content
 
 
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
@@ -35,7 +35,8 @@ class HashTag(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    upload_image = models.ImageField(upload_to="profile_images/%y/%m", null=True, blank=True)
+    upload_image = models.ImageField(
+        _("Image"), upload_to="profile_images/%Y/%m/", blank=True, null=True)
     image_url = models.CharField(
         max_length=3080, default='/static/default_jpg.png')
     status = models.CharField(max_length=50, null=True, blank=True)
@@ -49,6 +50,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
+    def save(self, *args, **kwargs):
+        # run save of parent class above to save original image to disk
+        super().save(*args, **kwargs)
+
+        if self.upload_image:
+            image_resize(self.upload_image, 144, 144)
 
 
 class Post(models.Model):
@@ -59,7 +66,8 @@ class Post(models.Model):
     content = RichTextField()
     # content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, max_length=255)
-    upload_image = models.ImageField(upload_to="post_media/%y/%m", null=True, blank=True)
+    upload_image = models.ImageField(
+        _("Image"), upload_to="post_media/image/%Y/%m/", blank=True, null=True)
     image_url = models.CharField(max_length=3038, null=True, blank=True)
     image_caption = models.CharField(max_length=100, null=True, blank=True,
                                    help_text="Text limit is 100, and know that this is the post image description")
@@ -114,17 +122,15 @@ class Post(models.Model):
         api_reverse("post-api:post-api-rud",
                     kwargs={'pk': self.pk}, request=request)
     
-    def clean_content(self):
-        content = self.cleaned_data.get('content')
-        arr = re.findall(r"#(\w+)", content)
-        for hsh in arr:
-            if len(hsh) < 80:
-                full_hash = '#' + hsh
-                if HashTag.objects.filter(name__iexact=hsh):
-                    content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/">#{hsh}</a>')
-                else:
-                    content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/">#{hsh}</a>')
-        return content
+    def save(self, *args, **kwargs):
+        # run save of parent class above to save original image to disk
+        super().save(*args, **kwargs)
+
+        if self.upload_image:
+            image_resize(self.upload_image, 800, 600)
+        if self.content:
+            self.content = clean_content(self.content)
+
 
 
 class Comment(models.Model):
