@@ -32,7 +32,7 @@ if (docHeight != "undefined") {
 //  Add scroll Event lisner
 body.addEventListener("scroll", function (event) {
   scrollPos = body.scrollTop || docElem.scrollTop;
-  if (btn) btn.className = scrollPos > offset ? "back-to-top visible" : "";
+  if (btn) btn.className = scrollPos > offset ? "back-to-top visible" : "back-to-top";
   npc.className = scrollPos > offset ? "nav npc change" : "nav npc";
   top_header.className = scrollPos > offset ? "top change" : "top";
   cd_header.className = scrollPos > offset ? "cd-header change" : "cd-header";

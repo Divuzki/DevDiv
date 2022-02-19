@@ -42,6 +42,11 @@
   <script src="https://kit.fontawesome.com/c66543d63b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/Main.css'%}" />
   <link rel="stylesheet" href="{% static 'css/style.css'%}" />
+  {% if posts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick-theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.selectric/1.9.4/selectric.css">
+{% endif %}
 
   <!-- SW REG -->
   <script type="text/javascript">
@@ -67,7 +72,7 @@
 
 <body>
   <div id="app">
-    <header class="top">{% include 'navbar.html' %}</header>
+    <header class="top mb-4">{% include 'navbar.html' %}</header>
         <div class="devdiv-content">
           {% block content %}{% endblock content %}
           {% include 'aside.html' %}
@@ -105,14 +110,20 @@ document.addEventListener('readystatechange', () => {
 		
 		// when loader is invisible remove it from the DOM
 			setTimeout(()=>{
-				loaderEl.parentNode.removeChild(loaderEl);
+        if(loaderEl.parentNode)
+				  loaderEl.parentNode.removeChild(loaderEl);
+        else
+          loaderEl.style.display = "none";
 			}, 1000);
 	}
 });
 
 window.addEventListener("load", function() {
     setTimeout(()=>{
-      loaderEl.parentNode.removeChild(loaderEl);
+      if(loaderEl.parentNode)
+				  loaderEl.parentNode.removeChild(loaderEl);
+        else
+          loaderEl.style.display = "none";
     }, 1000);
 });
 

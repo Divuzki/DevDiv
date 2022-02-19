@@ -6,6 +6,184 @@
 <!-- <link rel="stylesheet" href="{% static 'css/debug.css'%}"> -->
 <link rel="stylesheet" href="{% static 'css/reset.css'%}">
 <link rel="stylesheet" href="{% static 'css/post.css'%}">
+
+<!-- SLIDER -->
+<div class="section-content mb-4">
+  <div class="row align-center">
+    <div class="col medium-12" id="slick-container-shoutouts">
+    {% for posts in posts %}
+
+
+  <!-- World -->
+    {% if posts.category == "World" %}
+      <div class="slider-element">
+        <a href="{%url 'post-detail' posts.id%}">
+        <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+        </a>
+        </div>
+            <a href="{%url 'post-detail' posts.id%}">
+          <div class="text-wrap">
+            <h2>
+                {{ posts.title }}
+              </h2>
+              <h3>
+                {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+              </h3>
+              <h3>
+                {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+              </h3>
+            </div>
+          </a>
+          </div>
+          {% endif %}
+
+  <!-- Gossip -->
+    {% if posts.category == "Gossip" %}
+    <div class="slider-element">
+      <a href="{%url 'post-detail' posts.id%}">
+      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+      </a>
+      </div>
+          <a href="{%url 'post-detail' posts.id%}">
+        <div class="text-wrap">
+          <h2>
+              {{ posts.title }}
+            </h2>
+            <h3>
+              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+            </h3>
+            <h3>
+              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            </h3>
+          </div>
+        </a>
+        </div>
+        {% endif %}
+
+  <!-- Technology -->
+    {% if posts.category == "Technology" %}
+    <div class="slider-element">
+      <a href="{%url 'post-detail' posts.id%}">
+      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+      </a>
+      </div>
+          <a href="{%url 'post-detail' posts.id%}">
+        <div class="text-wrap">
+          <h2>
+              {{ posts.title }}
+            </h2>
+            <h3>
+              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+            </h3>
+            <h3>
+              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            </h3>
+          </div>
+        </a>
+        </div>
+      {% endif %}
+
+  <!-- Science -->
+  {% if posts.category == "Science" %}
+  <div class="slider-element">
+    <a href="{%url 'post-detail' posts.id%}">
+    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+    </a>
+    </div>
+        <a href="{%url 'post-detail' posts.id%}">
+      <div class="text-wrap">
+        <h2>
+            {{ posts.title }}
+          </h2>
+          <h3>
+            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+          </h3>
+          <h3>
+            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+          </h3>
+        </div>
+      </a>
+      </div>
+      {% endif %}
+
+
+  <!-- Politics -->
+  {% if posts.category == "Politics" %}
+  <div class="slider-element">
+    <a href="{%url 'post-detail' posts.id%}">
+    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+    </a>
+    </div>
+        <a href="{%url 'post-detail' posts.id%}">
+      <div class="text-wrap">
+        <h2>
+            {{ posts.title }}
+          </h2>
+          <h3>
+            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+          </h3>
+          <h3>
+            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+          </h3>
+        </div>
+      </a>
+      </div>
+      {% endif %}
+
+
+  <!-- Sports -->
+  {% if posts.category == "Sports" %}
+  <div class="slider-element">
+    <a href="{%url 'post-detail' posts.id%}">
+    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+    </a>
+    </div>
+        <a href="{%url 'post-detail' posts.id%}">
+      <div class="text-wrap">
+        <h2>
+            {{ posts.title }}
+          </h2>
+          <h3>
+            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+          </h3>
+          <h3>
+            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+          </h3>
+        </div>
+      </a>
+    </div>
+    {% endif %}
+
+  <!-- How-To -->
+  {% if posts.category == "How-to" %}
+  <div class="slider-element">
+    <a href="{%url 'post-detail' posts.id%}">
+    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+    </a>
+    </div>
+        <a href="{%url 'post-detail' posts.id%}">
+      <div class="text-wrap">
+        <h2>
+            {{ posts.title }}
+          </h2>
+          <h3>
+            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+          </h3>
+          <h3>
+            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+          </h3>
+        </div>
+      </a>
+    </div>
+      {% endif %}
+
+
+      {% endfor %}
+    </div>
+    </div>
+</div>
+<!-- END D POST SLIDER -->
+
 <article id="blog-post">
   <span>
     <em><a href="{% url 'category' object.category|slugify %}">in {{object.category}}</a></em>

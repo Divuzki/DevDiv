@@ -53,10 +53,9 @@ textarea.form-control {
 }
 
 .devdiv-content {
-  position: absolute;
+  position: relative;
   top: 80px;
   left: 0;
-  padding-left: 20px;
   width: 100%;
   display: flex;
   transition: all 0.3s;
@@ -979,7 +978,7 @@ a:hover {
   }
 }
 .divdev_posts__item {
-  padding: 40px;
+  padding: 30px;
   color: #fff;
   border-radius: 10px;
   display: block;
@@ -1042,6 +1041,8 @@ a:hover {
   background-position: center;
   background-size: cover;
   border-radius: 50%;
+  width: 100px;
+  height: 100px;
 }
 .user-post-profile img {
   width: 100%;
@@ -1310,6 +1311,7 @@ a:hover {
 }
 
 .top {
+  position: relative;
   transition: all 0.4s;
   z-index: 3;
 }
@@ -1317,12 +1319,25 @@ a:hover {
 .top.change {
   top: 0;
   width: 100%;
+  position: fixed;
   line-height: 0;
   height: 100px;
   padding: 30px;
   box-shadow: -8px 0px 13px;
   border-bottom: 1px solid #333;
   background-color: #fff;
+  -webkit-animation: fadeIn 350ms ease;
+          animation: fadeIn 350ms ease;
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
 }
 
 .nav.npc.change {

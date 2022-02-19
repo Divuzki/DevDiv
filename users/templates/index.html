@@ -1,13 +1,8 @@
 {% extends 'base.html' %}
 <title onload='document.getElementsByTagName(`title`)[0].innerHTML = `DevDiv`;'>{% block title %}Home{% endblock title %}</title>
 {% block content %}
-{% if posts %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick-theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.selectric/1.9.4/selectric.css">
-{% endif %}
 <div class="wrapper">
-  <div class="section-content relative">
+  <div class="section-content">
     <div class="row align-center">
       <div class="col medium-12" id="slick-container-shoutouts">
       {% for posts in posts %}
@@ -194,8 +189,12 @@
             <span class="divdev_posts-date__title">{{post.date_posted|date:"d"}}</span>
             <span class="divdev_posts-date__txt">{{post.date_posted|date:"F"}}</span>
           </div>
-            <figure onclick="window.location.href = `{% url 'user-posts' post.author.username %}`" class="user-post-profile">
-                <img src="{{ post.author.profile.image_url }}" class="mb-4" alt="{{post.author.username}}'s image">
+            <figure onclick="window.location.href = `{% url 'user-posts' post.author.username %}`" class="user-post-profile"
+            style="background-image: url({% if upload_image %}{{ post.author.profile.upload_image.url }}{% else %}{{ post.author.profile.image_url }}{% endif %});"
+            >
+                <img 
+                src="{% if upload_image %}{{ post.author.profile.upload_image.url }}{% else %}{{ post.author.profile.image_url }}{% endif %}" 
+                class="mb-4" alt="{{post.author.username}}'s image">
             </figure>
           </div>
           <div class="divdev_posts__title"> {{post.title | truncatechars:80 | safe}}

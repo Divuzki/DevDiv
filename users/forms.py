@@ -44,6 +44,7 @@ class ProfileUpdateForm(forms.ModelForm):
             'last_name',
             'username',
             'status',
+            'upload_image',
             'image_url',
             'facebook_link',
             'twitter_link',

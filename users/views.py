@@ -312,6 +312,7 @@ class PostDetailView(ObjectViewMixin, DetailView):
         stuff = get_object_or_404(Post, id=self.kwargs['pk'])
         total_likes = stuff.total_likes()
         total_dislikes = stuff.total_dislikes()
+        context["posts"] = cat_menu
         context["cat_menu"] = cat_menu
         context["total_likes"] = total_likes  # total likes
         context["total_dislikes"] = total_dislikes  # total dislikes
