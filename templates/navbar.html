@@ -1,5 +1,5 @@
 {% load static %}
-<img src="{% static 'logo.png' %}" onclick="window.location = `/`" class="logo_pc" alt="logo" />
+<img src="{% static 'logo.png' %}" onclick="window.location = `/`" class="logo_pc pointer" alt="logo" />
 <nav class="nav npc">
   <a href="{% url 'home' %}" class="nav-item" active-color="orange">Home</a>
   {% if user.is_authenticated %}
