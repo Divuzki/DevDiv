@@ -80,7 +80,7 @@ textarea.form-control {
   font-weight: 700;
   box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
-  display: inline-block;
+  display: none;
   opacity: 0;
   text-decoration: none;
   font-size: 0.75em;
@@ -95,6 +95,7 @@ textarea.form-control {
 
 .back-to-top.visible {
   opacity: 1;
+  display: inline-block;
 }
 
 .content {
@@ -131,6 +132,10 @@ textarea.form-control {
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1;
+}
+
+.pointer {
+  cursor: pointer !important;
 }
 
 .pg-btn {
@@ -462,7 +467,7 @@ a:hover {
   position: relative;
   display: block;
   float: left;
-  padding-left: 15px;
+  transform: translateX(-20px);
   padding-top: 15px;
   margin-top: 26px;
   transition: all 0.3s ease-out;
@@ -513,7 +518,7 @@ a:hover {
   content: "";
   position: fixed;
   top: 20px;
-  left: 50px;
+  left: 8px;
   width: 0;
   height: 0;
   background-color: rgba(20, 21, 26, 0.6);
@@ -540,7 +545,7 @@ a:hover {
   position: fixed;
   visibility: hidden;
   top: 90px;
-  left: 50px;
+  left: 8px;
   width: 280px;
   text-align: left;
 }
@@ -1034,6 +1039,7 @@ a:hover {
   margin-bottom: 20px;
   border-bottom: 2px solid;
   display: flex;
+  flex-direction: column;
   opacity: 0.7;
   transition: opacity 0.3s;
   justify-content: space-between;
@@ -1058,7 +1064,7 @@ a:hover {
 @media screen and (max-width: 576px) {
   .divdev_posts-date {
     margin-bottom: 10px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     padding-bottom: 0;
   }
@@ -1854,18 +1860,16 @@ a {
   visibility: hidden;
 }
 
-h5 {
+.trend-home h5 {
   margin: 0;
 }
-
-h3 {
+.trend-home h3 {
   color: #2996bd;
   margin: 10px 0px 15px;
   padding-bottom: 10px;
   padding-left: 10px;
   border-left: 5px solid #32aae1;
 }
-
 .trend-home .sidebar.widget {
   background: #f2f2f2;
   border: 1px solid #ddd;
@@ -1925,4 +1929,11 @@ h3 {
 
 .none {
   display: none;
+}
+
+.contant-section {
+  margin: auto;
+}
+.contant-section form {
+  margin-bottom: 40px;
 }/*# sourceMappingURL=Main.css.map */

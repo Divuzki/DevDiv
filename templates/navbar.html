@@ -1,5 +1,5 @@
 {% load static %}
-<img src="{% static 'logo.png' %}" class="logo_pc" alt="logo" />
+<img src="{% static 'logo.png' %}" onclick="window.location = `/`" class="logo_pc" alt="logo" />
 <nav class="nav npc">
   <a href="{% url 'home' %}" class="nav-item" active-color="orange">Home</a>
   {% if user.is_authenticated %}
@@ -77,7 +77,7 @@
 
 <!-- Search Form -->
 <form id="s-content" method="GET" action="{% url 'search' %}">
-  <input type="text" name="q" value="{{request.GET.q | truncatechars:5}}" class="s-input" id="s-input">
+  <input type="text" name="q" style="background-color: rgba(255, 255, 255, 0.433);" value="{{request.GET.q | truncatechars:5}}" class="s-input" id="s-input">
   <button type="reset" class="s" id="s-btn"></button>
 </form>
 {% if request.GET.q %}

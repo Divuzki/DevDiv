@@ -31,11 +31,16 @@ article * {
   grid-column: 1/8;
 }
 
-.size-1 img, .size-2 img, .size-3 img, .size-4 img, p img {
+.size-1 img,
+.size-2 img,
+.size-3 img,
+.size-4 img,
+p img {
   width: 100%;
 }
 
-h2, p {
+h2,
+p {
   margin-bottom: 2.4rem;
 }
 
@@ -169,4 +174,4 @@ figcaption {
 /* .post-overlay input{
     border: none;
     transform: translateY(50px);
-} *//*# sourceMappingURL=post.css.map */
+} */ /*# sourceMappingURL=post.css.map */

@@ -1,7 +1,5 @@
 import re
-from django.conf import settings
 import string
-from django.utils.text import slugify
 import random
 from pathlib import Path
 from PIL import Image
