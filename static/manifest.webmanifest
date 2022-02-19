@@ -3,7 +3,7 @@
   "short_name": "DevDiv",
   "lang": "en-US",
   "display": "standalone",
-  "theme_color": "#000A",
+  "theme_color": "#FFFA",
   "description": "Join A Community Where People Share There Thought",
   "start_url": "/",
   "id": "/?homescreen",
