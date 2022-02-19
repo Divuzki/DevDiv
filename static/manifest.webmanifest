@@ -6,6 +6,7 @@
   "theme_color": "#000A",
   "description": "Join A Community Where People Share There Thought",
   "start_url": "/",
+  "id": "/?homescreen",
   "scope": "/",
   "orientation": "Portrait",
   "background_color": "#FFFA",
