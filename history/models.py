@@ -24,11 +24,13 @@ class History(models.Model):
 
 
 def object_viewed_receiver(sender, instance, request, *args, **kwargs):
-    new_history = History.objects.create(
-        user=request.user,
-        content_type=ContentType.objects.get_for_model(sender),
-        object_id=instance.pk
-    )
+    qs = History.objects.filter(user=request.user, content_type=ContentType.objects.get_for_model(sender), object_id=instance.pk).first()
+    if qs is None:
+        new_history = History.objects.create(
+            user=request.user,
+            content_type=ContentType.objects.get_for_model(sender),
+            object_id=instance.pk
+        )
 
 
 object_viewed_signal.connect(object_viewed_receiver)

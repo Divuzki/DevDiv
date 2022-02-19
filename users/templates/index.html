@@ -189,7 +189,7 @@
             <span class="divdev_posts-date__title">{{post.date_posted|date:"d"}}</span>
             <span class="divdev_posts-date__txt">{{post.date_posted|date:"F"}}</span>
           </div>
-            <figure onclick="window.location.href = `{% url 'user-posts' post.author.username %}`" class="user-post-profile"
+            <figure onclick="window.location.href = `{% url 'user-posts' post.author.username %}`" class="user-post-profile figure-back"
             style="background-image: url({% if upload_image %}{{ post.author.profile.upload_image.url }}{% else %}{{ post.author.profile.image_url }}{% endif %});"
             >
                 <img 

@@ -13,14 +13,26 @@
         {% for history in history_list %}
         <a href="{% url 'post-detail' history.object_id %}">
             <div class="history-product-card">
-                <div class="history-badge">{{history.content_object.hashtag}}</div>
-                <div class="history-product-tumb">
-                    <img src="{{history.content_object.image_url}}" alt="{{history.content_object}} image">
-                </div>
+                <div class="history-badge">
+                    {% if history.content_object.hashtag %} {{history.content_object.hashtag}} {% else %} {{history.content_type}} {% endif %}</div>
+                <figure class="history-product-tumb figure-back"
+                style="background-image: url({% if history.content_object.upload_image %}
+                {{ history.content_object.upload_image }}
+            {% else %}
+            {{history.content_object.image_url}}
+            {% endif %});">
+                    <img src="{% if history.content_object.upload_image %}
+                    {{ history.content_object.upload_image }}
+                {% else %}
+                {{history.content_object.image_url}}
+                {% endif %}" alt="{{history.content_object}} image">
+                </figure>
                 <div class="history-product-details">
                     <span class="history-product-catagory">viewed on {{history.viewed_on}}</span>
-                    <h4><a href="">{{history.content_object.author}}</a></h4>
-                    <p>{{history.content_object.content | truncatechars:200 | safe}}</p>
+                    <h4><a href="">{{history.content_object}}</a></h4>
+                    <p>
+                        {{history.content_object.description}}
+                    </p>
                     <div class="history-product-bottom-details">
                         <div class="history-product-links">
                             <a href="{% url 'history_del' history.pk %}"><i class="fa fa-times"></i></a>

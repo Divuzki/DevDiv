@@ -854,7 +854,6 @@ a:hover {
   max-width: 1300px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 60px;
   transform: translateX(-50%);
   z-index: 2;
 }
@@ -1037,16 +1036,19 @@ a:hover {
 }
 
 .user-post-profile {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
   border-radius: 50%;
   width: 100px;
   height: 100px;
 }
-.user-post-profile img {
+
+.figure-back {
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: cover !important;
+}
+.figure-back img {
   width: 100%;
-  opacity: 0;
+  opacity: 0 !important;
 }
 
 @media screen and (max-width: 576px) {

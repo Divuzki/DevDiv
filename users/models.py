@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from rest_framework.reverse import reverse as api_reverse
-from PIL import Image
+# from PIL import Image
 
 
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
