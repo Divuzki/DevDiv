@@ -13,7 +13,7 @@
     <em style="background-color: #ccc;border-radius: 24px;padding: 10px;
   width: max-content;text-transform: capitalize;font-style: italic;"><a
         href="{% url 'hashtag' object.hashtag|slugify %}">{{object.hashtag}}</a></em>
-        {% elif object.hashtag == "#" %}
+    {% elif object.hashtag == "#" %}
         <em style="background-color: #ccc;border-radius: 24px;padding: 10px;
         width: max-content;text-transform: capitalize;font-style: italic;"><a
               href="#">{{object.hashtag}}</a></em>
@@ -21,7 +21,7 @@
   </span>
   <br />
   <br />
-  <h1><a href="//azoaltou.com/afu.php?zoneid=3657953" target="_blank"><em>{{object.title}}</em></a></h1>
+  <h1><a href="#" target="_blank"><em>{{object.title}}</em></a></h1>
   <!-- <h2>or ever was, or ever will be</h2> -->
   <style>
     p {
@@ -44,7 +44,7 @@
     {% endif %}
   </figure>
   <figcaption>
-    <p>{% if object.description %}{{object.description}}{% endif %} <em>Image</em>.</p>
+    <p>{% if object.image_caption %}{{object.image_caption}} <em>Image</em>. {% endif %}</p>
   </figcaption>
   {% endif %}
   <p> {{object.content|safe}} -

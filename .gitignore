@@ -148,3 +148,4 @@ Pipfile.lock
 *.mp4
 *.ts
 zscrape/
+static-root/

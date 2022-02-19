@@ -1,14 +1,14 @@
 import dj_database_url
+from decouple import config
 import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'staticfiles', 'sw.js')
-
 # SECURITY WARNING: don't run with debug turned on in production!
-SECRET_KEY = "j%vr*5iu43ks_w6j4#op223o96$p=#r7)jdevdiv%vr*5iudivineik43ks_w6j4#op223o96$p=#r7)"
+SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = False
+DEBUG = config('DEBUG', cast=bool)
+USE_S3 = config('USE_S3', cast=bool)
 ALLOWED_HOSTS = ['devdiv.herokuapp.com', 'localhost']
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = "/login/"
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'ckeditor',
+    'storages',
 ]
 
 CKEDITOR_CONFIGS = {
@@ -119,17 +120,39 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
+if USE_S3:
+    # aws settings
+    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+    AWS_DEFAULT_ACL = config('AWS_DEFAULT_ACL')
+    AWS_S3_CUSTOM_DOMAIN = f'd2rkspfokjrj1j.cloudfront.net'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    AWS_S3_SECURE_URLS = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
+    # s3 static settings
+    STATIC_LOCATION = 'static'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+    STATICFILES_STORAGE = 'core.storage_backends.StaticStorage'
+    COMPRESS_URL = STATIC_URL
+    COMPRESS_ROOT = BASE_DIR + "/static-root/"
+    COMPRESS_STORAGE = 'core.storage_backends.CachedStaticS3BotoStorage'
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # s3 public media settings
+    PUBLIC_MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
+    DEFAULT_FILE_STORAGE = 'core.storage_backends.PublicMediaStorage'
+
+elif not USE_S3:
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+    STATIC_ROOT = os.path.join(BASE_DIR, "static-root")
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media_root")
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static-root")
+    os.path.join(BASE_DIR, "static"),
 ]
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

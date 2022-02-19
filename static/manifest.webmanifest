@@ -1,0 +1,35 @@
+{
+  "name": "DEVDIV",
+  "short_name": "DevDiv",
+  "lang": "en-US",
+  "display": "standalone",
+  "theme_color": "#000A",
+  "description": "Join A Community Where People Share There Thought",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "Portrait",
+  "background_color": "#FFFA",
+
+  "icons": [
+    {
+      "src": "https://d2rkspfokjrj1j.cloudfront.net/static/images/logo/android-launchericon-144-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "https://d2rkspfokjrj1j.cloudfront.net/static/images/logo/apple-touch-icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "https://d2rkspfokjrj1j.cloudfront.net/static/images/logo/android-launchericon-192-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://d2rkspfokjrj1j.cloudfront.net/static/images/logo/android-launchericon-512-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

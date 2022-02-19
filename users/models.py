@@ -1,3 +1,4 @@
+import re
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -6,24 +7,13 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from rest_framework.reverse import reverse as api_reverse
-import os
-# from PIL import Image
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "categories"
+from PIL import Image
 
 
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
-CategoryList = (('World', 'World'), ('Politics', 'Politics'), ('Tech/Sci',
-                'Tech/Sci'), ('How To', 'How To'), ('LifeStyle', 'LifeStyle'), ('Art & Entertainment', 'Art & Entertainment'))
+CategoryList = (('World', 'World'), ('Politics', 'Politics'), ('Technology', 'Technology'), ('Science', 'Science'),
+ ('How-To', 'How-To'), ('LifeStyle', 'LifeStyle'), ('Gossip', 'Gossip'))
 
 
 class HashTag(models.Model):
@@ -45,6 +35,7 @@ class HashTag(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    upload_image = models.ImageField(upload_to="profile_images/%y/%m", null=True, blank=True)
     image_url = models.CharField(
         max_length=3080, default='/static/default_jpg.png')
     status = models.CharField(max_length=50, null=True, blank=True)
@@ -63,12 +54,15 @@ class Profile(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255, unique=True,
                              help_text="Text limit is 250")
-    description = models.CharField(max_length=200, null=True, blank=True,
+    description = models.CharField(max_length=200,
                                    help_text="Text limit is 200, and know that this is the post snippet")
     content = RichTextField()
     # content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, max_length=255)
+    upload_image = models.ImageField(upload_to="post_media/%y/%m", null=True, blank=True)
     image_url = models.CharField(max_length=3038, null=True, blank=True)
+    image_caption = models.CharField(max_length=100, null=True, blank=True,
+                                   help_text="Text limit is 100, and know that this is the post image description")
     video_url = models.CharField(max_length=3000, null=True, blank=True)
     category = models.CharField(
         choices=CategoryList, max_length=50, default='uncategorized')
@@ -81,6 +75,10 @@ class Post(models.Model):
     @property
     def owner(self):
         return self.author
+    
+    @property
+    def tag(self):
+        return self.hashtag
 
     @property
     def total_likes(self):
@@ -115,6 +113,18 @@ class Post(models.Model):
     def get_api_url(self, request=None):
         api_reverse("post-api:post-api-rud",
                     kwargs={'pk': self.pk}, request=request)
+    
+    def clean_content(self):
+        content = self.cleaned_data.get('content')
+        arr = re.findall(r"#(\w+)", content)
+        for hsh in arr:
+            if len(hsh) < 80:
+                full_hash = '#' + hsh
+                if HashTag.objects.filter(name__iexact=hsh):
+                    content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/">#{hsh}</a>')
+                else:
+                    content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/">#{hsh}</a>')
+        return content
 
 
 class Comment(models.Model):

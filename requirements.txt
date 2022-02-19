@@ -15,3 +15,11 @@ sqlparse
 stripe
 urllib3
 whitenoise
+s3transfer 
+boto 
+boto3
+botocore 
+django-cleanup 
+django-storages 
+Pillow 
+python-decouple

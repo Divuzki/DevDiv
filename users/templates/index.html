@@ -1,36 +1,20 @@
 {% extends 'base.html' %}
-<title onload='document.getElementsByTagName("title").innerHTML = "DevDiv";'>{% block title %}Home{% endblock title %}</title>
+<title onload='document.getElementsByTagName(`title`)[0].innerHTML = `DevDiv`;'>{% block title %}Home{% endblock title %}</title>
 {% block content %}
+{% if posts %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick-theme.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.selectric/1.9.4/selectric.css">
+{% endif %}
 <div class="wrapper">
   <div class="section-content relative">
     <div class="row align-center">
       <div class="col medium-12" id="slick-container-shoutouts">
       {% for posts in posts %}
-      {% if posts.category == "tech" %}
-      <div class="slider-element">
-        <a href="{%url 'post-detail' posts.id%}">
-        <div class="img-wrap" style="background-image: url({{posts.image_url}})">
-        </a>
-        </div>
-            <a href="{%url 'post-detail' posts.id%}">
-          <div class="text-wrap">
-            <h2>
-                {{ posts.title }}
-              </h2>
-              <h3>
-                {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-              </h3>
-              <h3>
-                {{ posts.category }} | {{posts.hashtag}}
-              </h3>
-            </div>
-          </a>
-          </div>
-        {% endif %}
-        {% if posts.category == "sports" %}
+
+
+    <!-- World -->
+      {% if posts.category == "World" %}
         <div class="slider-element">
           <a href="{%url 'post-detail' posts.id%}">
           <div class="img-wrap" style="background-image: url({{posts.image_url}})">
@@ -45,14 +29,15 @@
                   {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
                 </h3>
                 <h3>
-                  {{ posts.category }} | {{posts.hashtag}}
+                  {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
                 </h3>
               </div>
             </a>
             </div>
-          {% endif %}
-          <!-- News -->
-      {% if posts.category == "news" %}
+            {% endif %}
+
+    <!-- Gossip -->
+      {% if posts.category == "Gossip" %}
       <div class="slider-element">
         <a href="{%url 'post-detail' posts.id%}">
         <div class="img-wrap" style="background-image: url({{posts.image_url}})">
@@ -67,35 +52,131 @@
                 {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
               </h3>
               <h3>
-                {{ posts.category }} | {{posts.hashtag}}
+                {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+              </h3>
+            </div>
+          </a>
+          </div>
+          {% endif %}
+
+    <!-- Technology -->
+      {% if posts.category == "Technology" %}
+      <div class="slider-element">
+        <a href="{%url 'post-detail' posts.id%}">
+        <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+        </a>
+        </div>
+            <a href="{%url 'post-detail' posts.id%}">
+          <div class="text-wrap">
+            <h2>
+                {{ posts.title }}
+              </h2>
+              <h3>
+                {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+              </h3>
+              <h3>
+                {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
               </h3>
             </div>
           </a>
           </div>
         {% endif %}
 
-        <!-- Entertainment -->
-        {% if posts.category == "entertainment" %}
-        <div class="slider-element">
+    <!-- Science -->
+    {% if posts.category == "Science" %}
+    <div class="slider-element">
+      <a href="{%url 'post-detail' posts.id%}">
+      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+      </a>
+      </div>
           <a href="{%url 'post-detail' posts.id%}">
-          <div class="img-wrap" style="background-image: url({{posts.image_url}})">
-          </a>
+        <div class="text-wrap">
+          <h2>
+              {{ posts.title }}
+            </h2>
+            <h3>
+              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+            </h3>
+            <h3>
+              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            </h3>
           </div>
-              <a href="{%url 'post-detail' posts.id%}">
-            <div class="text-wrap">
-              <h2>
-                  {{ posts.title }}
-                </h2>
-                <h3>
-                  {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-                </h3>
-                <h3>
-                  {{ posts.category }} | {{posts.hashtag}}
-                </h3>
-              </div>
-            </a>
-            </div>
+        </a>
+        </div>
         {% endif %}
+
+
+    <!-- Politics -->
+    {% if posts.category == "Politics" %}
+    <div class="slider-element">
+      <a href="{%url 'post-detail' posts.id%}">
+      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+      </a>
+      </div>
+          <a href="{%url 'post-detail' posts.id%}">
+        <div class="text-wrap">
+          <h2>
+              {{ posts.title }}
+            </h2>
+            <h3>
+              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+            </h3>
+            <h3>
+              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            </h3>
+          </div>
+        </a>
+        </div>
+        {% endif %}
+
+
+    <!-- Sports -->
+    {% if posts.category == "Sports" %}
+    <div class="slider-element">
+      <a href="{%url 'post-detail' posts.id%}">
+      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+      </a>
+      </div>
+          <a href="{%url 'post-detail' posts.id%}">
+        <div class="text-wrap">
+          <h2>
+              {{ posts.title }}
+            </h2>
+            <h3>
+              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+            </h3>
+            <h3>
+              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            </h3>
+          </div>
+        </a>
+      </div>
+      {% endif %}
+
+    <!-- How-To -->
+    {% if posts.category == "How-to" %}
+    <div class="slider-element">
+      <a href="{%url 'post-detail' posts.id%}">
+      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+      </a>
+      </div>
+          <a href="{%url 'post-detail' posts.id%}">
+        <div class="text-wrap">
+          <h2>
+              {{ posts.title }}
+            </h2>
+            <h3>
+              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+            </h3>
+            <h3>
+              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            </h3>
+          </div>
+        </a>
+      </div>
+        {% endif %}
+
+
         {% endfor %}
       </div>
       </div>
@@ -104,18 +185,18 @@
   
   <div class="divdev_posts-slider">
     <div class="divdev_posts-slider__wrp swiper-wrapper">
-      {%for post in posts %}
+      {% for post in posts %}
       <div class="divdev_posts-slider__item swiper-slide">
-        <div class="user-posts">
-          <a href="{% url 'user-posts' post.author.username %}">
-            <img src="{{ post.author.profile.image_url }}" class="mb-4 rounded-circle" alt="post.author.username image">
-          </a>
-        </div>
         <a href="{%url 'post-detail' post.id%}" class="divdev_posts__item">
 
           <div class="divdev_posts-date">
+            <div class="">
             <span class="divdev_posts-date__title">{{post.date_posted|date:"d"}}</span>
             <span class="divdev_posts-date__txt">{{post.date_posted|date:"F"}}</span>
+          </div>
+            <figure onclick="window.location.href = `{% url 'user-posts' post.author.username %}`" class="user-post-profile">
+                <img src="{{ post.author.profile.image_url }}" class="mb-4" alt="{{post.author.username}}'s image">
+            </figure>
           </div>
           <div class="divdev_posts__title"> {{post.title | truncatechars:80 | safe}}
           </div>

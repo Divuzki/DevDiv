@@ -1,0 +1,215 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  font-family: sans-serif;
+}
+
+.profile {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+  display: flex;
+  box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+}
+@media (max-width: 700px) {
+  .profile {
+    transform: translate(-50%, -45%) scale(0.69);
+  }
+}
+.profile-left {
+  width: 35%;
+  background: linear-gradient(to right, #01a9ac, #01dbdf);
+  padding: 30px 25px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  text-align: center;
+  color: #fff;
+}
+.profile-left img {
+  margin-bottom: 10px;
+  border-radius: 5px;
+  height: 100px;
+  width: 100px;
+  image-rendering: -webkit-optimize-contrast;
+}
+.profile-left h4 {
+  margin-bottom: 10px;
+}
+.profile-left p {
+  font-size: 12px;
+  font-size: 20px;
+  text-transform: capitalize;
+}
+.profile-right {
+  width: 65%;
+  background: #fff;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 30px 25px;
+}
+.profile .info, .profile-post, .profile .aboutme {
+  margin-bottom: 25px;
+}
+.profile .info h3, .profile-post h3, .profile .aboutme h3 {
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #353c4e;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+.profile .info_data {
+  display: flex;
+  justify-content: space-between;
+}
+.profile .info_data .data {
+  width: 45%;
+}
+.profile .info_data .data h4 {
+  color: #353c4e;
+  margin-bottom: 5px;
+}
+.profile .info_data .data p {
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #919aa3;
+}
+.profile .social_links ul {
+  display: flex;
+}
+.profile .social_links ul li {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(to right, #01a9ac, #01dbdf);
+  margin-right: 10px;
+  border-radius: 5px;
+  line-height: 45px;
+  text-align: center;
+  transition: background 0.5s;
+}
+.profile .social_links ul li a {
+  color: #fff;
+  display: block;
+  font-size: 18px;
+}
+.profile .social_links ul li:hover {
+  background: linear-gradient(right to, #01a9ac, #01dbdf);
+}
+
+/* body{
+    background: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+} */
+#devdiv__video {
+  width: 100%;
+}
+
+.devdiv__video__player {
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  overflow: hidden;
+}
+
+.devdiv__video__controls {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  flex-wrap: wrap;
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: translateY(100%) translateY(-2px);
+  transition: all 0.2s;
+}
+
+.devdiv__video__player:hover .devdiv__video__controls {
+  transform: translateY(0);
+}
+
+.devdiv__videoBtns {
+  padding: 10px;
+}
+
+.devdiv__videoBtns button {
+  background: none;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+.devdiv__videoBtns button:before {
+  content: "";
+  font-family: "Font Awesome 5 Free";
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  font-size: 28px;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+.devdiv__videoBtns.play:before {
+  content: "";
+}
+
+.devdiv__videoBtns.pause:before {
+  content: "";
+}
+
+.devdiv__videoBar {
+  height: 2px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #333;
+  cursor: pointer;
+}
+
+.devdiv__videoBar__juice {
+  height: 3px;
+  top: -30px;
+  width: 0;
+  position: relative;
+  background: orangered;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.devdiv__videoBar input[type=range] {
+  position: relative;
+  height: 3px;
+  top: -18px;
+  width: 100%;
+  cursor: pointer;
+  outline: 0;
+  -webkit-appearance: none !important;
+}
+
+.devdiv__videoBar input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  position: relative;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: orangered;
+}
+
+.devdiv__videoBar input[type=range]:hover::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+.devdiv__video__timing {
+  position: absolute;
+  color: #fff;
+  right: 15px;
+  top: 17px;
+}/*# sourceMappingURL=profile-style.css.map */

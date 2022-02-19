@@ -1,9 +1,8 @@
 from django.template.loader import get_template
-from django import template
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import CreateUserForm, ProfileUpdateForm, ConfirmPasswordForm, FlagForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.views.generic.edit import UpdateView
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -14,15 +13,10 @@ from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
-    DeleteView,
-    View
+    DeleteView
 )
-try:
-    from django.utils import simplejson as json
-except ImportError:
-    import json
-from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
-from .models import Post, Profile, Comment, HashTag
+from django.http import JsonResponse, HttpResponse
+from .models import Post, Comment, HashTag
 from posts.models import PostFlag
 from django.contrib.auth.models import User
 from history.mixins import ObjectViewMixin
@@ -32,8 +26,6 @@ from rest_framework import serializers
 from django.views.decorators.csrf import csrf_exempt
 from .decorators import confirm_password
 from django.utils.decorators import method_decorator
-
-stripe.api_key = ""
 
 # HashTag View
 
@@ -75,13 +67,15 @@ def hashtag_view(request, tags):
 def category_view(request, cats):
     category_posts = Post.objects.filter(
         category=cats).order_by('-date_posted')
-    treading_tag = category_posts.first()
-    print(treading_tag)
-    treading_tag = HashTag.objects.filter(name=treading_tag)
+    print(category_posts)
+    first_tag = Post.objects.filter(category=cats)
+    if first_tag.exists():
+        print(first_tag)
+    first_tag = HashTag.objects.filter(name=first_tag)
     return render(request, 'categories.html', {
         'cats': cats,
         'posts': category_posts,
-        'treading_tag': treading_tag,
+        'first_tag': first_tag,
     })
 
 
@@ -288,7 +282,7 @@ class PostListView(ListView):
 @method_decorator(confirm_password, name='dispatch')
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post  # Getting Post Model in models.py
-    fields = ['title', 'description', 'image_url', 'video_url',
+    fields = ['title', 'description', 'upload_image', 'image_url', 'image_caption', 'video_url',
               'hashtag', 'content', 'category']  # fields in the Form
     # Validating the form
 
@@ -425,6 +419,7 @@ def search_result_view(request):
         Q(title__icontains=query) |
         Q(author__username__icontains=query) |
         Q(description__icontains=query) |
+        Q(image_caption__icontains=query) |
         Q(content__icontains=query) |
         Q(hashtag__icontains=query)
     ).order_by('-date_posted')

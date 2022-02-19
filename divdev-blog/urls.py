@@ -11,7 +11,7 @@ urlpatterns = [
     path('HadminD/', admin.site.urls),
     path('', include('users.urls')),
     path('0u/blog/api/', include('core.api.urls', namespace="post-api")),
-    re_path(r'^devdiv-sw00(.*.js)$', views.devdiv_serviceworker, name='devdiv_sw'),
+    re_path(r'^serviceworker(.*.js)$', views.devdiv_serviceworker, name='devdiv_sw'),
 ]
 
 
