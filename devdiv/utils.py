@@ -6,6 +6,8 @@ from PIL import Image
 from io import BytesIO
 from django.core.files import File
 
+from users.models import HashTag
+
 
 def truncate_string(value, max_length=45, suffix="devdiv"):
     string_value = str(value)
