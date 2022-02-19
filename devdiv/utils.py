@@ -6,8 +6,6 @@ from PIL import Image
 from io import BytesIO
 from django.core.files import File
 
-from users.models import HashTag
-
 
 def truncate_string(value, max_length=45, suffix="devdiv"):
     string_value = str(value)
@@ -81,7 +79,7 @@ def image_resize(image, width, height):
         image.save(img_filename, file_object)
 
 
-def clean_content(content):
+def clean_content(content, HashTag):
     arr = re.findall(r"#(\w+)", content)
     for hsh in arr:
         if len(hsh) < 80:

@@ -129,7 +129,7 @@ class Post(models.Model):
         if self.upload_image:
             image_resize(self.upload_image, 800, 600)
         if self.content:
-            self.content = clean_content(self.content)
+            self.content = clean_content(self.content, HashTag)
 
 
 
