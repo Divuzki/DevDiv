@@ -188,6 +188,7 @@ textarea.form-control {
   outline: none;
   border-bottom: 1px solid black;
   margin: 5px;
+  color: #2d2d2d;
 }
 
 #loginform button,
