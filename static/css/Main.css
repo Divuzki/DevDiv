@@ -54,12 +54,12 @@ textarea.form-control {
 
 .devdiv-content {
   position: relative;
-  top: 80px;
+  top: 120px;
   left: 0;
   width: 100%;
   display: flex;
   transition: all 0.3s;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   flex-wrap: nowrap;
   align-items: stretch;
@@ -1039,7 +1039,7 @@ a:hover {
   margin-bottom: 20px;
   border-bottom: 2px solid;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   opacity: 0.7;
   transition: opacity 0.3s;
   justify-content: space-between;
@@ -1936,4 +1936,47 @@ a {
 }
 .contant-section form {
   margin-bottom: 40px;
+}
+
+/** News Ticker**/
+.tickerwrapper {
+  position: relative;
+}
+
+.tickhead {
+  background: #dd4c39 no-repeat;
+  background-position: 125px 10px;
+  background-size: 20px;
+  position: absolute;
+  line-height: 40px !important;
+  height: 40px;
+  width: 130px;
+  padding: 0 15px 0 5px;
+  text-align: center;
+  color: #fff;
+  font: 400 15px "pt sans", sans-serif;
+  text-transform: uppercase;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.ticker2 {
+  padding-left: 155px;
+  height: 40px !important;
+  overflow: hidden;
+  background: #333;
+  line-height: 40px !important;
+}
+
+.ticker2 ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.ticker2 ul li a {
+  color: #fff;
+  font: 400 15px "pt sans", sans-serif;
+  text-decoration: none;
 }/*# sourceMappingURL=Main.css.map */

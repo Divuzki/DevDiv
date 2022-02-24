@@ -9,8 +9,9 @@ handler404 = 'errorHandler.views.view_404'
 
 urlpatterns = [
     path('HadminD/', admin.site.urls),
-    path('', include('users.urls')),
+    path('', include('users.urls', namespace="users")),
     path('0u/blog/api/', include('core.api.urls', namespace="post-api")),
+    path('pwa_file/<str:tmp>', views.devdiv_tmp_render, name="render_tmp"),
     re_path(r'^serviceworker(.*.js)$', views.devdiv_serviceworker, name='devdiv_sw'),
 ]
 

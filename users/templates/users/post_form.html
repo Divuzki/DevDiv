@@ -25,7 +25,7 @@
 </script>
 {% endblock %}
 <div class="contant-section">
-  <form method="POST" id="id_form" data-hashtag-url="{% url 'autocomplete' %}" token="{{ csrf_token }}" enctype="multipart/form-data">
+  <form method="POST" id="id_form" data-hashtag-url="{% url 'users:autocomplete' %}" token="{{ csrf_token }}" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">New Post</legend>

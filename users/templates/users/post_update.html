@@ -23,7 +23,7 @@
 </script>
 {% endblock js %}
 <div class="contant-section">
-    <form method="POST" token="{{ csrf_token }}" data-hashtag-url="{% url 'autocomplete' %}" enctype="multipart/form-data">
+    <form method="POST" token="{{ csrf_token }}" data-hashtag-url="{% url 'users:autocomplete' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Update Post</legend>

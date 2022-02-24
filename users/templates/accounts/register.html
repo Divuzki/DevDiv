@@ -20,7 +20,7 @@
                     {{form.email}}
                     {{form.password1}}
                     {{form.password2}}
-                    <span class="NMS">Already Have an account? <a href="{% url 'login' %}" style="color: blue;">Login</a></span>
+                    <span class="NMS">Already Have an account? <a href="{% url 'users:login' %}" style="color: blue;">Login</a></span>
                 <button type="submit">SIGN UP</button>
             </form>
                 <div id="login_msg">Have an account?</div>
@@ -31,7 +31,7 @@
     var login_btn = document.getElementById("login_btn");
     login_btn.addEventListener("click",
     function() {
-        window.location.href = "{% url 'login'%}";
+        window.location.href = "{% url 'users:login'%}";
     });
 
     var first_name = document.getElementById('id_first_name');

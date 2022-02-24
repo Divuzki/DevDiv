@@ -7,7 +7,7 @@
 <div class="flag">
     <h3>Tell us why you are Reporting/Flagging '{{post.title | truncatechars:80 }}'</h3>
     <hr />
-    <form action="{% url 'flagging' post_uuid %}" method="POST">
+    <form action="{% url 'users:flagging' post_uuid %}" method="POST">
         {% csrf_token %}
         {{form|crispy}}
         <input type="hidden" name="post_id" value="{{post.id}}">

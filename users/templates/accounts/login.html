@@ -10,8 +10,8 @@
 {%endfor%}
                 <h1>LOGIN</h1>
                     {{form}}
-                    <span class="NMS">Need an account? <a href="{% url 'register' %}" style="color: blue;">SignUp</a></span>
-                    <span class="#">forgot password? <a href="{% url 'pwdreset' %}" style="color: blue;">Request</a></span>
+                    <span class="NMS">Need an account? <a href="{% url 'users:register' %}" style="color: blue;">SignUp</a></span>
+                    <span class="#">forgot password? <a href="{% url 'users:pwdreset' %}" style="color: blue;">Request</a></span>
                 <button type="submit">LOGIN</button>
             </form>
                 <div id="signup_msg">Don't have an account?</div>
@@ -23,7 +23,7 @@
     var signup_btn = document.getElementById("signup_btn");
     signup_btn.addEventListener("click",
     function() {
-        window.location.href = "{% url 'register' %}";
+        window.location.href = "{% url 'users:register' %}";
     });
     var username = document.getElementById('id_username');
     var password = document.getElementById('id_password');

@@ -1,41 +1,107 @@
-var cacheName = "devdiv-pwa-v" + new Date().getTime();
-const DEBUG = false
+const CACHE_VERSION = 1.0;
+
+const DEBUG = true;
 var host = self.location.protocol + "//" + self.location.host + "/static";
 if (DEBUG === false) {
   host = "https://d2rkspfokjrj1j.cloudfront.net/static";
 }
-const staticAssets = [
+
+const BASE_CACHE_FILES = [
   // CSS
   `${host}/css/Main.css`,
-  `${host}/css/post.css`,
-  `${host}/css/reset.css`,
+  `${host}/css/style.css`,
 
   // JAVASCRIPTS
   `${host}/js/main.js`,
   `${host}/js/navbar.js`,
   `${host}/js/scroll.js`,
   // IMAGES
-  `${host}/debut_light.webp`,
   `${host}/logo.png`,
   // MANIFEST
   `${host}/manifest.webmanifest`,
 ];
 
-self.addEventListener("install", async (e) => {
-  const cache = await caches.open(cacheName);
-  await cache.addAll(staticAssets);
-  return self.skipWaiting();
+const OFFLINE_CACHE_FILES = ["pwa_file/error-slash-offline.html"];
+
+const NOT_FOUND_CACHE_FILES = ["pwa_file/error-slash-not-found.html"];
+
+const OFFLINE_PAGE = "/offline.html";
+const NOT_FOUND_PAGE = "/404.html";
+
+const CACHE_VERSIONS = {
+  assets: "assets-v" + CACHE_VERSION,
+  content: "content-v" + CACHE_VERSION,
+  offline: "offline-v" + CACHE_VERSION,
+  notFound: "404-v" + CACHE_VERSION,
+};
+
+/**
+ * installServiceWorker
+ * @returns {Promise}
+ */
+function installServiceWorker() {
+  return Promise.all([
+    caches.open(CACHE_VERSIONS.assets).then((cache) => {
+      return cache.addAll(BASE_CACHE_FILES);
+    }),
+    caches.open(CACHE_VERSIONS.offline).then((cache) => {
+      return cache.addAll(OFFLINE_CACHE_FILES);
+    }),
+    caches.open(CACHE_VERSIONS.notFound).then((cache) => {
+      return cache.addAll(NOT_FOUND_CACHE_FILES);
+    }),
+  ]);
+}
+
+/**
+ * cleanupLegacyCache
+ * @returns {Promise}
+ */
+function cleanupLegacyCache() {
+  let currentCaches = Object.keys(CACHE_VERSIONS).map((key) => {
+    return CACHE_VERSIONS[key];
+  });
+
+  return new Promise((resolve, reject) => {
+    caches
+      .keys()
+      .then((keys) => {
+        return (legacyKeys = keys.filter((key) => {
+          return !~currentCaches.indexOf(key);
+        }));
+      })
+      .then((legacy) => {
+        if (legacy.length) {
+          Promise.all(
+            legacy.map((legacyKey) => {
+              return caches.delete(legacyKey);
+            })
+          )
+            .then(() => {
+              resolve();
+            })
+            .catch((err) => {
+              reject(err);
+            });
+        } else {
+          resolve();
+        }
+      })
+      .catch(() => {
+        reject();
+      });
+  });
+}
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(installServiceWorker());
 });
 
-self.addEventListener('activate', function(e) {
-  self.clients.claim();
-  e.waitUntil(
-    caches.keys().then(function(keyList) {
-        return Promise.all(keyList.map(function (key) {
-            if (key !== cacheName) {
-                return caches.delete(key);
-            }
-        }));
+// The activate handler takes care of cleaning up old caches.
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    Promise.all([cleanupLegacyCache()]).catch((err) => {
+      event.skipWaiting();
     })
   );
 });

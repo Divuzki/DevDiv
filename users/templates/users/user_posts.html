@@ -19,7 +19,7 @@
     <div class="divdev_posts-slider__wrp swiper-wrapper">
       {%for post in posts %}
       <div class="divdev_posts-slider__item swiper-slide">
-        <a href="{%url 'post-detail' post.id%}" class="divdev_posts__item">
+        <a href="{%url 'users:post-detail' post.id%}" class="divdev_posts__item">
 
           <div class="divdev_posts-date">
             <span class="divdev_posts-date__title">{{post.date_posted|date:"d"}}</span>

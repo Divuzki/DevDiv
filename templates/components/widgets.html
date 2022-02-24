@@ -1,0 +1,38 @@
+
+{% if ngn == 'yes' %}
+<script type="text/javascript" 
+src="https://files.coinmarketcap.com/static/widget/coinMarquee.js"></script>
+<div id="coinmarketcap-widget-marquee" coins="1,1027,825,1839,3408,52,2010"
+currency="NGN" theme="light" transparent="false" show-symbol-logo="true"></div>
+<style>
+  .coin-marquee-header{
+    display: none !important;
+  }
+  .coin-marquee-container{
+    overflow: visible !important;
+  }
+</style>
+{% endif %}
+{% if usd == 'yes' %}
+<div id="cr-widget-marquee"
+data-coins="bitcoin,ethereum,tether,litecoin,solana,cardano,ripple,eos,usdcoin,bnb,binance-usd,luna,dogecoin"
+data-theme="light"
+data-show-symbol="true"
+data-show-icon="true"
+data-show-period-change="true"
+data-period-change="24H"
+data-api-url="https://api.cryptorank.io/v0"
+>
+<script src="https://cryptorank.io/widget/marquee.js"></script>
+</div>
+<style>
+  .cr-marquee-label{
+    display: none;
+  }
+</style>
+{% endif %}
+{% if headline == 'yes' %}
+<div class='news-ticker' data-domain='devdiv.herokuapp.com'>
+</div>
+{% endif %}
+<div class="mt-4"></div>

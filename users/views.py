@@ -21,11 +21,12 @@ from posts.models import PostFlag
 from django.contrib.auth.models import User
 from history.mixins import ObjectViewMixin
 from django.core.mail import mail_admins
-import stripe
 from rest_framework import serializers
 from django.views.decorators.csrf import csrf_exempt
 from .decorators import confirm_password
 from django.utils.decorators import method_decorator
+import stripe
+import time
 
 # HashTag View
 
@@ -228,7 +229,6 @@ def hashtag_autocomplete(request, *args, **kwargs):
         for name in qs:
             names.append(name.name)
 
-
         names = list(dict.fromkeys(names))
         return JsonResponse(names, safe=False)
 
@@ -240,26 +240,26 @@ def hashtag_autocomplete(request, *args, **kwargs):
         hashtag = hashtag.split(",")
         hashtag.sort()
         for hashtags in hashtag:
-                if hashtags[0] == "#":  # Checking if the hashtag text contains the '#' symbol at the begin
-                    # checking if the hashtag exists to avoid double hashtag in db
-                    if not HashTag.objects.filter(name__iexact=hashtags).exists():
-                        # returning it as json data for js to proccess
-                        HashTag.objects.create(
-                            user=user,
-                            post=post,
-                            name=hashtags
-                        ) # Add it to db
-                        ctx = {
-                            "data":
-                                {
-                                "tag":hashtag,
+            if hashtags[0] == "#":  # Checking if the hashtag text contains the '#' symbol at the begin
+                # checking if the hashtag exists to avoid double hashtag in db
+                if not HashTag.objects.filter(name__iexact=hashtags).exists():
+                    # returning it as json data for js to proccess
+                    HashTag.objects.create(
+                        user=user,
+                        post=post,
+                        name=hashtags
+                    )  # Add it to db
+                    ctx = {
+                        "data":
+                            {
+                                "tag": hashtag,
                                 "post": post
-                                }
-                        }
-                        return JsonResponse(ctx, safe=False)
-                        # then return as json data
-                elif not hashtags[0] == "#": # else error
-                    return JsonResponse({"data": {"error": f"This is a hashtag, You need to add the symbol '#' in {hashtags}"}}, safe=False)
+                            }
+                    }
+                    return JsonResponse(ctx, safe=False)
+                    # then return as json data
+            elif not hashtags[0] == "#":  # else error
+                return JsonResponse({"data": {"error": f"This is a hashtag, You need to add the symbol '#' in {hashtags}"}}, safe=False)
         return JsonResponse(hashtag, safe=False)
 
 
@@ -302,6 +302,27 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 
 # Showing a single post with it contents in a page -> Post Details
+def post_detail(request, pk, *args, **kwargs):
+    cat_menu = Post.objects.all()
+    qs = get_object_or_404(Post, id=pk)
+    qs.views = qs.views + 1
+    qs.save()
+    total_views = qs.total_views()
+    total_votes = qs.total_votes()
+    total_likes = qs.total_likes()
+    total_dislikes = qs.total_dislikes()
+    context = {
+        "posts": cat_menu,
+        "cat_menu": cat_menu,
+        "object": qs,
+        "total_views": total_views,
+        "total_votes": total_votes,
+        "total_likes": total_likes,
+        "total_dislikes": total_dislikes,
+    }
+    return render(request, "users/post_detail.html", context)
+
+
 class PostDetailView(ObjectViewMixin, DetailView):
     model = Post  # Getting Post Model in models.py
 
@@ -310,13 +331,25 @@ class PostDetailView(ObjectViewMixin, DetailView):
         context = super(PostDetailView, self).get_context_data()
 
         stuff = get_object_or_404(Post, id=self.kwargs['pk'])
+        total_views = stuff.total_views()
+        total_votes = stuff.total_votes()
         total_likes = stuff.total_likes()
         total_dislikes = stuff.total_dislikes()
         context["posts"] = cat_menu
         context["cat_menu"] = cat_menu
         context["total_likes"] = total_likes  # total likes
         context["total_dislikes"] = total_dislikes  # total dislikes
+        context["total_views"] = total_views  # total views
+        context["total_votes"] = total_votes  # total votes
         return context
+
+    # def get_queryset(self):
+    #     qs = Post.objects.get(id=self.kwargs['pk'])
+    #     qs.views = qs.views
+    #     qs.save()
+    #     time.sleep(5000)
+    #     print(qs.views)
+    #     return Post.objects.all()
 
 
 # Updating Post Using pk to Confirm
@@ -375,7 +408,7 @@ class ConfirmPasswordView(UpdateView):
         return self.request.user
 
     def get_success_url(self):
-        return self.request.get_full_path() # Getting the full url
+        return self.request.get_full_path()  # Getting the full url
 
 
 # Creating a new user
@@ -438,6 +471,13 @@ def devdiv_serviceworker(request, js):
     template = get_template('sw.js')
     html = template.render()
     return HttpResponse(html, content_type="application/x-javascript")
+
+def devdiv_tmp_render(request, tmp):
+    try:
+        return render(request, f"{tmp.replace('-slash-', '/')}")
+    except:
+        return render(request, "error/not-found.html")
+
 
 
 def profile(request, *args, **kwargs):

@@ -47,7 +47,7 @@
         <div class="text-center">
         <h1>Donations</h1>
         <div class="media-body">
-            <form action="{% url 'donate_charge' %}" method="post" id="payment-form">
+            <form action="{% url 'users:donate_charge' %}" method="post" id="payment-form">
                 {% csrf_token %}
 
                 <input type="text" name="email" placeholder="email...">

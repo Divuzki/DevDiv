@@ -12,8 +12,9 @@ from devdiv.utils import image_resize, clean_content
 
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
-CategoryList = (('World', 'World'), ('Politics', 'Politics'), ('Technology', 'Technology'), ('Science', 'Science'),
- ('How-To', 'How-To'), ('LifeStyle', 'LifeStyle'), ('Gossip', 'Gossip'))
+CategoryList = (('World', 'world'), ('Politics', 'politics'), ('Technology', 'technology'), 
+('Science', 'science'), ('Finace', 'finace'),
+ ('How-To', 'how-to'), ('LifeStyle', 'lifeStyle'), ('Gossip', 'gossip'))
 
 
 class HashTag(models.Model):
@@ -25,7 +26,7 @@ class HashTag(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('home')
+        return reverse('users:home')
 
     def serialize(self):
         return {
@@ -54,8 +55,10 @@ class Profile(models.Model):
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
-        if self.upload_image:
+        try:
             image_resize(self.upload_image, 144, 144)
+        except:
+            pass
 
 
 class Post(models.Model):
@@ -78,6 +81,8 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name="likes", blank=True)
     dislikes = models.ManyToManyField(
         User, related_name="dislikes",  blank=True)
+    views = models.IntegerField(default=0, null=True, blank=True)
+    votes = models.IntegerField(default=0, null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
 
     @property
@@ -104,19 +109,36 @@ class Post(models.Model):
         """
         return self.dislikes.count()
 
-        # For Post Detail
+    @property
+    def total_views(self):
+        return self.views
 
+    @property
+    def total_votes(self):
+        return self.votes
+
+    # For Post Detail
+
+    # Without Int
     def total_likes(self):
         return self.likes.count()
 
     def total_dislikes(self):
         return self.dislikes.count()
+    
+    # With Int
+    def total_views(self):
+        return self.views
+
+    def total_votes(self):
+        return self.votes
+
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
+        return reverse('users:post-detail', kwargs={'pk': self.pk})
 
     def get_api_url(self, request=None):
         api_reverse("post-api:post-api-rud",
@@ -126,11 +148,13 @@ class Post(models.Model):
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
-        if self.upload_image:
-            image_resize(self.upload_image, 800, 600)
+        if self.upload_image and not self.image_url:
+            try:
+                image_resize(self.upload_image, 800, 600)
+            except:
+                pass
         if self.content:
             self.content = clean_content(self.content, HashTag)
-
 
 
 class Comment(models.Model):

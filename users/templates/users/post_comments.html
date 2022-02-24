@@ -4,7 +4,7 @@
 <div class="comment-section">
   <div id="comments-form" class="comments-form">
     <h2>Leave a Comment</h2> 
-    <form v-on:submit.prevent="addComment" action="{% url 'create-comment' object.pk %}" id="comment_form" method="POST">
+    <form v-on:submit.prevent="addComment" action="{% url 'users:create-comment' object.pk %}" id="comment_form" method="POST">
         {% csrf_token %}
         <div class="field-wrapper">
           <div class="d-none alert alert-danger" id="comment-create-form-error"></div>
@@ -131,7 +131,7 @@ window.addEventListener('offline', () => handleCommentFormError("You are offline
 function loadComments(commentElement) {
   const xhr = new XMLHttpRequest()
   const method = 'GET' // "GET"
-  const url = '{% url "list-comment" object.pk %}'
+  const url = '{% url "isers:list-comment" object.pk %}'
   const responseType = "json"
   xhr.responseType = responseType
   xhr.open(method, url)

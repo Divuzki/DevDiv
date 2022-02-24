@@ -73,7 +73,7 @@
 <body>
   <div id="app">
     <header class="top mb-4">{% include 'navbar.html' %}</header>
-        <div class="devdiv-content">
+    <div class="devdiv-content">
           {% block content %}{% endblock content %}
           {% include 'aside.html' %}
         </div>
@@ -84,7 +84,26 @@
       </p>
     </footer>
   </div>
+<style>
+  .news {
+    width: 160px;
+}
 
+.news-scroll a {
+    text-decoration: none;
+}
+
+.dot {
+    height: 6px;
+    width: 6px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 2px !important;
+    background-color: rgb(207, 23, 23);
+    border-radius: 50%;
+    display: inline-block
+}
+</style>
   <!-- DevDiv Page Loader -->
   <div class="fullpage-loader">
     <div class="fullpage-loader__logo">
@@ -138,6 +157,7 @@ window.addEventListener("load", function() {
 <script src="{% static 'js/scroll.js' %}"></script>
 <script src="{% static 'js/navbar.js' %}"></script>
 <script src="{% static 'js/main.js' %}" defer></script>
+<script src="{% static 'js/news-ticker.js' %}"></script>
 
 <!-- AD JS -->
 

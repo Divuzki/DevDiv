@@ -40,11 +40,11 @@
         <h3></h3>
         <div class="info_data">
           <div class="data">
-            <h4> <a href="{% url 'user-posts' user.username %}">Posts</a></h4>
+            <h4> <a href="{% url 'users:user-posts' user.username %}">Posts</a></h4>
             <p>{{ post_qs.title }}</p>
           </div>
           <div class="data">
-            <h4> <a href="{% url 'history' %}">History</a></h4>
+            <h4> <a href="{% url 'users:history' %}">History</a></h4>
             <p>{{user.history.object_id}}</p>
           </div>
         </div>
@@ -67,7 +67,7 @@
         {% endif %}
       </div>
     </div>
-    <a href="{% url 'profile-update' %}">Edit</a>
+    <a href="{% url 'users:profile-update' %}">Edit</a>
   </div>
   {%for message in messages%}
   <div class="side-msg">

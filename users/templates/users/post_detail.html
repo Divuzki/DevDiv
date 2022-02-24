@@ -6,192 +6,16 @@
 <!-- <link rel="stylesheet" href="{% static 'css/debug.css'%}"> -->
 <link rel="stylesheet" href="{% static 'css/reset.css'%}">
 <link rel="stylesheet" href="{% static 'css/post.css'%}">
+{% include "components/widgets.html" with usd='yes' ngn='yes' headline='yes' %}
 
-<!-- SLIDER -->
-<div class="wrapper">
-<div class="section-content mt-4">
-  <div class="row align-center">
-    <div class="col medium-12" id="slick-container-shoutouts">
-    {% for posts in posts %}
-
-
-  <!-- World -->
-    {% if posts.category == "World" %}
-      <div class="slider-element">
-        <a href="{%url 'post-detail' posts.id%}">
-        <div class="img-wrap" style="background-image: url({{posts.image_url}})">
-        </a>
-        </div>
-            <a href="{%url 'post-detail' posts.id%}">
-          <div class="text-wrap">
-            <h2>
-                {{ posts.title }}
-              </h2>
-              <h3>
-                {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-              </h3>
-              <h3>
-                {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
-              </h3>
-            </div>
-          </a>
-          </div>
-          {% endif %}
-
-  <!-- Gossip -->
-    {% if posts.category == "Gossip" %}
-    <div class="slider-element">
-      <a href="{%url 'post-detail' posts.id%}">
-      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
-      </a>
-      </div>
-          <a href="{%url 'post-detail' posts.id%}">
-        <div class="text-wrap">
-          <h2>
-              {{ posts.title }}
-            </h2>
-            <h3>
-              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-            </h3>
-            <h3>
-              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
-            </h3>
-          </div>
-        </a>
-        </div>
-        {% endif %}
-
-  <!-- Technology -->
-    {% if posts.category == "Technology" %}
-    <div class="slider-element">
-      <a href="{%url 'post-detail' posts.id%}">
-      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
-      </a>
-      </div>
-          <a href="{%url 'post-detail' posts.id%}">
-        <div class="text-wrap">
-          <h2>
-              {{ posts.title }}
-            </h2>
-            <h3>
-              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-            </h3>
-            <h3>
-              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
-            </h3>
-          </div>
-        </a>
-        </div>
-      {% endif %}
-
-  <!-- Science -->
-  {% if posts.category == "Science" %}
-  <div class="slider-element">
-    <a href="{%url 'post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
-    </a>
-    </div>
-        <a href="{%url 'post-detail' posts.id%}">
-      <div class="text-wrap">
-        <h2>
-            {{ posts.title }}
-          </h2>
-          <h3>
-            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-          </h3>
-          <h3>
-            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
-          </h3>
-        </div>
-      </a>
-      </div>
-      {% endif %}
-
-
-  <!-- Politics -->
-  {% if posts.category == "Politics" %}
-  <div class="slider-element">
-    <a href="{%url 'post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
-    </a>
-    </div>
-        <a href="{%url 'post-detail' posts.id%}">
-      <div class="text-wrap">
-        <h2>
-            {{ posts.title }}
-          </h2>
-          <h3>
-            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-          </h3>
-          <h3>
-            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
-          </h3>
-        </div>
-      </a>
-      </div>
-      {% endif %}
-
-
-  <!-- Sports -->
-  {% if posts.category == "Sports" %}
-  <div class="slider-element">
-    <a href="{%url 'post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
-    </a>
-    </div>
-        <a href="{%url 'post-detail' posts.id%}">
-      <div class="text-wrap">
-        <h2>
-            {{ posts.title }}
-          </h2>
-          <h3>
-            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-          </h3>
-          <h3>
-            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
-          </h3>
-        </div>
-      </a>
-    </div>
-    {% endif %}
-
-  <!-- How-To -->
-  {% if posts.category == "How-to" %}
-  <div class="slider-element">
-    <a href="{%url 'post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
-    </a>
-    </div>
-        <a href="{%url 'post-detail' posts.id%}">
-      <div class="text-wrap">
-        <h2>
-            {{ posts.title }}
-          </h2>
-          <h3>
-            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-          </h3>
-          <h3>
-            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
-          </h3>
-        </div>
-      </a>
-    </div>
-      {% endif %}
-
-
-      {% endfor %}
-    </div>
-    </div>
-</div>
-<!-- END D POST SLIDER -->
 
 <article id="blog-post">
   <span>
-    <em><a href="{% url 'category' object.category|slugify %}">in {{object.category}}</a></em>
+    <em><a href="{% url 'users:category' object.category %}">in {{object.category}}</a></em>
     {% if object.hashtag %}
     <em style="background-color: #ccc;border-radius: 24px;padding: 10px;
   width: max-content;text-transform: capitalize;font-style: italic;"><a
-        href="{% url 'hashtag' object.hashtag|slugify %}">{{object.hashtag}}</a></em>
+        href="{% url 'users:hashtag' object.hashtag|slugify %}">{{object.hashtag}}</a></em>
     {% elif object.hashtag == "#" %}
         <em style="background-color: #ccc;border-radius: 24px;padding: 10px;
         width: max-content;text-transform: capitalize;font-style: italic;"><a
@@ -201,7 +25,7 @@
   <br />
   <br />
   <h1><a href="#" target="_blank"><em>{{object.title}}</em></a></h1>
-  <!-- <h2>or ever was, or ever will be</h2> -->
+  <h2>or ever was, or ever will be {{ total_views }}</h2>
   <style>
     p {
       line-break: anywhere;
@@ -228,7 +52,7 @@
   {% endif %}
   <p> {{object.content|safe}} -
     <strong>by {% if object.author == user %}You{%else%}<em> <a
-          href="{% url 'user-posts' object.author.username %}">{{object.author}}{% endif %}</a></em></strong>
+          href="{% url 'users:user-posts' object.author.username %}">{{object.author}}{% endif %}</a></em></strong>
   </p>
   {% if object.video_url %}
   <!-- Post Video -->
@@ -268,22 +92,36 @@
         <button type="submit" name="post_id" id="dislike_btn" value="{{ object.id }}"
           class="btn btn-danger mb-4">Dislike <span class="dislike_span">{{ total_dislikes }}</span></button>
 
-        <!-- <a href="{% url 'flag' object.id %}" style="box-shadow: none;"><button type="submit"
+        <!-- <a href="{% url 'users:flag' object.id %}" style="box-shadow: none;"><button type="submit"
             class="btn btn-secondary mb-4">Report</button></a> -->
         {% else %}
-        <a href="{% url 'login' %}?next=/post/{{object.id}}/" style="box-shadow: none;"><button type="submit"
+        <a href="{% url 'users:login' %}?next=/post/{{object.id}}/" style="box-shadow: none;"><button type="submit"
             class="btn btn-info mb-4">Like
             <span class="like_span">{{ total_likes }}</span></button></a>
         {% endif %}
         <br />
         {% if object.author == user %}
-        <a class="btn btn-secondary btn-sm" style="height: fit-content;" href="{% url 'post-update' object.id %}">Update</a>
-        <a class="btn btn-danger btn-sm" style="height: fit-content;" href="{% url 'post-delete' object.id %}">Delete</a>
+        <a class="btn btn-secondary btn-sm" style="height: fit-content;" href="{% url 'users:post-update' object.id %}">Update</a>
+        <a class="btn btn-danger btn-sm" style="height: fit-content;" href="{% url 'users:post-delete' object.id %}">Delete</a>
         {% endif %}
       </div>
     </div>
   </div>
 </article>
+<div class="content-wrapper none">
+  <div class="news-card">
+    <a href="#" class="news-card__card-link"></a>
+    <img src="https://images.pexels.com/photos/210243/pexels-photo-210243.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" alt="" class="news-card__image">
+    <div class="news-card__text-wrapper">
+      <h2 class="news-card__title">Amazing 6<sup>th</sup> Title</h2>
+      <div class="news-card__post-date">Jan 29, 2018</div>
+      <div class="news-card__details-wrapper">
+        <p class="news-card__excerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est pariatur nemo tempore repellat? Ullam sed officia.</p>
+        <a href="#" class="news-card__read-more">Read more <i class="fas fa-long-arrow-alt-right"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
 <style>
   article{
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
@@ -306,7 +144,7 @@
   $("#like_btn").click(function () {
     $.ajax({
       type: "POST",
-      url: "{% url 'like_post' object.pk %}",
+      url: "{% url 'users:like_post' object.pk %}",
       data: {
         'post_id': "{{ object.id }}",
         'csrfmiddlewaretoken': '{{ csrf_token }}'
@@ -327,7 +165,7 @@
   $("#dislike_btn").click(function () {
     $.ajax({
       type: "POST",
-      url: "{% url 'dislike_post' object.pk %}",
+      url: "{% url 'users:dislike_post' object.pk %}",
       data: {
         'post_id': "{{ object.id }}",
         'csrfmiddlewaretoken': '{{ csrf_token }}'
