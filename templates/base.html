@@ -77,8 +77,7 @@
           {% block content %}{% endblock content %}
           {% include 'aside.html' %}
         </div>
-
-    <footer class="footers">
+    <footer class="footers mt-2">
       <p>
         <small><em><a href="/" style="color: brown;"> DevDiv </a> made by <a href="//www.google.com/search?q=divine+ikhuoria" target="_blank" style="color: rgb(162, 86, 86);">Divine Ikhuoria</a> </em></small>
       </p>
@@ -145,7 +144,7 @@ window.addEventListener("load", function() {
           loaderEl.style.display = "none";
     }, 1000);
 });
-
+  localStorage.setItem("currentPage", window.location.href);
   </script>
 
  <!-- JS -->

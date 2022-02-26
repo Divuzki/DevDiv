@@ -3,9 +3,10 @@
 }
 
 * {
-  -webkit-text-decoration-line: none;
-          text-decoration-line: none;
-  color: currentColor;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans" !important;
 }
 
 p {
@@ -1540,12 +1541,6 @@ a:hover {
   transform: translate(-100%, -50%);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 a {
   text-decoration: none;
 }
@@ -1928,7 +1923,7 @@ a {
 }
 
 .none {
-  display: none;
+  display: none !important;
 }
 
 .contant-section {
@@ -1979,4 +1974,11 @@ a {
   color: #fff;
   font: 400 15px "pt sans", sans-serif;
   text-decoration: none;
+}
+
+.btn-rounded {
+  border-radius: 50%;
+}
+.btn-rounded a {
+  box-shadow: none;
 }/*# sourceMappingURL=Main.css.map */

@@ -1,4 +1,4 @@
-const CACHE_VERSION = 17;
+const CACHE_VERSION = 1;
 
 const DEBUG = false;
 var host = self.location.protocol + "//" + self.location.host + "/static";
@@ -117,13 +117,13 @@ self.addEventListener("fetch", async (e) => {
 });
 
 async function cacheFirst(req) {
-  const cache = await caches.open(cacheName);
+  const cache = await caches.open(CACHE_VERSIONS.assets);
   const cached = await cache.match(req);
   return cached || fetch(req);
 }
 
 async function networkAndCache(req) {
-  const cache = await caches.open(cacheName);
+  const cache = await caches.open(CACHE_VERSIONS.assets);
   try {
     const fresh = await fetch(req);
     await cache.put(req, fresh.clone());

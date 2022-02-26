@@ -51,10 +51,11 @@
             </div>
           </div>
           <div class="divdev_posts__img">
-            {% if post.image_url == None or '' %}
-            <img src="/static/default.png" class="post-img" alt="{{object.title}}">
-            {% else %}
-            <img src="{{ post.image_url }}" class="post-img" alt="{{object.title}}">
+            {% if post.image_url or post.upload_image %}
+            <img src="{% if post.upload_image %}{{ post.upload_image.url }}
+            {% elif post.upload_image == None and post.image_url %}
+            {% static 'default.png' %}
+            {% else %}{{ post.image_url }}{% endif %}" class="post-img" alt="{{object.title}}">
             {% endif %}
           </div>
         </a>
@@ -103,5 +104,8 @@
   <script>
     document.getElementsByTagName("title").innerText = "DevDiv";
   </script>
+    <script>
+      localStorage.setItem("previousPage", window.location.href);
+    </script>
   {% endblock %}
   {% endblock content%}

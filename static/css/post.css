@@ -1,5 +1,5 @@
 article {
-  padding: 0.5in 15px;
+  padding: 0.5in 0px;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -8,8 +8,10 @@ article {
   width: max-content;
   display: grid;
   margin: auto;
-  grid-template-columns: 1fr 0.5in [start] 1.25in 5in 1.25in [end] 0.5in 1fr;
+  border-radius: 15px 15px 0px 0px;
   background: linear-gradient(#fffdeb, white 6.55rem);
+  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
+  grid-template-columns: 1fr 0.5in [start] 1.25in 5in 1.25in [end] 0.5in 1fr;
 }
 
 article * {
@@ -18,8 +20,8 @@ article * {
 
 @media (max-width: 8.5in) {
   article {
-    grid-template-columns: 1fr 5% [start] 15% 60% 15% [end] 5% 1fr;
     transform: translateX(-33px);
+    padding: 0.5in 15px;
   }
 }
 .size-1 {
@@ -36,6 +38,17 @@ article * {
 
 .size-4 {
   grid-column: 1/8;
+}
+
+.size-center {
+  display: flex;
+  justify-content: center;
+}
+.size-center-col {
+  flex-direction: column;
+}
+.size-center-row {
+  flex-direction: row;
 }
 
 .size-1 img,
@@ -76,9 +89,35 @@ p {
   color: #545454;
 }
 
+@media (min-width: 1024px) {
+  figure {
+    transition: all 500ms ease;
+  }
+  figure:hover {
+    box-shadow: 1px 0px 2px 14px #ffffffc9;
+    border-radius: 24px;
+    padding: 2px;
+  }
+  figure:hover > img {
+    border-radius: 24px;
+  }
+  figure:hover ~ figcaption {
+    display: flex;
+  }
+  figure ~ figcaption {
+    display: none;
+    transition: all 450ms ease;
+  }
+  figure > img {
+    transition: all 450ms ease;
+  }
+}
 figcaption p {
   font: 400 1rem/1.2 "Roboto";
   color: #545454;
+  border-radius: 0px 0px 5px 5px;
+  background: #d9ac279c;
+  padding: 5px;
 }
 
 article a {
@@ -166,6 +205,27 @@ figcaption {
 }
 
 /** News Card **/
+.recent-post {
+  width: 816px;
+  background: #fff;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 0px 0px 15px 15px;
+  border-top: 1px solid #17a2b82b;
+  border-top-style: dashed;
+  border-width: 10px;
+}
+
+.recent-post h3 {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  font-size: x-large;
+  font-weight: 900;
+  line-height: 1.5;
+  color: #1c00a8ba;
+  text-transform: uppercase;
+}
+
 .content-wrapper {
   margin: 0 auto;
   max-width: 1200px;
@@ -230,23 +290,29 @@ figcaption {
   position: absolute;
   bottom: 0rem;
   padding: 1rem;
-  color: white;
+  color: white !important;
   /*     background-color: rgba(0, 0, 0, 0.4); */
   transition: background-color 1.5s ease;
 }
 .news-card__title {
   transition: color 1s ease;
   margin-bottom: 0.5rem;
+  color: white !important;
 }
 .news-card__post-date {
   font-size: 0.7rem;
   margin-bottom: 0.5rem;
-  color: #ccc;
+  color: #ccc !important;
+}
+.news-card__post-date i,
+.news-card__post-date svg {
+  margin-right: 0.5rem !important;
 }
 .news-card__details-wrapper {
   max-height: 0;
   opacity: 0;
   transition: max-height 1.5s ease, opacity 1s ease;
+  color: white !important;
 }
 @media (min-width: 900px) {
   .news-card:hover .news-card__details-wrapper {
@@ -254,10 +320,10 @@ figcaption {
     opacity: 1;
   }
   .news-card:hover .news-card__text-wrapper {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.6) !important;
   }
   .news-card:hover .news-card__title {
-    color: yellow;
+    color: yellow !important;
   }
   .news-card:hover .news-card__image {
     transform: scale(1.2);
@@ -266,10 +332,11 @@ figcaption {
 }
 .news-card__excerpt {
   font-weight: 300;
+  color: white !important;
 }
 .news-card__read-more {
-  background: black;
-  color: #bbb;
+  background: black !important;
+  color: #bbb !important;
   display: block;
   padding: 0.4rem 0.6rem;
   border-radius: 0.3rem;
@@ -284,15 +351,32 @@ figcaption {
   position: relative;
   z-index: 5;
 }
-.news-card__read-more i {
+.news-card__read-more i,
+.news-card__read-more svg {
   position: relative;
   left: 0.2rem;
-  color: #888;
+  color: #888 !important;
   transition: left 0.5s ease, color 0.6s ease;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-.news-card__read-more:hover i {
+.news-card__read-more i:hover i,
+.news-card__read-more svg:hover i {
   left: 0.5rem;
-  color: yellow;
+  color: yellow !important;
+}
+
+.by-author {
+  color: #645e5e9e !important;
+  font-style: oblique !important;
+}
+
+.action-btns button {
+  border: 1px solid #333;
+  color: #333;
+  background: none;
+  border-radius: 24px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }/*# sourceMappingURL=post.css.map */

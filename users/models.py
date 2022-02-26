@@ -12,9 +12,9 @@ from devdiv.utils import image_resize, clean_content
 
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
-CategoryList = (('World', 'world'), ('Politics', 'politics'), ('Technology', 'technology'), 
-('Science', 'science'), ('Finace', 'finace'),
- ('How-To', 'how-to'), ('LifeStyle', 'lifeStyle'), ('Gossip', 'gossip'))
+CategoryList = (('uncategorized','uncategorized'),('world', 'world'), ('politics', 'politics'), ('technology', 'technology'), 
+('science', 'science'), ('finace', 'finace'),
+ ('how-To', 'how-to'), ('lifeStyle', 'lifeStyle'), ('gossip', 'gossip'))
 
 
 class HashTag(models.Model):
@@ -77,7 +77,8 @@ class Post(models.Model):
     video_url = models.CharField(max_length=3000, null=True, blank=True)
     category = models.CharField(
         choices=CategoryList, max_length=50, default='uncategorized')
-    hashtag = models.CharField(max_length=150, null=True, blank=True)
+    hashtag = models.ManyToManyField(HashTag, related_name="hashtag", blank=True)
+    # CharField(max_length=150, null=True, blank=True)
     likes = models.ManyToManyField(User, related_name="likes", blank=True)
     dislikes = models.ManyToManyField(
         User, related_name="dislikes",  blank=True)
@@ -89,9 +90,6 @@ class Post(models.Model):
     def owner(self):
         return self.author
     
-    @property
-    def tag(self):
-        return self.hashtag
 
     @property
     def total_likes(self):

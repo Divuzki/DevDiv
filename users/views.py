@@ -35,7 +35,7 @@ def hashtag_view(request, tags):
     tags = '#'+tags  # adding hashtag symbol '#' to query
 
     # getting all the hashtags in django
-    hashtag_posts = Post.objects.filter(hashtag=tags)
+    hashtag_posts = Post.objects.filter(hashtag__name=tags)
     hashtag_count = hashtag_posts.count()
 
     # Getting the first user to use the hashtag
