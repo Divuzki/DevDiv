@@ -472,12 +472,12 @@ def devdiv_serviceworker(request, js):
     html = template.render()
     return HttpResponse(html, content_type="application/x-javascript")
 
+
 def devdiv_tmp_render(request, tmp):
     try:
         return render(request, f"{tmp.replace('-slash-', '/')}")
     except:
         return render(request, "error/not-found.html")
-
 
 
 def profile(request, *args, **kwargs):
