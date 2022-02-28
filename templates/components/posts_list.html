@@ -1,0 +1,90 @@
+{% load static %}
+{% if posts %}
+  <div class="devdiv_posts-slider">
+    <div class="devdiv_posts-slider__wrp swiper-wrapper">
+      {% for post in posts %}
+      <div class="devdiv_posts-slider__item swiper-slide">
+        <a href="{%url 'users:post-detail' post.id%}" class="devdiv_posts__item">
+
+          <div class="devdiv_posts-date">
+            <div class="">
+            <span class="devdiv_posts-date__title">{{post.date_posted|date:"d"}}</span>
+            <span class="devdiv_posts-date__txt">{{post.date_posted|date:"F"}}</span>
+          </div>
+            <figure onclick="window.location.href = `{% url 'users:user-posts' post.author.username %}`" class="user-post-profile figure-back"
+            style="background-image: url(
+              {% if post.author.profile.upload_image %}{{ post.author.profile.upload_image.url }}
+            {% elif post.author.profile.upload_image == None and post.image_url %}{% static 'default_jpg.png' %}{% else %}{{ post.author.profile.image_url }}{% endif %})"
+            >
+                <img 
+                src="
+                {% if post.author.profile.upload_image %}{{ post.author.profile.upload_image.url }}
+            {% elif post.author.profile.upload_image == None and post.image_url %}
+            {% static 'default_jpg.png' %}
+            {% else %}{{ post.author.profile.image_url }}{% endif %}
+                " 
+                class="mb-4" alt="{{post.author.username}}'s image">
+            </figure>
+          </div>
+          <div class="devdiv_posts__title"> {{post.title | truncatechars:80 | safe}}
+          </div>
+          <div class="devdiv_posts__txt">
+            {% if post.description %}
+            {{post.description | truncatechars:100 | safe}}
+            {% else %}
+            {{post.content | truncatechars:100 | safe}}
+            {% endif %}
+            <div class="author-name-content"> <strong style="font-style: italic; color: #56a9b7b3;"> - Posted by {{post.author}} </strong>
+            </div>
+            <div>
+              <span>{{post.views}} views | {{post.likes.count}} likes</span>
+            </div>
+          </div>
+          <div class="devdiv_posts__img">
+            <img src="{% if post.upload_image %}{{ post.upload_image.url }}
+            {% elif post.upload_image == None %}
+            {{ post.image_url }}
+            {% else %}{% static 'default.png' %}{% endif %}" class="post-img" alt="{{object.title}}">
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+      {% if is_paginated %}
+      <div class="pag">
+        {% if page_obj.has_previous %}
+        <a href="?page=1" class="btn btn-outline-info mb-4">1</a>
+        <a href="?page={{page_obj.previous_page_number}}" class="btn btn-outline-info mb-4">Previous</a>
+        {% endif %}
+      </div>
+
+    </div>
+    <div class="pg-btn">
+      {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+      <a href="?page={{ num }}" class="btn btn-info mb-4">{{ num }}</a>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+      <a href="?page={{ num }}" class="btn btn-outline-info mb-4">{{ num }}</a>
+      {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-info mb-4">Next</a>
+      <a href="?page={{page_obj.paginator.num_pages}}" class="btn btn-outline-info mb-4">Last</a>
+      {% endif %}
+
+      {% endif %}
+    </div>
+  <style>
+    .devdiv_posts__item {
+      color: #333 !important;
+    }
+
+    .devdiv_posts-slider__item.swiper-slide {
+      opacity: 1 !important;
+    }
+
+    .devdiv_posts-slider__item.swiper-slide {
+      pointer-events: all !important;
+    }
+  </style>
+  </div>
+  {% endif %}

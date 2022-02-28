@@ -223,7 +223,7 @@ def hashtag_autocomplete(request, *args, **kwargs):
     # Looking for data that
     if 'term' in request.GET:
         qs = HashTag.objects.filter(name__istartswith=request.GET.get(
-            'term'))  # stat with the 'term' in the GET request
+            'term'))[:6]  # stat with the 'term' in the GET request
         names = []
         names = list(dict.fromkeys(names))
         for name in qs:
@@ -282,8 +282,8 @@ class PostListView(ListView):
 @method_decorator(confirm_password, name='dispatch')
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post  # Getting Post Model in models.py
-    fields = ['title', 'description', 'upload_image', 'image_url', 'image_caption', 'video_url',
-              'hashtag', 'content', 'category']  # fields in the Form
+    fields = ['title', 'description', 'upload_image', 'image_url',
+              'image_caption', 'video_url', 'content', 'category']  # fields in the Form
     # Validating the form
 
     def form_valid(self, form):

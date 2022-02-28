@@ -1,9 +1,13 @@
+{% load static %}
 {% for posts in posts %}
   <!-- World -->
-    {% if posts.category == "World" %}
+    {% if posts.category == "world" %}
       <div class="slider-element">
         <a href="{%url 'users:post-detail' posts.id%}">
-        <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+        <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
+    {% elif posts.upload_image == None %}
+    {{ posts.image_url }}
+    {% else %}{% static 'default.png' %}{% endif %})">
         </a>
         </div>
             <a href="{%url 'users:post-detail' posts.id%}">
@@ -15,7 +19,7 @@
                 {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
               </h3>
               <h3>
-                {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+                {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
               </h3>
             </div>
           </a>
@@ -23,10 +27,13 @@
           {% endif %}
 
   <!-- Gossip -->
-    {% if posts.category == "Gossip" %}
+    {% if posts.category == "gossip" %}
     <div class="slider-element">
       <a href="{%url 'users:post-detail' posts.id%}">
-      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+      <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
+    {% elif posts.upload_image == None %}
+    {{ posts.image_url }}
+    {% else %}{% static 'default.png' %}{% endif %})">
       </a>
       </div>
           <a href="{%url 'users:post-detail' posts.id%}">
@@ -38,7 +45,7 @@
               {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
             </h3>
             <h3>
-              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+              {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
             </h3>
           </div>
         </a>
@@ -46,10 +53,13 @@
         {% endif %}
 
   <!-- Technology -->
-    {% if posts.category == "Technology" %}
+    {% if posts.category == "technology" %}
     <div class="slider-element">
       <a href="{%url 'users:post-detail' posts.id%}">
-      <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+      <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
+    {% elif posts.upload_image == None %}
+    {{ posts.image_url }}
+    {% else %}{% static 'default.png' %}{% endif %})">
       </a>
       </div>
           <a href="{%url 'users:post-detail' posts.id%}">
@@ -61,7 +71,7 @@
               {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
             </h3>
             <h3>
-              {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+              {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
             </h3>
           </div>
         </a>
@@ -69,10 +79,13 @@
       {% endif %}
 
   <!-- Science -->
-  {% if posts.category == "Science" %}
+  {% if posts.category == "science" %}
   <div class="slider-element">
     <a href="{%url 'users:post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+    <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
+    {% elif posts.upload_image == None %}
+    {{ posts.image_url }}
+    {% else %}{% static 'default.png' %}{% endif %})">
     </a>
     </div>
         <a href="{%url 'users:post-detail' posts.id%}">
@@ -84,7 +97,7 @@
             {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
           </h3>
           <h3>
-            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
           </h3>
         </div>
       </a>
@@ -93,10 +106,13 @@
 
 
   <!-- Politics -->
-  {% if posts.category == "Politics" %}
+  {% if posts.category == "politics" %}
   <div class="slider-element">
     <a href="{%url 'users:post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+    <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
+    {% elif posts.upload_image == None %}
+    {{ posts.image_url }}
+    {% else %}{% static 'default.png' %}{% endif %})">
     </a>
     </div>
         <a href="{%url 'users:post-detail' posts.id%}">
@@ -108,7 +124,7 @@
             {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
           </h3>
           <h3>
-            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
           </h3>
         </div>
       </a>
@@ -117,10 +133,13 @@
 
 
   <!-- Sports -->
-  {% if posts.category == "Sports" %}
+  {% if posts.category == "sports" %}
   <div class="slider-element">
     <a href="{%url 'users:post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+    <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
+    {% elif posts.upload_image == None %}
+    {{ posts.image_url }}
+    {% else %}{% static 'default.png' %}{% endif %})">
     </a>
     </div>
         <a href="{%url 'users:post-detail' posts.id%}">
@@ -132,7 +151,7 @@
             {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
           </h3>
           <h3>
-            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
           </h3>
         </div>
       </a>
@@ -140,10 +159,13 @@
     {% endif %}
 
   <!-- How-To -->
-  {% if posts.category == "How-to" %}
+  {% if posts.category == "how-to" %}
   <div class="slider-element">
     <a href="{%url 'users:post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({{posts.image_url}})">
+    <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
+    {% elif posts.upload_image == None %}
+    {{ posts.image_url }}
+    {% else %}{% static 'default.png' %}{% endif %})">
     </a>
     </div>
         <a href="{%url 'users:post-detail' posts.id%}">
@@ -155,7 +177,7 @@
             {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
           </h3>
           <h3>
-            {{ posts.category }} {% if posts.hashtag %} | {{posts.hashtag}} {% endif %}
+            {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
           </h3>
         </div>
       </a>

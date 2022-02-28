@@ -8,78 +8,8 @@
 <center><h3 style="text-transform: capitalize;"><em>{{cats}}</em></h3></center>
 <hr />
 <div class="wrapper">
-  <div class="divdev_posts-slider">
-    <div class="divdev_posts-slider__wrp swiper-wrapper">
-      {%for post in posts %}
-      <div class="content-wrapper">
-        <div class="news-card">
-          <a href="#" class="news-card__card-link"></a>
-          <img src="{% if post.upload_image %}{{ post.upload_image.url }}
-          {% elif post.upload_image == None and post.image_url %}
-          {% static 'default.png' %}
-          {% else %}{{ post.image_url }}{% endif %}" alt="" class="news-card__image">
-          <div class="news-card__text-wrapper">
-            <h2 class="news-card__title">Amazing 6<sup>th</sup> Title</h2>
-            <div class="news-card__post-date">Jan 29, 2018</div>
-            <div class="news-card__details-wrapper">
-              <p class="news-card__excerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est pariatur nemo tempore repellat? Ullam sed officia.</p>
-              <a href="{%url 'users:post-detail' post.id%}" class="news-card__read-more">Read more <i class="fas fa-long-arrow-alt-right"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-      {% if is_paginated %}
-      <div class="pag">
-        {% if page_obj.has_previous %}
-        <a href="?page=1" class="btn btn-outline-info mb-4">1</a>
-        <a href="?page={{page_obj.previous_page_number}}" class="btn btn-outline-info mb-4">Previous</a>
-        {% endif %}
-      </div>
+  {% include "components/posts_list.html" with posts=posts is_paginated=is_paginated page_obj=page_obj %}
 
-    </div>
-    <div class="pg-btn">
-      {% for num in page_obj.paginator.page_range %}
-      {% if page_obj.number == num %}
-      <a href="?page={{ num }}" class="btn btn-info mb-4">{{ num }}</a>
-      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-      <a href="?page={{ num }}" class="btn btn-outline-info mb-4">{{ num }}</a>
-      {% endif %}
-      {% endfor %}
-      {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-info mb-4">Next</a>
-      <a href="?page={{page_obj.paginator.num_pages}}" class="btn btn-outline-info mb-4">Last</a>
-      {% endif %}
-
-      {% endif %}
-    </div>
-  </div>
-  <style>
-    .divdev_posts__item {
-      color: #333 !important;
-    }
-
-    .divdev_posts-slider__item.swiper-slide {
-      opacity: 1 !important;
-    }
-
-    .divdev_posts-slider__item.swiper-slide {
-      pointer-events: all !important;
-    }
-
-    .rounded-circle {
-      cursor: pointer;
-      width: 100px;
-      height: 100px;
-      border: 3px solid #84eaeabd !important;
-      padding: 15px;
-      transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .rounded-circle:hover {
-      border: 1px !important;
-    }
-  </style>
   {% else %}
 <br /><br /><br /><br /><br /><br />
   <center><h3 style="color: red;">{{cats}} does not exists</h3></center>

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -148,7 +147,7 @@
 }
 
 .devdiv__videoBtns button:before {
-  content: "";
+  content: "\f144";
   font-family: "Font Awesome 5 Free";
   width: 30px;
   height: 30px;
@@ -159,11 +158,11 @@
 }
 
 .devdiv__videoBtns.play:before {
-  content: "";
+  content: "\f144";
 }
 
 .devdiv__videoBtns.pause:before {
-  content: "";
+  content: "\f28b";
 }
 
 .devdiv__videoBar {

@@ -39,7 +39,6 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-  <script src="https://kit.fontawesome.com/c66543d63b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/Main.css'%}" />
   <link rel="stylesheet" href="{% static 'css/style.css'%}" />
   {% if posts %}
@@ -77,12 +76,29 @@
           {% block content %}{% endblock content %}
           {% include 'aside.html' %}
         </div>
-    <footer class="footers mt-2">
-      <p>
+    <footer class="pl-3 pr-0 footer">
+      <p class="mr-1 mb-0">
         <small><em><a href="/" style="color: brown;"> DevDiv </a> made by <a href="//www.google.com/search?q=divine+ikhuoria" target="_blank" style="color: rgb(162, 86, 86);">Divine Ikhuoria</a> </em></small>
+      </p>
+      <p class="m-0 pointer ml-1" id="show-footer">
+        <i class="fa-regular fa-copyright"></i>
       </p>
     </footer>
   </div>
+  <script>
+    var ShowFooterBtn = document.getElementById("show-footer"),
+        footer = document.querySelector(".footer");
+
+        if (ShowFooterBtn.children[0].className.indexOf("fa-arrow-right") === 1){
+          ShowFooterBtn.children[0].addEventListener("click", function(){
+              ShowFooterBtn.children[0].classList.replace("fa-arrow-right","fa-copyright");
+            });
+        }
+      ShowFooterBtn.addEventListener("click", function(){
+        ShowFooterBtn.children[0].classList.replace("fa-copyright", "fa-arrow-right");
+        footer.classList.toggle("footer-show");
+      });
+  </script>
 <style>
   .news {
     width: 160px;
@@ -153,6 +169,7 @@ window.addEventListener("load", function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 
+<script src="https://kit.fontawesome.com/c66543d63b.js" crossorigin="anonymous" defer></script>
 <script src="{% static 'js/scroll.js' %}"></script>
 <script src="{% static 'js/navbar.js' %}"></script>
 <script src="{% static 'js/main.js' %}" defer></script>

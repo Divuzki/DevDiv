@@ -179,7 +179,7 @@ $(".news-ticker").each(function () {
     "/feeds/posts/summary/?max-results=5&alt=json-in-script";
   var thisc = $(this);
   thisc.append(
-    '<div class="tickerwrapper"><span class="tickhead">Latest News</span><div class="ticker2"><ul></ul></div></div>'
+    '<div class="tickerwrapper none"><span class="tickhead">Latest News</span><div class="ticker2"><ul></ul></div></div>'
   );
   $.ajax({
     type: "GET",

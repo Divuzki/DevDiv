@@ -33,6 +33,11 @@
       {{ form.media }}
       {{ form|crispy }}
     </fieldset>
+    <div id="div_id_hashtag" class="form-group"> 
+      <label for="id_hashtag" class="">
+      Hashtag
+  </label>
+  <div> <input type="text" name="hashtag" maxlength="3000" class="textinput textInput form-control" id="id_hashtag"> </div>  </div>
     <div class="form-group">
       <button class="btn btn-outline-info enableBtn" type="submit">Create</button>
     </div>
@@ -40,6 +45,9 @@
 <style>
 body {
   overflow-x: visible !important;
+}
+.cd-header{
+  position: absolute !important;
 }
 </style>
 </div>

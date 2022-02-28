@@ -56,20 +56,18 @@
   <p>
     <em>{% if object.description %}{{object.description}}{% endif %}</em>
   </p>
-  {% if object.image_url %}
   <!-- Post Image -->
   <figure class="size-4">
 
-    {% if object.image_url == None or '' %}
-    <img src="{% static 'default.png' %}" alt="{{object.title}} image">
-    {% else %}
-    <img src="{{object.image_url}}" alt="{{object.title}} image">
-    {% endif %}
+
+    <img src="{% if object.upload_image %}{{ object.upload_image.url }}
+    {% elif object.upload_image == None %}
+    {{ object.image_url }}
+    {% else %}{% static 'default.png' %}{% endif %}" alt="{{object.image_caption}}">
   </figure>
   <figcaption>
-    <p>{% if object.image_caption %}{{object.image_caption}} <em>Image</em>. {% endif %}</p>
+    <p>{% if object.image_caption %}{{object.image_caption}} {% endif %}</p>
   </figcaption>
-  {% endif %}
   <p> {{object.content|safe}}
     <p class="by-author">~ by {% if object.author == user %}You{%else%}<em> <a
           href="{% url 'users:user-posts' object.author.username %}">{{object.author}}{% endif %}</a></em></p>
