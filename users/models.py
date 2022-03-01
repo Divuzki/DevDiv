@@ -148,8 +148,8 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if self.upload_image and not self.image_url:
             self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
-        else:
-            self.image_url = f"{STATIC_URL}default.jpg"
+        elif not self.upload_image and self.image_url:
+            self.image_url = f"{STATIC_URL}default.png"
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
