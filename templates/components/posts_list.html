@@ -12,16 +12,16 @@
             <span class="devdiv_posts-date__txt">{{post.date_posted|date:"F"}}</span>
           </div>
             <figure onclick="window.location.href = `{% url 'users:user-posts' post.author.username %}`" class="user-post-profile figure-back"
-            style="background-image: url({% if post.upload_image %}{{ post.upload_image.url }}
-            {% elif not post.upload_image %}
-            {{ post.image_url }}
-            {% else %}{% static 'default.png' %}{% endif %})"
+            style="background-image: url({% if post.author.profile.upload_image %}{{ post.author.profile.upload_image.url }}
+            {% elif not post.author.profile.upload_image %}
+            {{ post.author.profile.image_url }}
+            {% else %}{% static 'default_jpg.png' %}{% endif %})"
             >
                 <img 
-                src="{% if post.upload_image %}{{ post.upload_image.url }}
-                {% elif not post.upload_image %}
-                {{ post.image_url }}
-                {% else %}{% static 'default.png' %}{% endif %}" 
+                src="{% if post.author.profile.upload_image %}{{ post.author.profile.upload_image.url }}
+                {% elif not post.author.profile.upload_image %}
+                {{ post.author.profile.image_url }}
+                {% else %}{% static 'default_jpg.png' %}{% endif %}" 
                 class="mb-4" alt="{{post.author.username}}'s image">
             </figure>
           </div>
@@ -41,7 +41,7 @@
           </div>
           <div class="devdiv_posts__img">
             <img src="{% if post.upload_image %}{{ post.upload_image.url }}
-            {% elif post.upload_image == None %}
+            {% elif not post.upload_image %}
             {{ post.image_url }}
             {% else %}{% static 'default.png' %}{% endif %}" class="post-img" alt="{{object.title}}">
           </div>
