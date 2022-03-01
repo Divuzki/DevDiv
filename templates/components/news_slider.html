@@ -5,7 +5,7 @@
       <div class="slider-element">
         <a href="{%url 'users:post-detail' posts.id%}">
         <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif posts.upload_image == None %}
+    {% elif not posts.upload_image %}
     {{ posts.image_url }}
     {% else %}{% static 'default.png' %}{% endif %})">
         </a>
@@ -31,7 +31,7 @@
     <div class="slider-element">
       <a href="{%url 'users:post-detail' posts.id%}">
       <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif posts.upload_image == None %}
+    {% elif not posts.upload_image %}
     {{ posts.image_url }}
     {% else %}{% static 'default.png' %}{% endif %})">
       </a>
@@ -57,7 +57,7 @@
     <div class="slider-element">
       <a href="{%url 'users:post-detail' posts.id%}">
       <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif posts.upload_image == None %}
+    {% elif not posts.upload_image %}
     {{ posts.image_url }}
     {% else %}{% static 'default.png' %}{% endif %})">
       </a>
@@ -79,11 +79,11 @@
       {% endif %}
 
   <!-- Science -->
-  {% if posts.category == "science" %}
+  {% if posts.category == "education" %}
   <div class="slider-element">
     <a href="{%url 'users:post-detail' posts.id%}">
     <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif posts.upload_image == None %}
+    {% elif not posts.upload_image %}
     {{ posts.image_url }}
     {% else %}{% static 'default.png' %}{% endif %})">
     </a>
@@ -110,7 +110,7 @@
   <div class="slider-element">
     <a href="{%url 'users:post-detail' posts.id%}">
     <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif posts.upload_image == None %}
+    {% elif not posts.upload_image %}
     {{ posts.image_url }}
     {% else %}{% static 'default.png' %}{% endif %})">
     </a>
@@ -133,11 +133,11 @@
 
 
   <!-- Sports -->
-  {% if posts.category == "sports" %}
+  {% if posts.category == "finace" %}
   <div class="slider-element">
     <a href="{%url 'users:post-detail' posts.id%}">
     <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif posts.upload_image == None %}
+    {% elif not posts.upload_image %}
     {{ posts.image_url }}
     {% else %}{% static 'default.png' %}{% endif %})">
     </a>
@@ -163,7 +163,7 @@
   <div class="slider-element">
     <a href="{%url 'users:post-detail' posts.id%}">
     <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif posts.upload_image == None %}
+    {% elif not posts.upload_image %}
     {{ posts.image_url }}
     {% else %}{% static 'default.png' %}{% endif %})">
     </a>

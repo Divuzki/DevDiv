@@ -16,7 +16,7 @@ MEDIA_URL = settings.MEDIA_URL
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
 CategoryList = (('uncategorized', 'uncategorized'), ('world', 'world'), ('politics', 'politics'), ('technology', 'technology'),
-                ('science', 'science'), ('finace', 'finace'),
+                ('science', 'science'), ('finace', 'finace'), ('education', 'education'),
                 ('how-To', 'how-to'), ('lifeStyle', 'lifeStyle'), ('gossip', 'gossip'))
 
 
@@ -42,7 +42,7 @@ class Profile(models.Model):
     upload_image = models.ImageField(
         _("Image"), upload_to="profile_images/%Y/%m/", blank=True, null=True)
     image_url = models.CharField(
-        max_length=3080, default='static/default_jpg.png', blank=True, null=True)
+        max_length=3080, blank=True, null=True)
     status = models.CharField(max_length=50, null=True, blank=True)
     facebook_link = models.CharField(max_length=255, null=True, blank=True)
     twitter_link = models.CharField(max_length=255, null=True, blank=True)
@@ -80,7 +80,7 @@ class Post(models.Model):
     upload_image = models.ImageField(
         _("Image"), upload_to="post_media/image/%Y/%m/", blank=True, null=True)
     image_url = models.CharField(
-        max_length=3038, default='static/default.png', null=True, blank=True)
+        max_length=3038, null=True, blank=True)
     image_caption = models.CharField(max_length=100, null=True, blank=True,
                                      help_text="Text limit is 100, and know that this is the post image description")
     video_url = models.CharField(max_length=3000, null=True, blank=True)
@@ -93,7 +93,6 @@ class Post(models.Model):
     dislikes = models.ManyToManyField(
         User, related_name="dislikes",  blank=True)
     views = models.IntegerField(default=0, null=True, blank=True)
-    votes = models.IntegerField(default=0, null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
 
     @property
