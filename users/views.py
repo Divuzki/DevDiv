@@ -581,5 +581,8 @@ def post_flagging_view(request, postuuid, *args, **kwargs):
         return redirect('/profile')
 # replace('-', '')
 
-def policy(request):
-    return render(request, "policy.html")
+def policy_en(request):
+    return render(request, "policy-en.html")
+
+def policy_fr(request):
+    return render(request, "policy-fr.html")
