@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+{% block head %}
+<meta property="og:title" content="{{object.title}}" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:image" content="{% if object.upload_image %}{{ object.upload_image.url }}
+{% elif not object.upload_image %}
+{{ object.image_url }}
+{% else %}{% static 'default.png' %}{% endif %}" />
+<meta property="og:description" content="{{object.description}} | {{ total_views }} views" />
+<meta property="og:site_name" content="DevDiv" />
+{% endblock head %}
+{% block content %}
 <link rel="stylesheet" href="{% static 'css/__devdiv__video__style__.css'%}">
 <title>{% block title %}{{object.title}}{% endblock title %}</title>
 <!-- <link rel="stylesheet" href="{% static 'css/debug.css'%}"> -->
@@ -56,6 +66,7 @@
   <p>
     <em>{% if object.description %}{{object.description}}{% endif %}</em>
   </p>
+  <div class="sharethis-inline-share-buttons"></div>
   {% if object.upload_image or object.image_url %}
   <!-- Post Image -->
   <figure class="size-4 figure-back"

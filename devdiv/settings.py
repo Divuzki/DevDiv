@@ -136,7 +136,6 @@ if USE_S3:
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
     STATICFILES_STORAGE = 'core.storage_backends.StaticStorage'
 
-    
     # s3 cached static settings
     COMPRESS_URL = STATIC_URL
     COMPRESS_ROOT = BASE_DIR / "staticfiles"

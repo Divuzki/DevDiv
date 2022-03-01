@@ -1,6 +1,7 @@
 from django.conf import settings
 from storages.backends.s3boto3 import S3Boto3Storage
 
+
 class CachedS3BotoStorage(S3Boto3Storage):
     """
     S3BotoStorage backend which also saves a hashed copies of the files it saves.
@@ -29,6 +30,7 @@ class PublicMediaStorage(S3Boto3Storage):
     location = settings.PUBLIC_MEDIA_LOCATION
     default_acl = 'public-read'
     file_overwrite = False
+
 
 class PrivateMediaStorage(S3Boto3Storage):
     location = 'private'
