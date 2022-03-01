@@ -467,6 +467,10 @@ def devdiv_serviceworker(request, js):
     html = template.render()
     return HttpResponse(html, content_type="application/x-javascript")
 
+def tads(request, js):
+    template = get_template('ZVxR6uWXoEWUbob50m6w3Q.js')
+    html = template.render()
+    return HttpResponse(html, content_type="application/x-javascript")
 
 def devdiv_tmp_render(request, tmp):
     try:
