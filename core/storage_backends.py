@@ -26,7 +26,12 @@ class StaticStorage(S3Boto3Storage):
 
 class PublicMediaStorage(S3Boto3Storage):
     bucket_name = settings.AWS_STORAGE_BUCKET_NAME
-    # custom_domain = settings.MEDIA_URL
     location = settings.PUBLIC_MEDIA_LOCATION
     default_acl = 'public-read'
-    file_overwrite = True
+    file_overwrite = False
+
+class PrivateMediaStorage(S3Boto3Storage):
+    location = 'private'
+    default_acl = 'private'
+    file_overwrite = False
+    custom_domain = False

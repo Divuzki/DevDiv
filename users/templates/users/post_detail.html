@@ -56,22 +56,29 @@
   <p>
     <em>{% if object.description %}{{object.description}}{% endif %}</em>
   </p>
+  {% if object.upload_image or object.image_url %}
   <!-- Post Image -->
-  <figure class="size-4">
+  <figure class="size-4 figure-back"
+  style="background-image: url({% if object.upload_image %}{{ object.upload_image.url }}
+  {% elif not object.upload_image %}
+  {{ object.image_url }}
+  {% else %}{% static 'default.png' %}{% endif %});"
+  >
 
 
     <img src="{% if object.upload_image %}{{ object.upload_image.url }}
-    {% elif object.upload_image == None %}
+    {% elif not object.upload_image %}
     {{ object.image_url }}
     {% else %}{% static 'default.png' %}{% endif %}" alt="{{object.image_caption}}">
   </figure>
   <figcaption>
     <p>{% if object.image_caption %}{{object.image_caption}} {% endif %}</p>
   </figcaption>
-  <p> {{object.content|safe}}
+  {% endif %}
+   {{object.content|safe}}
     <p class="by-author">~ by {% if object.author == user %}You{%else%}<em> <a
           href="{% url 'users:user-posts' object.author.username %}">{{object.author}}{% endif %}</a></em></p>
-  </p>
+  
   {% if object.video_url %}
   <!-- Post Video -->
   {% if object.video_url == None or '' %}

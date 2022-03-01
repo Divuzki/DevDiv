@@ -26,7 +26,6 @@ from django.views.decorators.csrf import csrf_exempt
 from .decorators import confirm_password
 from django.utils.decorators import method_decorator
 import stripe
-import time
 
 # HashTag View
 
@@ -356,7 +355,7 @@ class PostDetailView(ObjectViewMixin, DetailView):
 @method_decorator(confirm_password, name='dispatch')
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'hashtag', 'image_url',
+    fields = ['title', 'upload_image', 'image_url',
               'video_url', 'content']  # fields in the Form
     # Validating the form
 

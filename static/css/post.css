@@ -16,11 +16,14 @@ article {
 
 article * {
   grid-column: start/end;
+  transition: all 0.2s ease;
 }
 
 @media (max-width: 8.5in) {
   article {
-    transform: translateX(-33px);
+    width: 100%;
+    padding-left: 24px;
+    grid-template-columns: 1fr 5% [start] 15% 60% 15% [end] 5% 1fr;
     padding: 0.5in 15px;
   }
 }
@@ -102,10 +105,15 @@ p {
     border-radius: 24px;
   }
   figure:hover ~ figcaption {
-    display: flex;
+    opacity: 1;
+    transform: translateY(-46px);
+  }
+  figure:hover ~ figcaption p {
+    border: 1px solid;
+    border-radius: 24px;
   }
   figure ~ figcaption {
-    display: none;
+    opacity: 0;
     transition: all 450ms ease;
   }
   figure > img {
@@ -118,6 +126,7 @@ figcaption p {
   border-radius: 0px 0px 5px 5px;
   background: #d9ac279c;
   padding: 5px;
+  margin: auto;
 }
 
 article a {

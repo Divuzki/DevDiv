@@ -79,13 +79,27 @@ def image_resize(image, width, height):
         image.save(img_filename, file_object)
 
 
-def clean_content(content, HashTag):
+def check_for_tag(content, HashTag):
     arr = re.findall(r"#(\w+)", content)
     for hsh in arr:
         if len(hsh) < 80:
             full_hash = '#' + hsh
             if HashTag.objects.filter(name__iexact=hsh):
-                content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/">#{hsh}</a>')
+                content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/?new=no">#{hsh}</a>')
             else:
-                content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/">#{hsh}</a>')
+                content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/?new=yes">#{hsh}</a>')
     return content
+
+def num_sum(num):
+    if num >= 1000:
+        num = str(f"{num}")
+        if not num[1] == "0":
+            num = f"{num[0]}.{num[1]}k"
+        else:
+            num = f"{num[0]}k"
+    elif num >= 1000000:
+        num = str(f"{num}")
+        if len(num) >= 2:
+            num = f"{num[0]+num[1]}M"
+        else:
+            num = f"{num[0]}M"

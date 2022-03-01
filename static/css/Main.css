@@ -63,6 +63,8 @@ iframe {
   cursor: pointer;
   box-shadow: -1px 0px 7px 0px rgba(18, 17, 17, 0.7);
   transition: all 0.5s ease;
+  margin-left: 0.25rem !important;
+  margin-bottom: 0 !important;
 }
 .footer p:last-child:hover {
   box-shadow: none;
@@ -97,32 +99,37 @@ textarea.form-control {
 .back-to-top {
   position: fixed;
   bottom: 3em;
+  padding: 13px;
+  width: 40px;
+  height: 40px;
   left: 3em;
-  background-color: rgba(225, 225, 225, 0.9);
+  background-color: white;
   color: #313943;
   border: none;
-  border-radius: 5px;
-  padding: 1em;
+  border-radius: 24px;
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 700;
-  box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.25);
+  box-shadow: -1px -1px 2em 1px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
-  display: none;
   opacity: 0;
   text-decoration: none;
   font-size: 0.75em;
 }
-
 .back-to-top:hover {
-  background: #efede8a1;
-  padding: 1em 3em;
-  color: #333;
+  background: #000000d1;
+  color: white;
   border: 1px solid;
 }
-
+.back-to-top:hover svg {
+  transform: translateY(-5px);
+}
+.back-to-top > svg {
+  transition: all 0.3s ease;
+}
 .back-to-top.visible {
   opacity: 1;
+  z-index: 2;
   display: inline-block;
 }
 

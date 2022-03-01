@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -7,8 +8,10 @@ from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from rest_framework.reverse import reverse as api_reverse
 from django.utils.translation import gettext_lazy as _
-from devdiv.utils import image_resize, clean_content
+from devdiv.utils import image_resize, check_for_tag
 
+STATIC_URL = settings.STATIC_URL
+MEDIA_URL = settings.MEDIA_URL
 
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
@@ -39,7 +42,7 @@ class Profile(models.Model):
     upload_image = models.ImageField(
         _("Image"), upload_to="profile_images/%Y/%m/", blank=True, null=True)
     image_url = models.CharField(
-        max_length=3080, default='/static/default_jpg.png')
+        max_length=3080, default='static/default_jpg.png', blank=True, null=True)
     status = models.CharField(max_length=50, null=True, blank=True)
     facebook_link = models.CharField(max_length=255, null=True, blank=True)
     twitter_link = models.CharField(max_length=255, null=True, blank=True)
@@ -71,7 +74,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, max_length=255)
     upload_image = models.ImageField(
         _("Image"), upload_to="post_media/image/%Y/%m/", blank=True, null=True)
-    image_url = models.CharField(max_length=3038, null=True, blank=True)
+    image_url = models.CharField(max_length=3038, default='static/default.png', null=True, blank=True)
     image_caption = models.CharField(max_length=100, null=True, blank=True,
                                    help_text="Text limit is 100, and know that this is the post image description")
     video_url = models.CharField(max_length=3000, null=True, blank=True)
@@ -143,16 +146,18 @@ class Post(models.Model):
                     kwargs={'pk': self.pk}, request=request)
     
     def save(self, *args, **kwargs):
+        if self.upload_image and not self.image_url:
+            self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
+        else:
+            self.image_url = f"{STATIC_URL}default.jpg"
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
         if self.upload_image and not self.image_url:
-            try:
-                image_resize(self.upload_image, 800, 600)
-            except:
-                pass
+            image_resize(self.upload_image, 800, 600)
+            
         if self.content:
-            self.content = clean_content(self.content, HashTag)
+            self.content = check_for_tag(self.content, HashTag)
 
 
 class Comment(models.Model):
