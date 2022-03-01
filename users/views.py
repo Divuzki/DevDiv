@@ -467,8 +467,8 @@ def devdiv_serviceworker(request, js):
     html = template.render()
     return HttpResponse(html, content_type="application/x-javascript")
 
-def tads(request, js):
-    template = get_template('ZVxR6uWXoEWUbob50m6w3Q.js')
+def sw():
+    template = get_template('service.js')
     html = template.render()
     return HttpResponse(html, content_type="application/x-javascript")
 

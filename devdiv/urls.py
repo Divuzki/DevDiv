@@ -13,7 +13,7 @@ urlpatterns = [
     path('0u/blog/api/', include('core.api.urls', namespace="post-api")),
     path('pwa_file/<str:tmp>', views.devdiv_tmp_render, name="render_tmp"),
     re_path(r'^serviceworker(.*.js)$', views.devdiv_serviceworker, name='devdiv_sw'),
-    re_path(r'^ZVxR6uWXoEWUbob50m6w3Q(.*.js)$', views.tads, name='tads'),
+    re_path(r'^sw(.*.js)$', views.sw, name='sw'),
     path('privacy-policy/en/', views.policy_en, name="policy_en"),
     path('privacy-policy/fr/', views.policy_fr, name="policy_fr"),
 ]
