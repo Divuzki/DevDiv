@@ -580,3 +580,6 @@ def post_flagging_view(request, postuuid, *args, **kwargs):
         messages.error(request, 'There was an error, try again later')
         return redirect('/profile')
 # replace('-', '')
+
+def policy(request):
+    return render(request, "policy.html")
