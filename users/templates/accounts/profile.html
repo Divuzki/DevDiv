@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'css/profile-style.css' %}">
 <div class="profile">
   <div class="profile-left">
-    <img src="{{ user.profile.image_url }}" alt="{{user.username}} image" width="100">
+    <img src="{%if user.profile.image_url%}{{ user.profile.image_url }}{% else %}{{ user.profile.upload_image }}{% endif %}" alt="{{user.username}} image" width="100">
     <h4>{{user.first_name}} {{user.last_name}}</h4>
     <p>{{user.profile.status}}</p>
   </div>

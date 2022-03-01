@@ -15,9 +15,9 @@ MEDIA_URL = settings.MEDIA_URL
 
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
-CategoryList = (('uncategorized','uncategorized'),('world', 'world'), ('politics', 'politics'), ('technology', 'technology'), 
-('science', 'science'), ('finace', 'finace'),
- ('how-To', 'how-to'), ('lifeStyle', 'lifeStyle'), ('gossip', 'gossip'))
+CategoryList = (('uncategorized', 'uncategorized'), ('world', 'world'), ('politics', 'politics'), ('technology', 'technology'),
+                ('science', 'science'), ('finace', 'finace'),
+                ('how-To', 'how-to'), ('lifeStyle', 'lifeStyle'), ('gossip', 'gossip'))
 
 
 class HashTag(models.Model):
@@ -54,7 +54,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
+
     def save(self, *args, **kwargs):
+        if not self.upload_image or self.upload_image is None:
+            self.image_url = f"{STATIC_URL}default.png"
+        else:
+            self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
@@ -74,13 +79,15 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, max_length=255)
     upload_image = models.ImageField(
         _("Image"), upload_to="post_media/image/%Y/%m/", blank=True, null=True)
-    image_url = models.CharField(max_length=3038, default='static/default.png', null=True, blank=True)
+    image_url = models.CharField(
+        max_length=3038, default='static/default.png', null=True, blank=True)
     image_caption = models.CharField(max_length=100, null=True, blank=True,
-                                   help_text="Text limit is 100, and know that this is the post image description")
+                                     help_text="Text limit is 100, and know that this is the post image description")
     video_url = models.CharField(max_length=3000, null=True, blank=True)
     category = models.CharField(
         choices=CategoryList, max_length=50, default='uncategorized')
-    hashtag = models.ManyToManyField(HashTag, related_name="hashtag", blank=True)
+    hashtag = models.ManyToManyField(
+        HashTag, related_name="hashtag", blank=True)
     # CharField(max_length=150, null=True, blank=True)
     likes = models.ManyToManyField(User, related_name="likes", blank=True)
     dislikes = models.ManyToManyField(
@@ -92,7 +99,6 @@ class Post(models.Model):
     @property
     def owner(self):
         return self.author
-    
 
     @property
     def total_likes(self):
@@ -126,14 +132,13 @@ class Post(models.Model):
 
     def total_dislikes(self):
         return self.dislikes.count()
-    
+
     # With Int
     def total_views(self):
         return self.views
 
     def total_votes(self):
         return self.votes
-
 
     def __str__(self):
         return self.title
@@ -144,18 +149,18 @@ class Post(models.Model):
     def get_api_url(self, request=None):
         api_reverse("post-api:post-api-rud",
                     kwargs={'pk': self.pk}, request=request)
-    
+
     def save(self, *args, **kwargs):
-        if self.upload_image and not self.image_url:
-            self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
-        elif not self.upload_image and self.image_url:
+        if not self.upload_image or self.upload_image is None:
             self.image_url = f"{STATIC_URL}default.png"
+        else:
+            self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
         if self.upload_image and not self.image_url:
             image_resize(self.upload_image, 800, 600)
-            
+
         if self.content:
             self.content = check_for_tag(self.content, HashTag)
 
