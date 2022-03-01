@@ -16,7 +16,8 @@ MEDIA_URL = settings.MEDIA_URL
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
 CategoryList = (('uncategorized', 'uncategorized'), ('world', 'world'), ('politics', 'politics'), ('technology', 'technology'),
-                ('science', 'science'), ('finace', 'finace'), ('education', 'education'),
+                ('science', 'science'), ('finace',
+                                         'finace'), ('education', 'education'),
                 ('how-To', 'how-to'), ('lifeStyle', 'lifeStyle'), ('gossip', 'gossip'))
 
 

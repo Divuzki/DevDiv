@@ -307,7 +307,6 @@ def post_detail(request, pk, *args, **kwargs):
     qs.views = qs.views + 1
     qs.save()
     total_views = qs.total_views()
-    total_votes = qs.total_votes()
     total_likes = qs.total_likes()
     total_dislikes = qs.total_dislikes()
     context = {
@@ -315,7 +314,6 @@ def post_detail(request, pk, *args, **kwargs):
         "cat_menu": cat_menu,
         "object": qs,
         "total_views": total_views,
-        "total_votes": total_votes,
         "total_likes": total_likes,
         "total_dislikes": total_dislikes,
     }
@@ -331,7 +329,6 @@ class PostDetailView(ObjectViewMixin, DetailView):
 
         stuff = get_object_or_404(Post, id=self.kwargs['pk'])
         total_views = stuff.total_views()
-        total_votes = stuff.total_votes()
         total_likes = stuff.total_likes()
         total_dislikes = stuff.total_dislikes()
         context["posts"] = cat_menu
@@ -339,7 +336,6 @@ class PostDetailView(ObjectViewMixin, DetailView):
         context["total_likes"] = total_likes  # total likes
         context["total_dislikes"] = total_dislikes  # total dislikes
         context["total_views"] = total_views  # total views
-        context["total_votes"] = total_votes  # total votes
         return context
 
     # def get_queryset(self):
