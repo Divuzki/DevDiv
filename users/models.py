@@ -56,10 +56,10 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):
-        if not self.upload_image or self.image_url is None and self.image_url == '' or self.image_url is None:
-            self.image_url = f"{STATIC_URL}default_jpg.png"
-        else:
+        if self.upload_image:
             self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
+        if not self.upload_image and not self.image_url:
+            self.image_url = f"{STATIC_URL}default_jpg.png"
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
@@ -151,10 +151,10 @@ class Post(models.Model):
                     kwargs={'pk': self.pk}, request=request)
 
     def save(self, *args, **kwargs):
-        if not self.upload_image or self.image_url is None and self.image_url == '' or self.image_url is None:
-            self.image_url = f"{STATIC_URL}default.png"
-        else:
+        if self.upload_image:
             self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
+        if not self.upload_image and not self.image_url:
+            self.image_url = f"{STATIC_URL}default.png"
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
