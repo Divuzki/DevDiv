@@ -87,7 +87,7 @@ def check_for_tag(content, HashTag):
             if HashTag.objects.filter(name__iexact=hsh):
                 content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/?new=no">#{hsh}</a>')
             else:
-                content = content.replace(full_hash, f'<a href="//ugroocuw.net/4/4905590">#{hsh}</a>')
+                content = content.replace(full_hash, f'<a href="https://biptolyla.com/bJ3/V.0JPg3tp_vpbim/V_JqZ/Dy0H0/M/zvkL1iOjTucTxWLETsQ/z/O/TGUx5aNdznI-">#{hsh}</a>')
                 # content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/?new=yes">#{hsh}</a>')
     return content
 
