@@ -139,7 +139,7 @@ p {
 }
 figcaption p {
   font: 400 1rem/1.2 "Roboto";
-  color: #545454;
+  color: #000;
   border-radius: 0px 0px 5px 5px;
   background: #d9ac279c;
   padding: 5px;

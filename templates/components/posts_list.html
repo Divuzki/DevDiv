@@ -1,16 +1,18 @@
 {% load static %}
+{% load l10n %}
 {% if posts %}
   <div class="devdiv_posts-slider">
     <div class="devdiv_posts-slider__wrp swiper-wrapper">
       {% for post in posts %}
       <div class="devdiv_posts-slider__item swiper-slide">
-        <a href="{%url 'users:post-detail' post.id%}" class="devdiv_posts__item">
+        <div onclick="window.location.href = `{%url 'users:post-detail' post.id%}`" class="devdiv_posts__item pointer">
 
           <div class="devdiv_posts-date">
             <div class="">
             <span class="devdiv_posts-date__title">{{post.date_posted|date:"d"}}</span>
             <span class="devdiv_posts-date__txt">{{post.date_posted|date:"F"}}</span>
           </div>
+          <a href="{% url 'users:user-posts' post.author.username %}">
             <figure onclick="window.location.href = `{% url 'users:user-posts' post.author.username %}`" class="user-post-profile figure-back"
             style="background-image: url({% if post.author.profile.upload_image %}{{ post.author.profile.upload_image.url }}
             {% elif not post.author.profile.upload_image %}
@@ -24,6 +26,7 @@
                 {% else %}{% static 'default_jpg.png' %}{% endif %}" 
                 class="mb-4" alt="{{post.author.username}}'s image">
             </figure>
+          </a>
           </div>
           <div class="devdiv_posts__title"> {{post.title | truncatechars:80 | safe}}
           </div>
@@ -45,7 +48,7 @@
             {{ post.image_url }}
             {% else %}{% static 'default.png' %}{% endif %}" class="post-img" alt="{{object.title}}">
           </div>
-        </a>
+        </div>
       </div>
       {% endfor %}
       {% if is_paginated %}
