@@ -95,7 +95,7 @@ class Post(models.Model):
     dislikes = models.ManyToManyField(
         User, related_name="dislikes",  blank=True)
     views = models.IntegerField(default=0, null=True, blank=True)
-    unwanted_content = models.TextField(null=True, blank=True)
+    scraped = models.BooleanField(default=False)
     date_posted = models.DateTimeField(default=timezone.now)
 
     @property

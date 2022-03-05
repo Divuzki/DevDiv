@@ -4,9 +4,8 @@ from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
 from users.models import Post
 
-USER_1 = User.objects.get(pk=1)
+USER_1 = User.objects.get(pk=2)
 class Command(BaseCommand):
-    help = "collect jobs"
     # define logic of command
     def handle(self, *args, **options):
         # collect html
@@ -14,11 +13,12 @@ class Command(BaseCommand):
         # convert to soup
         soup = BeautifulSoup(html.content, 'html.parser')
         # grab all postings
-        postings = soup.find_all("div", class_="jeg_postsmall")
-        post_list = []
+        postings = soup.find_all("div", class_="jeg_posts jeg_load_more_flag")
+        # post_list = []
         for p in postings:
-            url = p.find('a')['href']
-            title = p.find('a').text
+            post = p.find("h3", {"class":"jeg_post_title"})
+            url = post.find('a')['href']
+            title = post.text
             html = requests.get(url)
             soup = BeautifulSoup(html.content, 'html.parser')
             # post = soup.find_all("div", class_="jeg_inner_content")
@@ -44,7 +44,11 @@ class Command(BaseCommand):
 
                 # Looking for Content Tags
                 for p in content:
-                    content_list.append(p.find('p'))
+                    pr = p.find_all('p')
+                    unwanted = p.find('div')
+                    unwanted.extract()
+                    for pr in pr:
+                        content_list.append(pr)
 
             # print(content_list)
             except:
@@ -53,9 +57,13 @@ class Command(BaseCommand):
                 unwanted_list = None
 
             # Getting the finished looped post details data
-            discription = ' '.join([str(x) for x in desc_list])
-            content = ' '.join([str(x) for x in content_list])
-            image_url = ' '.join([str(x) for x in img_list])
+            try:
+                discription = ' '.join([str(x) for x in desc_list])
+                image_url = ' '.join([str(x) for x in img_list])
+            except:
+                discription = ' '.join([str(x) for x in content])
+            # content = '\n'.join([str(x) for x in content])
+            content = '\n'.join([str(x) for x in content_list])
 
             qs = Post.objects.filter(title__iexact=title)
             if not qs.exists():
@@ -65,6 +73,7 @@ class Command(BaseCommand):
                     content=content, 
                     author=USER_1,
                     image_url=image_url,
+                    scraped=True
                     )
                 print('%s added' % (title,))
             else:
