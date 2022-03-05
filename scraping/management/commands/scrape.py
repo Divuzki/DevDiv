@@ -20,8 +20,7 @@ class Command(BaseCommand):
             url = post.find('a')['href']
             title = post.text
             qs = Post.objects.filter(title__iexact=title).first()
-            print(qs)
-            if qs is None:
+            if qs == None:
                 html = requests.get(url)
                 soup = BeautifulSoup(html.content, 'html.parser')
                 # post = soup.find_all("div", class_="jeg_inner_content")
