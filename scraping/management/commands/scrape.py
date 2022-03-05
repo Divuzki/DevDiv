@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
 from users.models import Post
 
-USER_1 = User.objects.get(pk=2)
+USER_1 = User.objects.get(pk=1)
 class Command(BaseCommand):
     # define logic of command
     def handle(self, *args, **options):
@@ -63,7 +63,7 @@ class Command(BaseCommand):
                 content = '\n'.join([str(x) for x in content_list])
                 # content = '\n'.join([str(x) for x in content])
 
-                qs = Post.objects.filter(title__iexact=title)
+                qs = Post.objects.filter(title=title)
                 if not qs.exists():
                     Post.objects.create(
                         title=title, 
