@@ -1964,6 +1964,7 @@ a {
 
 .contant-section {
   margin: auto;
+  padding: 24px;
 }
 .contant-section form {
   margin-bottom: 40px;

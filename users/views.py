@@ -1,3 +1,5 @@
+from bs4 import BeautifulSoup
+import requests
 from django.template.loader import get_template
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import CreateUserForm, ProfileUpdateForm, ConfirmPasswordForm, FlagForm
@@ -25,6 +27,8 @@ from rest_framework import serializers
 from django.views.decorators.csrf import csrf_exempt
 from .decorators import confirm_password
 from django.utils.decorators import method_decorator
+from devdiv.utils import num_sum
+
 import stripe
 
 # HashTag View
@@ -313,7 +317,7 @@ def post_detail(request, pk, *args, **kwargs):
         "posts": cat_menu,
         "cat_menu": cat_menu,
         "object": qs,
-        "total_views": total_views,
+        "total_views": num_sum(total_views),
         "total_likes": total_likes,
         "total_dislikes": total_dislikes,
     }
@@ -467,10 +471,12 @@ def devdiv_serviceworker(request, js):
     html = template.render()
     return HttpResponse(html, content_type="application/x-javascript")
 
+
 def sw():
     template = get_template('service.js')
     html = template.render()
     return HttpResponse(html, content_type="application/x-javascript")
+
 
 def devdiv_tmp_render(request, tmp):
     try:
@@ -585,8 +591,56 @@ def post_flagging_view(request, postuuid, *args, **kwargs):
         return redirect('/profile')
 # replace('-', '')
 
+
 def policy_en(request):
     return render(request, "policy-en.html")
 
+
 def policy_fr(request):
     return render(request, "policy-fr.html")
+
+
+# from .functions import get_descriptions
+
+
+def test(request):
+    # collect html
+    html = requests.get('https://nairametrics.com/')
+    # convert to soup
+    soup = BeautifulSoup(html.content, 'html.parser')
+    # grab all postings
+    postings = soup.find_all("div", class_="jeg_postsmall")
+    post_list = []
+    for p in postings:
+        url = p.find('a')['href']
+        title = p.find('a').text
+        html = requests.get(url)
+        soup = BeautifulSoup(html.content, 'html.parser')
+        # post = soup.find_all("div", class_="jeg_inner_content")
+        descs = soup.find_all("div", class_="entry-header")
+        img = soup.find_all("div", class_="jeg_featured")
+        # getting the content
+        content = soup.find_all("div", class_="content-inner")
+        desc_list = []
+        img_list = []
+        unwanted_list = []
+        try:
+            for d in descs:
+                desc_list.append(d.find('h2').text)  # getting the discription
+
+            # Looking for post image link
+            for img_url in img:
+                img_list.append(img_url.find('a')['href'])  # getting the image_url
+
+            # Looking for Unwanted Tags
+            for p in content:
+                unwanted_list.append(p.find('div'))
+
+        # print(content_list)
+        except:
+            desc_list = None
+            img_list = None
+            unwanted_list = None
+        post_list.append((title, desc_list, content, img_list))
+    front_end_stuff = {'final_postings': post_list}
+    return render(request, 'test.html', context=front_end_stuff)

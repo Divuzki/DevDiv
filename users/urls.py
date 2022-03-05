@@ -54,5 +54,6 @@ urlpatterns = [
     path('post/like/<int:pk>', views.LikeView, name="like_post"),
     path('post/dislike/<int:pk>', views.DislikeView, name="dislike_post"),
     path('search/', views.search_result_view, name="search"),
+    path('t', views.test, name="test"),
 
 ]

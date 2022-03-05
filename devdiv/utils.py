@@ -87,20 +87,14 @@ def check_for_tag(content, HashTag):
             if HashTag.objects.filter(name__iexact=hsh):
                 content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/?new=no">#{hsh}</a>')
             else:
-                content = content.replace(full_hash, f'<a href="https://biptolyla.com/bJ3/V.0JPg3tp_vpbim/V_JqZ/Dy0H0/M/zvkL1iOjTucTxWLETsQ/z/O/TGUx5aNdznI-">#{hsh}</a>')
+                content = content.replace(full_hash, f'<a href="https://whamuthygle.com/bR3.Vb0FPY3/plvLbWm/V/JDZPDJ0w0iMRzNkT2GM/TSka5/LAT/Q_z/OpTHYUy/MYDLAf">#{hsh}</a>')
                 # content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/?new=yes">#{hsh}</a>')
     return content
 
 def num_sum(num):
-    if num >= 1000:
-        num = str(f"{num}")
-        if not num[1] == "0":
-            num = f"{num[0]}.{num[1]}k"
-        else:
-            num = f"{num[0]}k"
-    elif num >= 1000000:
-        num = str(f"{num}")
-        if len(num) >= 2:
-            num = f"{num[0]+num[1]}M"
-        else:
-            num = f"{num[0]}M"
+    magnitude = 0
+    while abs(num) >= 1000:
+        magnitude += 1
+        num /= 1000.0
+    # add more suffixes if you need them
+    return '%.2f%s' % (num, ['', 'K', 'M', 'B', 'T', 'P'][magnitude])

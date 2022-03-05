@@ -2,7 +2,6 @@
   body {
     background: linear-gradient(to right top, #0089f2 50%, #DDD 50%);
     background-size: 100% calc(100% - 100vh + 129px);
-    background-repeat: no-repeat;
   }
 
   body:before {
@@ -405,4 +404,8 @@ figcaption {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+}
+
+.sharethis-inline-share-buttons {
+  z-index: 1;
 }/*# sourceMappingURL=post.css.map */

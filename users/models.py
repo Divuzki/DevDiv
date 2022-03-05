@@ -15,7 +15,9 @@ MEDIA_URL = settings.MEDIA_URL
 
 Country = (('Nigeria', 'Nigeria'), ('USA', 'USA'), ('UK', 'UK'),
            ('Ghana', 'Ghana'), ('Canada', 'Canada'))
-CategoryList = (('uncategorized', 'uncategorized'), ('world', 'world'), ('politics', 'politics'), ('technology', 'technology'),
+CategoryList = (('uncategorized', 'uncategorized'), ('foreign', 'foreign'), ('local', 'local'),
+                ('sports', 'sports'), ('politics',
+                                       'politics'), ('technology', 'technology'),
                 ('science', 'science'), ('finace',
                                          'finace'), ('education', 'education'),
                 ('how-To', 'how-to'), ('lifeStyle', 'lifeStyle'), ('gossip', 'gossip'))
@@ -76,7 +78,6 @@ class Post(models.Model):
     description = models.CharField(max_length=200,
                                    help_text="Text limit is 200, and know that this is the post snippet")
     content = RichTextField()
-    # content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, max_length=255)
     upload_image = models.ImageField(
         _("Image"), upload_to="post_media/image/%Y/%m/", blank=True, null=True)
@@ -94,6 +95,7 @@ class Post(models.Model):
     dislikes = models.ManyToManyField(
         User, related_name="dislikes",  blank=True)
     views = models.IntegerField(default=0, null=True, blank=True)
+    unwanted_content = models.TextField(null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
 
     @property
@@ -162,7 +164,10 @@ class Post(models.Model):
             image_resize(self.upload_image, 800, 600)
 
         if self.content:
-            self.content = check_for_tag(self.content, HashTag)
+            try:
+                self.content = check_for_tag(self.content, HashTag)
+            except:
+                pass
 
 
 class Comment(models.Model):
