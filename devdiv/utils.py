@@ -95,6 +95,6 @@ def num_sum(num):
     magnitude = 0
     while abs(num) >= 1000:
         magnitude += 1
-        num /= 1000.0
+        num /= 1000
     # add more suffixes if you need them
     return '%.2f%s' % (num, ['', 'K', 'M', 'B', 'T', 'P'][magnitude])
