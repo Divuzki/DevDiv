@@ -13,7 +13,7 @@ class Command(BaseCommand):
         # convert to soup
         soup = BeautifulSoup(html.content, 'html.parser')
         # grab all postings
-        postings = soup.find_all("div", class_="jeg_posts jeg_load_more_flag")
+        postings = soup.find_all("div", class_="jeg_posts")
         # post_list = []
         for p in postings:
             post = p.find("h3", {"class":"jeg_post_title"})
@@ -57,13 +57,10 @@ class Command(BaseCommand):
                 unwanted_list = None
 
             # Getting the finished looped post details data
-            try:
-                discription = ' '.join([str(x) for x in desc_list])
-                image_url = ' '.join([str(x) for x in img_list])
-            except:
-                discription = ' '.join([str(x) for x in content])
-            # content = '\n'.join([str(x) for x in content])
+            discription = ' '.join([str(x) for x in desc_list])
+            image_url = ' '.join([str(x) for x in img_list])
             content = '\n'.join([str(x) for x in content_list])
+            # content = '\n'.join([str(x) for x in content])
 
             qs = Post.objects.filter(title__iexact=title)
             if not qs.exists():
@@ -78,6 +75,4 @@ class Command(BaseCommand):
                 print('%s added' % (title,))
             else:
                 print('%s already exists' % (title,))
-                # except:
-                    # print('%s already exists' % (title,))
-        self.stdout.write( 'post complete' )
+        self.stdout.write( '`created posts` completed ✅' )
