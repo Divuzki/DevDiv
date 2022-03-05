@@ -57,22 +57,25 @@ class Command(BaseCommand):
                 unwanted_list = None
 
             # Getting the finished looped post details data
-            discription = ' '.join([str(x) for x in desc_list])
-            image_url = ' '.join([str(x) for x in img_list])
-            content = '\n'.join([str(x) for x in content_list])
-            # content = '\n'.join([str(x) for x in content])
+            try:
+                discription = ' '.join([str(x) for x in desc_list])
+                image_url = ' '.join([str(x) for x in img_list])
+                content = '\n'.join([str(x) for x in content_list])
+                # content = '\n'.join([str(x) for x in content])
 
-            qs = Post.objects.filter(title__iexact=title)
-            if not qs.exists():
-                Post.objects.create(
-                    title=title, 
-                    description=discription,
-                    content=content, 
-                    author=USER_1,
-                    image_url=image_url,
-                    scraped=True
-                    )
-                print('%s added' % (title,))
-            else:
-                print('%s already exists' % (title,))
-        self.stdout.write( '`created posts` completed ✅' )
+                qs = Post.objects.filter(title__iexact=title)
+                if not qs.exists():
+                    Post.objects.create(
+                        title=title, 
+                        description=discription,
+                        content=content, 
+                        author=USER_1,
+                        image_url=image_url,
+                        scraped=True
+                        )
+                    print('%s added' % (title,))
+                else:
+                    print('%s already exists' % (title,))
+            except:
+                print('%s can`t be posted' % (title,))
+        self.stdout.write( 'Scraped Sucessful ✅' )
