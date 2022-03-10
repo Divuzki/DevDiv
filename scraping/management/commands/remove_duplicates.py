@@ -8,13 +8,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         MyModel = Post
 
-        unique_fields = ['title', 'image_url']
+        unique_fields = ['title']
         duplicates = (
             MyModel.objects.values(*unique_fields)
             .order_by()
             .annotate(max_id=Max('id'), count_id=Count('id'))
             .filter(count_id__gt=1)
         )
+        print(duplicates)
         self.stdout.write('Scanning...😁')
 
         msg = "Removed Duplicates✅"
