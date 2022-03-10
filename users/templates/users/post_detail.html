@@ -89,8 +89,18 @@
     <p>{% if object.image_caption %}{{object.image_caption}} {% endif %}</p>
   </figcaption>
   {% endif %}
-  <div class="intro"></div>
+  <div id="my-player" data-player-id="3f0a99e6-2880-47b4-bce4-8ae175e622aa">
   <div class="post-content videoAd">
+      <script src="//cdn.flowplayer.com/players/c99231c9-f30f-4f19-a723-70057390fd13/7/flowplayer.async.js">
+        {
+           "ima": { "ads": [{
+             "adTag": "https://whamuthygle.com/dTmDFhz.d/GHNXv/ZRGIUN/OeHmq9TuPZtUBlckbPCTHQQzFO/TMYnwDMUzucUt/NvDDMY5PNujXA-zcOXAq",
+             "time": 0,
+             "outstream": true
+           }]}
+        }
+      </script>
+    </div>
    {{object.content|safe}}
     <p class="by-author">~ by {% if object.author == user %}You{%else%}<em> <a
           href="{% url 'users:user-posts' object.author.username %}">{{object.author}}{% endif %}</a></em></p>
@@ -195,26 +205,15 @@
       }
     });
   })
+  flowplayer.defer('#my-player').then(function(api) {
+  console.log('api ready');
+});
+
 </script>
 {% endif %}
 {% if object.video_url %}
 <script src="{% static 'js/__devdiv__video__.js' %}"></script>
 {% endif %}
-<!-- The following line is the Brightcove Player script. Replace it with your player. You can  -->
-<!-- include the default player for your account by just changing the account number to use your own. -->
-<!-- That way you don't even need to create a new Brightcove Player. -->
-<script src="https://players.brightcove.net/1752604059001/default_default/index.min.js"></script>
-<!-- These next two lines are the IMA3 plugin - the ad integration using Google's IMA3 HTML5 SDK. -->
-<!-- You can get a little bit faster load time if you include these in the player config and build -->
-<!-- them together as one unit using the Brightcove Player Management API. -->
-<!-- If you do that then they will be part of the player index.min.js. -->
-<link href="https://players.brightcove.net/videojs-ima3/3/videojs.ima3.min.css" rel="stylesheet"/>
-<script src="https://players.brightcove.net/videojs-ima3/3/videojs.ima3.min.js"></script>
-<!-- This is the ad-only player loader script. You can use it unmodified since it's hosted from -->
-<!-- Brightcove's player origin and served over CDN. You can also use it as an example of how to -->
-<!-- dynamically load the Brightcove Player and do your own thing. It can also be included in your -->
-<!-- player config if you choose. -->
-<script src="https://players.brightcove.net/3723496277001/files/adonly.js"></script>
 {% endblock js %}
 <style>
   .zos{

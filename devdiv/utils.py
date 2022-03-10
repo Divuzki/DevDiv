@@ -91,10 +91,27 @@ def check_for_tag(content, HashTag):
                 # content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/?new=yes">#{hsh}</a>')
     return content
 
+def add_comma_to_number(n):
+   res = str(n)
+   res = res[::-1]
+
+   ans = ""
+   for i in range(len(res)):
+      if i%3 == 0 and i != 0 :
+         ans += ','
+      ans += res[i]
+
+   ans = ans[::-1]
+
+   return ans
+
+
 def num_sum(num):
     magnitude = 0
-    while abs(num) >= 1000:
-        magnitude += 1
-        num /= 1000
-    # add more suffixes if you need them
-    return '%.2f%s' % (num, ['', 'K', 'M', 'B', 'T', 'P'][magnitude])
+    if abs(num) >= 1000:
+        while abs(num) >= 1000:
+            magnitude += 1
+            num /= 1000
+        # add more suffixes if you need them
+        num = '%.2f%s' % (num, ['', 'K', 'M', 'B', 'T', 'P'][magnitude])
+    return num
