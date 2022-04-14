@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load ads_tags %}
+
 {% block head %}
 <meta property="og:title" content="{{object.title}}" />
 <meta property="og:url" content="{{ request.build_absolute_uri }}" />
@@ -101,7 +103,7 @@
         }
       </script>
     </div>
-   {{object.content|safe}}
+   {{ object.content|inject_ads_after_paragraph:5 | safe}}
     <p class="by-author">~ by {% if object.author == user %}You{%else%}<em> <a
           href="{% url 'users:user-posts' object.author.username %}">{{object.author}}{% endif %}</a></em></p>
     </div>

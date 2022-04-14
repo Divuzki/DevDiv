@@ -18,7 +18,7 @@ class Command(BaseCommand):
         print(duplicates)
         self.stdout.write('Scanning...😁')
 
-        msg = "Removed Duplicates✅"
+        msg = "Removing Duplicates✅"
         if not duplicates.exists():
             msg = "No Duplicates Was Found 🤷🏾‍♂️"
 
