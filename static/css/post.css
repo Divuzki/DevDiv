@@ -1,7 +1,6 @@
 @supports (height: 100vh) {
   body {
     background: linear-gradient(to right top, #0089f2 50%, #DDD 50%);
-    background-size: 100% calc(100% - 100vh + 129px);
   }
 
   body:before {
@@ -25,7 +24,7 @@ article {
   display: grid;
   margin: auto;
   border-radius: 15px 15px 0px 0px;
-  background: linear-gradient(#fffdeb, white 6.55rem);
+  background: linear-gradient(hsl(55deg, 100%, 96%), white 6.55rem);
   box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
   grid-template-columns: 1fr 0.5in [start] 1.25in 5in 1.25in [end] 0.5in 1fr;
 }
@@ -85,27 +84,27 @@ p {
 
 h1 {
   font: 700 2rem/1.2 "Roboto";
-  color: #545454;
+  color: hsl(0deg, 0%, 33%);
 }
 
 h2 {
   font: 400 1.5rem/1.2 "Roboto";
-  color: #545454;
+  color: hsl(0deg, 0%, 33%);
 }
 
 time {
   font: 700 1rem/1.2 "Roboto";
-  color: #b7a8ff;
+  color: hsl(250deg, 100%, 83%);
 }
 
 h3 {
   font: 700 1rem/1.2 "Roboto";
-  color: #1c00a8;
+  color: hsl(250deg, 100%, 33%);
 }
 
 p {
   font: 400 1rem/1.2 "Roboto";
-  color: #545454;
+  color: hsl(0deg, 0%, 33%);
 }
 
 @media (min-width: 1024px) {
@@ -113,7 +112,7 @@ p {
     transition: all 500ms ease;
   }
   figure:hover {
-    box-shadow: 1px 0px 2px 14px #ffffffc9;
+    box-shadow: 1px 0px 2px 14px rgba(255, 255, 255, 0.7882352941);
     border-radius: 24px;
     padding: 2px;
   }
@@ -140,13 +139,16 @@ figcaption p {
   font: 400 1rem/1.2 "Roboto";
   color: #000;
   border-radius: 0px 0px 5px 5px;
-  background: #d9ac279c;
+  background: rgba(217, 172, 39, 0.6117647059);
   padding: 5px;
   margin: auto;
 }
 
 article a {
-  box-shadow: inset 0 -0.25em #fff480;
+  box-shadow: inset 0 -0.25em hsl(55deg, 100%, 75%);
+}
+article a[target=_blank] {
+  box-shadow: none;
 }
 
 @media (max-width: 8.5in) {
@@ -203,18 +205,18 @@ figcaption {
 }
 
 .share-post button {
-  background: #2fe92fa9;
+  background: rgba(47, 233, 47, 0.662745098);
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
-  border: 1px solid #2fe92fa9;
+  border: 1px solid rgba(47, 233, 47, 0.662745098);
   border-radius: 24px;
   padding: 5px;
   outline: none;
 }
 
 .share-post button:active {
-  background: #2fe92f6a;
+  background: rgba(47, 233, 47, 0.4156862745);
   border: 2px solid;
 }
 
@@ -235,7 +237,7 @@ figcaption {
   background: #fff;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
   border-radius: 0px 0px 15px 15px;
-  border-top: 1px solid #17a2b82b;
+  border-top: 1px solid rgba(23, 162, 184, 0.168627451);
   border-top-style: dashed;
   border-width: 10px;
 }
@@ -247,7 +249,7 @@ figcaption {
   font-size: x-large;
   font-weight: 900;
   line-height: 1.5;
-  color: #1c00a8ba;
+  color: rgba(28, 0, 168, 0.7294117647);
   text-transform: uppercase;
 }
 
@@ -392,7 +394,7 @@ figcaption {
 }
 
 .by-author {
-  color: #645e5e9e !important;
+  color: rgba(100, 94, 94, 0.6196078431) !important;
   font-style: oblique !important;
 }
 
