@@ -22,8 +22,7 @@ def inject_ads_after_paragraph(value, arg):
 
         # Append our code before the following paragraph
         paragraphs[arg] = ad_post_code + paragraphs[arg]
-        if paragraphs[arg-2]:
-            paragraphs[arg-2] = ad_vid_code + paragraphs[arg-2]
+        paragraphs[arg-2] = ad_vid_code + paragraphs[arg-2]
         if paragraphs[arg+4]:
             paragraphs[arg+4] = ad_vid_code2 + paragraphs[arg+4]
         else:
