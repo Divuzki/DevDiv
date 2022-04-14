@@ -148,7 +148,7 @@ article a {
   box-shadow: inset 0 -0.25em hsl(55deg, 100%, 75%);
 }
 article a[target=_blank] {
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 @media (max-width: 8.5in) {

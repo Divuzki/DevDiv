@@ -10,8 +10,9 @@ def inject_ads_after_paragraph(value, arg):
     # Render our adsense code placed in html file
     ad_post_code = render_to_string("users/ads/posts.html")
     ad_vid_code = render_to_string("users/ads/video.html")
-    ad_vid_code2 = render_to_string("users/ads/video.html").replace("adPlayerDiv", "adPlayerDiv2")
-    ad_vid_code3 = render_to_string("users/ads/video.html").replace("adPlayerDiv", "adPlayerDiv3")
+    ad_vid_code2 = render_to_string(
+        "users/ads/video.html").replace("adPlayerDiv", "adPlayerDiv2")
+    ad_poster = render_to_string("users/ads/poster-300x250.html")
 
     # Break down content into paragraphs
     paragraphs = value.split("</p>")
@@ -26,8 +27,9 @@ def inject_ads_after_paragraph(value, arg):
         if paragraphs[arg+4]:
             paragraphs[arg+4] = ad_vid_code2 + paragraphs[arg+4]
         else:
-            paragraphs[arg] = ad_vid_code3 + paragraphs[arg]
-
+            paragraphs[arg] = ad_poster + paragraphs[arg]
+        if paragraphs[arg+4-3]:
+            paragraphs[arg] = ad_poster + paragraphs[arg]
 
         # Assemble our text back with injected adsense code
         value = "</p>".join(paragraphs)

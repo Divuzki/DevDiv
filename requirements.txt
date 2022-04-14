@@ -23,3 +23,5 @@ django-storages
 Pillow 
 python-decouple
 beautifulsoup4
+psycopg2
+psycopg2-binary
