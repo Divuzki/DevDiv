@@ -12,7 +12,7 @@ def inject_ads_after_paragraph(value, arg):
     ad_vid_code = render_to_string("users/ads/video.html")
     ad_vid_code2 = render_to_string(
         "users/ads/video.html").replace("adPlayerDiv", "adPlayerDiv2")
-    ad_poster = render_to_string("users/ads/poster-300x250.html")
+    ad_poster = render_to_string("users/ads/poster-720x90.html")
 
     # Break down content into paragraphs
     paragraphs = value.split("</p>")
