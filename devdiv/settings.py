@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'ckeditor',
     'storages',
-    'fcm_django',
 ]
 
 
@@ -59,18 +58,6 @@ cred = credentials.Certificate(BASE_DIR / 'devdiv-web-firebase-adminsdk-5s41r-55
 FIREBASE_APP  = firebase_admin.initialize_app(cred)
 # To learn more, visit the docs here:
 # https://cloud.google.com/docs/authentication/getting-started>
-
-FCM_DJANGO_SETTINGS = {
-     # default: _('FCM Django')
-    "APP_VERBOSE_NAME": "devdiv",
-     # true if you want to have only one active device per registered user at a time
-     # default: False
-    "ONE_DEVICE_PER_USER": True,
-     # devices to which notifications cannot be sent,
-     # are deleted upon receiving error response from FCM
-     # default: False
-    "DELETE_INACTIVE_DEVICES": False,
-}
 
 
 MIDDLEWARE = [

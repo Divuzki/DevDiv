@@ -25,3 +25,4 @@ python-decouple
 beautifulsoup4
 psycopg2
 psycopg2-binary
+firebase_admin

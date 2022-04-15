@@ -5,11 +5,7 @@ from django.conf.urls import handler404
 from django.conf.urls.static import static
 from users import views
 from webpush.views import send, add_devices_view
-from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
-from rest_framework.routers import DefaultRouter
 from django.views.generic import TemplateView
-router = DefaultRouter()
-router.register('devices', FCMDeviceAuthorizedViewSet)
 
 handler404 = 'errorHandler.views.view_404'
 
