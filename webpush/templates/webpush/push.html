@@ -1,0 +1,51 @@
+<script>
+  // Initialize Firebase
+  // Firebase Console --> Settings --> General
+  // --> Register App --> Copy firebaseConfig
+  const firebaseConfig = {
+    apiKey: "AIzaSyDRIyN62EVYL5HbtqIDjDRK_1PI_0jcoQY",
+    authDomain: "devdiv.herokuapp.com",
+    databaseURL: "ec2-54-156-110-139.compute-1.amazonaws.com",
+    projectId: "devdiv-web",
+    storageBucket: "https://d2rkspfokjrj1j.cloudfront.net",
+    messagingSenderId: "192359966552",
+    appId: "1:192359966552:web:f8b99e44f4e4cc8435e72d",
+    measurementId: "G-6Z8BXD1Z4H",
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const messaging = firebase.messaging();
+  console.log(messaging.getToken());
+  messaging
+    .getToken({
+      vapidKey:
+        "BH1du44MtNpIY0WEzkeJ0DoKWVe3lRcl6RqtZ6cMuFu3Ah_VMYMU56Ar-KDhnh20WqojvqoMuP3idkrPjEqrydI",
+    })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log(currentToken);
+      } else {
+        console.log(
+          "No registration token available. Request permission to generate one."
+        );
+      }
+    })
+    .catch((err) => {
+      console.log("An error occurred while retrieving token. ", err);
+    });
+
+  messaging
+    .requestPermission()
+    .then(function () {
+      console.log("Notification permission granted.");
+      return messaging.getToken();
+    })
+    .catch(function (err) {
+      console.log("Unable to get permission to notify.", err);
+    });
+
+  messaging.onMessage((payload) => {
+    console.log("Message received. ", payload);
+  });
+</script>

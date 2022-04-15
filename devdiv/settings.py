@@ -1,6 +1,9 @@
 import dj_database_url
 from decouple import config
 from pathlib import Path
+import firebase_admin
+from firebase_admin import credentials
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,6 +37,7 @@ INSTALLED_APPS = [
     'core.api',
     'history',
     'scraping',
+    'webpush',
 
     # # Third Party
     'crispy_forms',
@@ -41,7 +45,33 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'ckeditor',
     'storages',
+    'fcm_django',
 ]
+
+
+# Optional ONLY IF you have initialized a firebase app already:
+# Visit https://firebase.google.com/docs/admin/setup/#python
+# for more options for the following:
+# Store an environment variable called GOOGLE_APPLICATION_CREDENTIALS
+# which is a path that point to a json file with your credentials.
+# Additional arguments are available: credentials, options, name
+cred = credentials.Certificate(BASE_DIR / 'devdiv-web-firebase-adminsdk-5s41r-55c6390a1f.json')
+FIREBASE_APP  = firebase_admin.initialize_app(cred)
+# To learn more, visit the docs here:
+# https://cloud.google.com/docs/authentication/getting-started>
+
+FCM_DJANGO_SETTINGS = {
+     # default: _('FCM Django')
+    "APP_VERBOSE_NAME": "devdiv",
+     # true if you want to have only one active device per registered user at a time
+     # default: False
+    "ONE_DEVICE_PER_USER": True,
+     # devices to which notifications cannot be sent,
+     # are deleted upon receiving error response from FCM
+     # default: False
+    "DELETE_INACTIVE_DEVICES": False,
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

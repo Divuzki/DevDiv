@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <script type="application/javascript" src="https://js.nextssp.com/ps/ps.js?id=ZVxR6uWXoEWUbob50m6w3Q"></script>
+  <!-- <script type="application/javascript" src="https://js.nextssp.com/ps/ps.js?id=ZVxR6uWXoEWUbob50m6w3Q"></script> -->
   <!-- META -->
   <meta charset="UTF-8" />
   <meta name="theme-color" content="#FFF" />
@@ -19,13 +19,13 @@
   {% block head %}{% endblock head %}
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <!-- Path to manifest.json -->
-  <link rel="manifest" href="{% static 'manifest.webmanifest' %}" />
+  <link rel="manifest" href="{% static 'js/manifest.json' %}" />
   
   <meta name="msapplication-starturl" content="/" />
   <meta name="msapplication-TileColor" content="#FFF" />
   <meta name="msapplication-TileImage" content="{% static 'images/logo/mstile-144x144.png' %}" />
   <meta name="msapplication-notification" 
-  content="frequency=30;polling-uri=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.comhttps://devdiv.herokuapp.com/0u/blog/api/&amp;id=1;polling-uri2=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.com/0u/blog/api/&amp;id=2;polling-uri3=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.com/0u/blog/api/&amp;id=3;polling-uri4=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.com/0u/blog/api/&amp;id=4;polling-uri5=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.com/0u/blog/api/&amp;id=5;cycle=1" />
+  content="frequency=30;polling-uri=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.com/0u/blog/api/&amp;id=1;polling-uri2=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.com/0u/blog/api/&amp;id=2;polling-uri3=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.com/0u/blog/api/&amp;id=3;polling-uri4=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.com/0u/blog/api/&amp;id=4;polling-uri5=https://notifications.buildmypinnedsite.com/?feed=https://devdiv.herokuapp.com/0u/blog/api/&amp;id=5;cycle=1" />
   <meta name="msapplication-navbutton-color" content="#FFF" />
   
   <!-- FAVICON -->
@@ -49,7 +49,7 @@
 {% endif %}
 
   <!-- SW REG -->
-  <!-- <script type="text/javascript">
+  <script type="text/javascript">
     var serviceWorkerPath = "/sw.js";
     var devdivServiceWorker = registerServiceWorker(serviceWorkerPath);
 
@@ -66,18 +66,11 @@
           });
       }
     }
-  </script> -->
+  </script>
   <title>DevDiv | {% block title %}{% endblock title %}</title>
-  <!-- PushAlert -->
-<!-- <script type="text/javascript">
-  (function(d, t) {
-          var g = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-          g.src = "https://cdn.pushalert.co/integrate_fc469228f94cac033d81fec8ea9687ab.js";
-          s.parentNode.insertBefore(g, s);
-  }(document, "script"));
-</script> -->
-<!-- End PushAlert -->
+  <!-- Firebase JS -->
+<script src="https://www.gstatic.com/firebasejs/8.6.3/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
 </head>
 
 <body>
@@ -212,5 +205,6 @@ window.addEventListener("load", function() {
       z-index: 1 !important;
     }
   </style>
+  {% include 'webpush/push.html' %}
   </body>
 </html>

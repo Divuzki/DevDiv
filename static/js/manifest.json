@@ -1,13 +1,13 @@
 {
-  "name": "DEVDIV",
+  "name": "DevDiv News NG",
   "short_name": "DevDiv",
+  "gcm_sender_id": "192359966552",
   "lang": "en-US",
   "display": "standalone",
   "theme_color": "#FFFA",
   "description": "Join A Community Where People Share There Thought",
   "start_url": "/",
   "id": "/?homescreen",
-  "start_url": "/?homescreen",
   "orientation": "Portrait",
   "background_color": "#FFFA",
 

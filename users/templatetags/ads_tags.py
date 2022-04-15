@@ -8,6 +8,7 @@ register = template.Library()
 def inject_ads_after_paragraph(value, arg):
 
     # Render our adsense code placed in html file
+    ad_js_code = render_to_string("users/ads/js.html")
     ad_post_code = render_to_string("users/ads/posts.html")
     ad_vid_code = render_to_string("users/ads/video.html")
     ad_vid_code2 = render_to_string(
@@ -30,6 +31,7 @@ def inject_ads_after_paragraph(value, arg):
         if paragraphs[arg+4-3]:
             paragraphs[arg] = ad_poster + paragraphs[arg]
 
+        paragraphs[arg] = ad_js_code + paragraphs[arg]
         # Assemble our text back with injected adsense code
         value = "</p>".join(paragraphs)
 
