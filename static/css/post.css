@@ -1,18 +1,3 @@
-@supports (height: 100vh) {
-  body {
-    background: linear-gradient(to right top, #0089f2 50%, #DDD 50%);
-  }
-
-  body:before {
-    content: "";
-    position: fixed;
-    top: 128px;
-    bottom: 0;
-    width: 100%;
-    z-index: -1;
-    background: white;
-  }
-}
 article {
   padding: 0.5in 0px;
   width: -webkit-fit-content;

@@ -4,10 +4,9 @@
   // --> Register App --> Copy firebaseConfig
   const firebaseConfig = {
     apiKey: "AIzaSyDRIyN62EVYL5HbtqIDjDRK_1PI_0jcoQY",
-    authDomain: "devdiv.herokuapp.com",
-    databaseURL: "ec2-54-156-110-139.compute-1.amazonaws.com",
+    authDomain: "devdiv-web.firebaseapp.com",
     projectId: "devdiv-web",
-    storageBucket: "https://d2rkspfokjrj1j.cloudfront.net",
+    storageBucket: "devdiv-web.appspot.com",
     messagingSenderId: "192359966552",
     appId: "1:192359966552:web:f8b99e44f4e4cc8435e72d",
     measurementId: "G-6Z8BXD1Z4H",
@@ -15,37 +14,126 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
+  // Firebase Messaging Service
   const messaging = firebase.messaging();
-  console.log(messaging.getToken());
-  messaging
-    .getToken({
-      vapidKey:
-        "BH1du44MtNpIY0WEzkeJ0DoKWVe3lRcl6RqtZ6cMuFu3Ah_VMYMU56Ar-KDhnh20WqojvqoMuP3idkrPjEqrydI",
-    })
-    .then((currentToken) => {
-      if (currentToken) {
-        console.log(currentToken);
-      } else {
-        console.log(
-          "No registration token available. Request permission to generate one."
-        );
-      }
-    })
-    .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
-    });
+  function sendTokenToServer(currentToken) {
+    if (!isTokenSentToServer()) {
+      // The API Endpoint will be explained at step 8
+      $.ajax({
+        url: "/push-api/add/device/",
+        method: "POST",
+        headers: {
+          "X-CSRF-Token": "{{ csrf_token }}",
+        },
+        async: false,
+        data: {
+          regId: currentToken,
+          type: "web",
+        },
+        success: function (data) {
+          console.info(data);
+          setTokenSentToServer(true);
+        },
+        error: function (err) {
+          console.error("[ERROR] "+err);
+          setTokenSentToServer(false);
+        },
+      });
+    } else {
+      console.info(
+        "[INFO] Token already sent to server so won't send it again " +
+          "unless it changes"
+      );
+    }
+  }
 
-  messaging
-    .requestPermission()
-    .then(function () {
-      console.log("Notification permission granted.");
-      return messaging.getToken();
-    })
-    .catch(function (err) {
-      console.log("Unable to get permission to notify.", err);
-    });
+  function isTokenSentToServer() {
+    return window.localStorage.getItem("sentToServer") === "1";
+  }
 
-  messaging.onMessage((payload) => {
-    console.log("Message received. ", payload);
+  function setTokenSentToServer(sent) {
+    if (sent) {
+      window.localStorage.setItem("sentToServer", "1");
+    } else {
+      window.localStorage.setItem("sentToServer", "0");
+    }
+  }
+
+  function requestPermission() {
+    messaging
+      .requestPermission()
+      .then(function () {
+        console.log("Permission Granted!");
+        resetUI();
+      })
+      .catch(function (err) {
+        console.error("[ERROR] Unable to get permission to notify.", err);
+      });
+  }
+
+  function resetUI() {
+    console.info("[INFO] Accessing Push Notification API");
+    messaging
+      .getToken()
+      .then(function (currentToken) {
+        if (currentToken) {
+          sendTokenToServer(currentToken);
+        } else {
+          setTokenSentToServer(false);
+        }
+      })
+      .catch(function (err) {
+        console.error("[ERROR] " + err);
+        setTokenSentToServer(false);
+      });
+  }
+
+  messaging.onTokenRefresh(function () {
+    messaging
+      .getToken({
+        vapidKey:
+          "BH1du44MtNpIY0WEzkeJ0DoKWVe3lRcl6RqtZ6cMuFu3Ah_VMYMU56Ar-KDhnh20WqojvqoMuP3idkrPjEqrydI",
+      })
+      .then(function (refreshedToken) {
+        console.info("[INFO] Token refreshed.");
+        // Indicate that the new Instance ID token has not yet been sent to the
+        // app server.
+        setTokenSentToServer(false);
+        // Send Instance ID token to app server.
+        sendTokenToServer(refreshedToken);
+        resetUI();
+      })
+      .catch(function (err) {
+        console.error("[ERROR] Unable to retrieve refreshed token ", err);
+      });
   });
+
+  messaging.onMessage(function (payload) {
+    payload = payload.data;
+    // Create notification manually when user is focused on the tab
+    const notificationTitle = payload.title;
+    const notificationOptions = {
+      body: payload.body,
+      icon: payload.icon_url,
+    };
+
+    if (!("Notification" in window)) {
+      console.error("[PROBLEM] This browser does not support system notifications");
+    }
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      // If it's okay let's create a notification
+      var notification = new Notification(
+        notificationTitle,
+        notificationOptions
+      );
+      notification.onclick = function (event) {
+        event.preventDefault(); // prevent the browser from focusing the Notification's tab
+        window.open(payload.url, "_blank");
+        notification.close();
+      };
+    }
+  });
+
+  requestPermission();
 </script>

@@ -1,3 +1,5 @@
 from django.db import models
 
-# Create your models here.
+class WebPushNotificationUsers(models.Model):
+    registration_id = models.TextField()
+    type = models.CharField(max_length=10)

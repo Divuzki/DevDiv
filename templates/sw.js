@@ -1,6 +1,6 @@
 const CACHE_VERSION = 1;
 
-const DEBUG = true;
+const DEBUG = false;
 var host = "//" + self.location.host + "/static";
 if (DEBUG === false) {
   host = "https://d2rkspfokjrj1j.cloudfront.net/static";
@@ -18,7 +18,7 @@ const BASE_CACHE_FILES = [
   // IMAGES
   `${host}/logo.png`,
   // MANIFEST
-  `${host}/manifest.webmanifest`,
+  `${host}/manifest.json`,
 ];
 
 const OFFLINE_CACHE_FILES = ["pwa_file/error-slash-offline.html"];
