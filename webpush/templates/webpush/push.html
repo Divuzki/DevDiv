@@ -36,7 +36,7 @@
         async: false,
         data: {
           regId: currentToken,
-          type: `${isMobileTablet === true ? "mobile" : "web"}`,
+          type: `${isMobileTablet === false ? "mobile" : "web"}`,
         },
         success: function (data) {
           console.info(data);
