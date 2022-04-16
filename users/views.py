@@ -70,7 +70,7 @@ def hashtag_view(request, tags):
 
 def category_view(request, cats):
     category_posts = Post.objects.filter(
-        category=cats).order_by('-date_posted')
+        category=cats)
     print(category_posts)
     first_tag = Post.objects.filter(category=cats)
     if first_tag.exists():
@@ -269,11 +269,10 @@ def hashtag_autocomplete(request, *args, **kwargs):
 # listing out all the post in desc order for home page
 class PostListView(ListView):
     model = Post  # Getting Model from models.py
-    lookup="id"
     template_name = 'index.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'  # the context name
-    ordering = ['-date_posted']  # start post in desc order
-    paginate_by = 9  # dividing the page into 9 posts per page
+    # ordering = ['-date_posted']  # start post in desc order
+    paginate_by = 12  # dividing the page into 9 posts per page
 
     def test_func(self):
         post = self.get_object()
@@ -396,7 +395,7 @@ class UserPostListView(ListView):
     # Getting qs of all the post by the username -> author
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')
+        return Post.objects.filter(author=user)
 
 
 # Confirming Password
@@ -456,7 +455,7 @@ def search_result_view(request):
         Q(image_caption__icontains=query) |
         Q(content__icontains=query) 
         # |Q(hashtag__icontains=query)
-    ).order_by('-date_posted')
+    )
     # pages = pagination(request, result, num=1)
 
     context = {

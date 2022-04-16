@@ -98,6 +98,8 @@ class Post(models.Model):
     scraped = models.BooleanField(default=False)
     date_posted = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        ordering = ['-id']
     @property
     def owner(self):
         return self.author
