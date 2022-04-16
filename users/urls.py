@@ -7,6 +7,7 @@ app_name = 'users'
 
 urlpatterns = [
     path('', views.PostListView.as_view(), name="home"),
+    path('', views.PostListView.as_view(), name="post-detail"),
     path('user/post/history/', HistoryList.as_view(), name='history'),
     path('user/history/delete/<int:pk>/', HistoryDelete.as_view(), name='history_del'),
 

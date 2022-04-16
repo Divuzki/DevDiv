@@ -269,6 +269,7 @@ def hashtag_autocomplete(request, *args, **kwargs):
 # listing out all the post in desc order for home page
 class PostListView(ListView):
     model = Post  # Getting Model from models.py
+    lookup="id"
     template_name = 'index.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'  # the context name
     ordering = ['-date_posted']  # start post in desc order

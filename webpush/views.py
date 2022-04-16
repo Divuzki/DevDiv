@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 STATIC_URL = settings.STATIC_URL
 
 
-def send_notification(registration_ids, message_title, message_desc, message_image, message_link=None):
+def send_notification(registration_ids, message_title, message_desc, message_image, message_link):
     fcm_api = "AAAALMmMJ1g:APA91bFuK6lbc2LAGz0-sb5slMpAvB0sBYHSEQ9VwzsFuoXaRtKMSfpao89HRQ6wuPYVSUu8leHtXlhnQ5k7kB0vq20kfIgapHBIL1Y6B-3UvHau5OTzImHU25tyM9ioAVs7gM4ITae3"
     url = "https://fcm.googleapis.com/fcm/send"
 
@@ -25,9 +25,9 @@ def send_notification(registration_ids, message_title, message_desc, message_ima
             "title": message_title,
             "image": message_image,
             "icon": "https://d2rkspfokjrj1j.cloudfront.net/static/favicon-32x32.png",
+            "click_action": str(message_link),
             "sound": "http://localhost:8000/static/audio/notify-male-audio.wav",
             "tag": "Latest News",
-            "click_action": message_link
         }
     }
 
@@ -41,7 +41,7 @@ def send(request):
     for device in qs:
         resgistration.append(device.registration_id)
     send_notification(
-        resgistration, 'Ignore', 'Ignore This', "https://d2rkspfokjrj1j.cloudfront.net/static/logo.png")
+        resgistration, 'Ignore', 'Ignore This', "https://d2rkspfokjrj1j.cloudfront.net/static/logo.png", "//devdiv.herokuapp.com")
     return HttpResponse("sent")
 
 
