@@ -19,5 +19,5 @@ class Command(BaseCommand):
             for device in qs:
                 resgistration.append(device.registration_id)
             send_notification(resgistration, post.title, post.description,
-                              post.image_url, message_link=f"//{link}/{post.id}")
+                              post.image_url, message_link=f"//{link}/post/{post.id}")
         self.stdout.write('Notification Was Done Sucessfully ✅')
