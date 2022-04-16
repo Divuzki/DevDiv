@@ -17,18 +17,16 @@ def inject_ads_after_paragraph(value, arg):
 
     # Break down content into paragraphs
     paragraphs = value.split("</p>")
-
     # Check if paragraph we want to post after exists
     if arg < len(paragraphs):
 
         # Append our code before the following paragraph
         paragraphs[arg] = ad_post_code + paragraphs[arg]
-        paragraphs[arg-2] = ad_vid_code + paragraphs[arg-2]
-        if paragraphs[arg+4]:
+        if arg < 3:
+            paragraphs[arg-1] = ad_vid_code + paragraphs[arg-1]
+        if arg > 3:
             paragraphs[arg+4] = ad_vid_code2 + paragraphs[arg+4]
-        else:
-            paragraphs[arg] = ad_poster + paragraphs[arg]
-        if paragraphs[arg+4-3]:
+        if arg+4-3:
             paragraphs[arg] = ad_poster + paragraphs[arg]
 
         paragraphs[arg] = ad_js_code + paragraphs[arg]

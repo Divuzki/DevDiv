@@ -91,19 +91,7 @@
     <p>{% if object.image_caption %}{{object.image_caption}} {% endif %}</p>
   </figcaption>
   {% endif %}
-  <div id="my-player" data-player-id="3f0a99e6-2880-47b4-bce4-8ae175e622aa">
-  <div class="post-content videoAd">
-      <script src="//cdn.flowplayer.com/players/c99231c9-f30f-4f19-a723-70057390fd13/7/flowplayer.async.js">
-        {
-           "ima": { "ads": [{
-             "adTag": "https://whamuthygle.com/dTmDFhz.d/GHNXv/ZRGIUN/OeHmq9TuPZtUBlckbPCTHQQzFO/TMYnwDMUzucUt/NvDDMY5PNujXA-zcOXAq",
-             "time": 0,
-             "outstream": true
-           }]}
-        }
-      </script>
-    </div>
-   {{ object.content|inject_ads_after_paragraph:5 | safe}}
+   {{ object.content|inject_ads_after_paragraph:2 | safe}}
     <p class="by-author">~ by {% if object.author == user %}You{%else%}<em> <a
           href="{% url 'users:user-posts' object.author.username %}">{{object.author}}{% endif %}</a></em></p>
     </div>
