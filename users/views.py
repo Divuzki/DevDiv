@@ -272,7 +272,7 @@ class PostListView(ListView):
     template_name = 'index.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'  # the context name
     # ordering = ['-date_posted']  # start post in desc order
-    paginate_by = 12  # dividing the page into 9 posts per page
+    paginate_by = 12  # dividing the page into 12 posts per page
 
     def test_func(self):
         post = self.get_object()
@@ -390,7 +390,7 @@ class UserPostListView(ListView):
     model = Post
     template_name = 'users/user_posts.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
-    paginate_by = 6  # dividing the page into 6 post per page
+    paginate_by = 12  # dividing the page into 12 post per page
 
     # Getting qs of all the post by the username -> author
     def get_queryset(self):
