@@ -2,14 +2,19 @@
 // Give the service worker access to Firebase Messaging.
 // Note that you can only use Firebase Messaging here, other Firebase libraries
 // are not available in the service worker.
-importScripts('https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js');
 
 // Initialize the Firebase app in the service worker by passing in the
 // messagingSenderId.
 firebase.initializeApp({
-  // Replace messagingSenderId with yours
-  'messagingSenderId': '192359966552'
+  'apiKey': "AIzaSyDRIyN62EVYL5HbtqIDjDRK_1PI_0jcoQY",
+  'authDomain': "devdiv-web.firebaseapp.com",
+  'projectId': "devdiv-web",
+  'storageBucket': "devdiv-web.appspot.com",
+  'messagingSenderId': "192359966552",
+  'appId': "1:192359966552:web:f8b99e44f4e4cc8435e72d",
+  'measurementId': "G-6Z8BXD1Z4H",
 });
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
@@ -30,6 +35,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
   const notificationOptions = {
     body: payload.body,
     icon: payload.icon_url,
+    click_action: payload.click_action,
     sound: payload.sound
   };
 

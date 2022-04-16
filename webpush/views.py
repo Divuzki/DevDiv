@@ -21,13 +21,13 @@ def send_notification(registration_ids, message_title, message_desc, message_ima
         "registration_ids": registration_ids,
         "priority": "high",
         "notification": {
-            "body": message_desc,
-            "title": message_title,
+            "tag": "Latest News",
+            "title": str(message_title),
+            "body": str(message_desc),
             "image": message_image,
             "icon": "https://d2rkspfokjrj1j.cloudfront.net/static/favicon-32x32.png",
-            "click_action": str(message_link),
-            "sound": "http://localhost:8000/static/audio/notify-male-audio.wav",
-            "tag": "Latest News",
+            "click_action": message_link,
+            "sound": "https://d2rkspfokjrj1j.cloudfront.net/static/audio/notify-male-audio.wav"
         }
     }
 
