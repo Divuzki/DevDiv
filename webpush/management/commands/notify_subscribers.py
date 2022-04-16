@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from webpush.views import send_notification
 from users.models import Post
 from django.conf import settings
-ALLOWED_HOSTS = settings.ALLOWED_HOSTS[0]
+ALLOWED_HOSTS = "devdiv.herokuapp.com"
 DEBUG = settings.DEBUG
 if DEBUG == True:
     ALLOWED_HOSTS = 'localhost:8000'
