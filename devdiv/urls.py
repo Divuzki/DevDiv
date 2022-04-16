@@ -12,12 +12,12 @@ handler404 = 'errorHandler.views.view_404'
 urlpatterns = [
     path('HadminD/', admin.site.urls),
     path("firebase-messaging-sw.js",
-        TemplateView.as_view(
-            template_name="firebase-messaging-sw.js",
-            content_type="application/javascript",
-        ),
-        name="firebase-messaging-sw.js"
-    ),
+         TemplateView.as_view(
+             template_name="firebase-messaging-sw.js",
+             content_type="application/javascript",
+         ),
+         name="firebase-messaging-sw.js"
+         ),
     path('push-api/add/device/', add_devices_view, name="push_add_device"),
     path('', include('users.urls', namespace="users")),
     path('pwa_file/<str:tmp>', views.devdiv_tmp_render, name="render_tmp"),

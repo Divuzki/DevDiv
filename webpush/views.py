@@ -24,7 +24,7 @@ def send_notification(registration_ids, message_title, message_desc, message_ima
             "body": message_desc,
             "title": message_title,
             "image": message_image,
-            "icon": f"{STATIC_URL}/favicon-32x32.png",
+            "icon": "https://d2rkspfokjrj1j.cloudfront.net/static/favicon-32x32.png",
             "sound": "http://localhost:8000/static/audio/notify-male-audio.wav",
             "tag": "Latest News",
             "click_action": message_link

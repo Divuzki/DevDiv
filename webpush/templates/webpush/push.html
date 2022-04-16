@@ -74,7 +74,10 @@
   function resetUI() {
     console.info("[INFO] Accessing Push Notification API");
     messaging
-      .getToken()
+      .getToken({
+        vapidKey:
+          "BH1du44MtNpIY0WEzkeJ0DoKWVe3lRcl6RqtZ6cMuFu3Ah_VMYMU56Ar-KDhnh20WqojvqoMuP3idkrPjEqrydI",
+      })
       .then(function (currentToken) {
         if (currentToken) {
           sendTokenToServer(currentToken);
@@ -110,11 +113,13 @@
 
   messaging.onMessage(function (payload) {
     payload = payload.data;
+    console.log(payload)
     // Create notification manually when user is focused on the tab
     const notificationTitle = payload.title;
     const notificationOptions = {
       body: payload.body,
       icon: payload.icon_url,
+      sound: payload.sound
     };
 
     if (!("Notification" in window)) {
