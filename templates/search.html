@@ -30,7 +30,7 @@
                     <p>{{obj.content | truncatechars:150 | safe}}.
                     </p>
                     {% endif %}
-                    <a href="{% url 'post-detail' obj.id%}">Read More</a>
+                    <a href="{% url 'users:post-detail' obj.id%}">Read More</a>
                 </div>
             </div>
         </div>
