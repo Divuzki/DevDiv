@@ -453,8 +453,8 @@ def search_result_view(request):
         Q(author__username__icontains=query) |
         Q(description__icontains=query) |
         Q(image_caption__icontains=query) |
-        Q(content__icontains=query) |
-        Q(hashtag__icontains=query)
+        Q(content__icontains=query) 
+        # |Q(hashtag__icontains=query)
     ).order_by('-date_posted')
     # pages = pagination(request, result, num=1)
 
