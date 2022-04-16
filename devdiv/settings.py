@@ -147,7 +147,7 @@ if USE_S3:
     AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
     AWS_DEFAULT_ACL = config('AWS_DEFAULT_ACL')
     AWS_S3_CUSTOM_DOMAIN = f'd2rkspfokjrj1j.cloudfront.net'
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400', 'Access-Control-Allow-Origin': 'devdiv.herokuapp.com'}
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     AWS_S3_SECURE_URLS = True
 
     # s3 static settings
