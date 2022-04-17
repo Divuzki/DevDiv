@@ -10,6 +10,7 @@
   "id": "/?homescreen",
   "orientation": "Portrait",
   "background_color": "#FFFA",
+  "scope": ".",
 
   "icons": [
     {

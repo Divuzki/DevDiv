@@ -18,7 +18,7 @@ const BASE_CACHE_FILES = [
   // IMAGES
   `${host}/logo.png`,
   // MANIFEST
-  `${host}/manifest.json`,
+  `${host}/manifest.webmanifest`,
 ];
 
 const OFFLINE_CACHE_FILES = ["pwa_file/error-slash-offline.html"];
