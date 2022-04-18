@@ -158,6 +158,9 @@ document.addEventListener('readystatechange', () => {
 				  loaderEl.parentNode.removeChild(loaderEl);
         else
           loaderEl.style.display = "none";
+          document.querySelector(".slider-element").style.display = "flex";
+          document.querySelector(".load-none").classList.remove("load-none");
+          document.querySelector("#load-none").style.display = "";
 			}, 1000);
 	}
 });
@@ -171,7 +174,7 @@ window.addEventListener("load", function() {
           document.querySelector(".slider-element").style.display = "flex";
           document.querySelector(".load-none").classList.remove("load-none");
           document.querySelector("#load-none").style.display = "";
-    }, 1000);
+    }, 100);
 });
   localStorage.setItem("currentPage", window.location.href);
   </script>
