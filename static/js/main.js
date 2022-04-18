@@ -17,7 +17,7 @@
 // Blog Slider
 $(document).ready(function() {
 	var config = {
-	  infinite: true,
+	  infinite: false,
 	  slidesToShow: 2,
 	  slidesToScroll: 1,
 	  autoplay: true,
