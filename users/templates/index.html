@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% load static %}
 <title>{% block title %}Home{% endblock title %}</title>
 {% block content %} {% include "components/widgets.html" with usd='yes' ngn='yes' headline='yes' %}
-<div class="wrapper">
-  <div class="section-content">
+<div class="wrapper m-0">
+  <div class="section-content ml-5">
     <div class="row align-center">
       <div class="col medium-12" id="slick-container-shoutouts">
         {% include 'components/news_slider.html' with posts=posts %}
