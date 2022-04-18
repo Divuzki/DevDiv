@@ -5,7 +5,7 @@
     <div class="devdiv_posts-slider__wrp swiper-wrapper">
       {% for post in posts %}
       <div class="devdiv_posts-slider__item swiper-slide">
-        <div onclick="window.location.href = `{%url 'users:post-detail' post.id%}`" class="devdiv_posts__item pointer">
+        <div onclick="window.location.href = `{%url 'users:post-detail' post.id%}`" style="background: linear-gradient(1deg, {{post.image_color}}, #fff);" class="devdiv_posts__item pointer">
 
           <div class="devdiv_posts-date">
             <div class="">
@@ -52,7 +52,7 @@
       </div>
       {% endfor %}
       {% if is_paginated %}
-      <div class="pag">
+      <div class="pag mt-3 mb-3">
         {% if page_obj.has_previous %}
         <a href="?page=1" class="btn btn-outline-info mb-4">1</a>
         <a href="?page={{page_obj.previous_page_number}}" class="btn btn-outline-info mb-4">Previous</a>

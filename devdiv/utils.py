@@ -85,25 +85,28 @@ def check_for_tag(content, HashTag):
         if len(hsh) < 80:
             full_hash = '#' + hsh
             if HashTag.objects.filter(name__iexact=hsh):
-                content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/?new=no">#{hsh}</a>')
+                content = content.replace(
+                    full_hash, f'<a href="/hashtag/{hsh}/?new=no">#{hsh}</a>')
             else:
-                content = content.replace(full_hash, f'<a href="https://whamuthygle.com/bR3.Vb0FPY3/plvLbWm/V/JDZPDJ0w0iMRzNkT2GM/TSka5/LAT/Q_z/OpTHYUy/MYDLAf">#{hsh}</a>')
+                content = content.replace(
+                    full_hash, f'<a href="https://whamuthygle.com/bR3.Vb0FPY3/plvLbWm/V/JDZPDJ0w0iMRzNkT2GM/TSka5/LAT/Q_z/OpTHYUy/MYDLAf">#{hsh}</a>')
                 # content = content.replace(full_hash, f'<a href="/hashtag/{hsh}/?new=yes">#{hsh}</a>')
     return content
 
+
 def add_comma_to_number(n):
-   res = str(n)
-   res = res[::-1]
+    res = str(n)
+    res = res[::-1]
 
-   ans = ""
-   for i in range(len(res)):
-      if i%3 == 0 and i != 0 :
-         ans += ','
-      ans += res[i]
+    ans = ""
+    for i in range(len(res)):
+        if i % 3 == 0 and i != 0:
+            ans += ','
+        ans += res[i]
 
-   ans = ans[::-1]
+    ans = ans[::-1]
 
-   return ans
+    return ans
 
 
 def num_sum(num):
@@ -115,3 +118,22 @@ def num_sum(num):
         # add more suffixes if you need them
         num = '%.2f%s' % (num, ['', 'K', 'M', 'B', 'T', 'P'][magnitude])
     return num
+
+
+# Getting Image Current Average Color
+def get_image_color(url):
+    import requests
+    import io
+    try:
+        response = requests.get(f"{url}")
+        image_bytes = io.BytesIO(response.content)
+    except:
+        image_bytes = None
+
+    img = Image.open(image_bytes)
+    if image_bytes == None:
+        img = Image.open(url)
+    colors = img.getpixel((320,240))
+    color = f"rgb{colors}"
+    img.close()
+    return color

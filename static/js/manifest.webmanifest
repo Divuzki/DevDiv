@@ -6,11 +6,9 @@
   "display": "standalone",
   "theme_color": "#FFFA",
   "description": "Join A Community Where People Share There Thought",
-  "start_url": "/",
   "id": "/?homescreen",
   "orientation": "Portrait",
   "background_color": "#FFFA",
-  "scope": ".",
 
   "icons": [
     {

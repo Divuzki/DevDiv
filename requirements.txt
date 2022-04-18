@@ -26,3 +26,5 @@ beautifulsoup4
 psycopg2
 psycopg2-binary
 firebase_admin
+numpy
+opencv-python

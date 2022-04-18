@@ -20,6 +20,7 @@ def send_notification(registration_ids, message_title, message_desc, message_ima
     payload = {
         "registration_ids": registration_ids,
         "priority": "high",
+        "from": "DevDiv NG",
         "notification": {
             "tag": "Latest News",
             "title": str(message_title),

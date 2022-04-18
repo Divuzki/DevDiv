@@ -8,7 +8,7 @@ from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from rest_framework.reverse import reverse as api_reverse
 from django.utils.translation import gettext_lazy as _
-from devdiv.utils import image_resize, check_for_tag
+from devdiv.utils import image_resize, check_for_tag, get_image_color
 
 STATIC_URL = settings.STATIC_URL
 MEDIA_URL = settings.MEDIA_URL
@@ -83,6 +83,8 @@ class Post(models.Model):
         _("Image"), upload_to="post_media/image/%Y/%m/", blank=True, null=True)
     image_url = models.CharField(
         max_length=3038, null=True, blank=True)
+    image_color = models.CharField(
+        max_length=50, null=True, blank=True)
     image_caption = models.CharField(max_length=100, null=True, blank=True,
                                      help_text="Text limit is 100, and know that this is the post image description")
     video_url = models.CharField(max_length=3000, null=True, blank=True)
@@ -159,6 +161,7 @@ class Post(models.Model):
             self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
         if not self.upload_image and not self.image_url:
             self.image_url = f"{STATIC_URL}default.png"
+        self.image_color = get_image_color(self.image_url)
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
