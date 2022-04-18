@@ -165,12 +165,14 @@ p {
 }
 
 /* VUE.JS Transitions */
-.fade-up-enter-active, .fade-up-leave-to {
+.fade-up-enter-active,
+.fade-up-leave-to {
   transition: all 0.3s ease-in-out;
   opacity: 0.75;
 }
 
-.fade-up-enter, .fade-up-leave-to {
+.fade-up-enter,
+.fade-up-leave-to {
   opacity: 0;
   transform: translateY(-32px);
 }
@@ -195,4 +197,4 @@ p {
   background-color: #45b3e0;
   color: #f8f7f8;
   font-size: 1.5em;
-}
+}/*# sourceMappingURL=comment-section.css.map */
