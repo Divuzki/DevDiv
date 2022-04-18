@@ -16,5 +16,5 @@ class Command(BaseCommand):
                 post.save()
                 print(f"{post.image_url} has been colored 😁")
             else:
-                print("Nothing to do")
-        self.stdout.write('Added Colors Sucessfully ✅')
+                print("Colored already! 😋")
+        self.stdout.write('Add Colors Operation Done Sucessfully ✅')

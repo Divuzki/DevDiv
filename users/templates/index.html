@@ -11,6 +11,11 @@
       </div>
       </div>
   </div>
+  <div class="ad">
+    {% include 'users/ads/poster-720x90.html' %}
+    <hr />
+    <p class="text-center lead">Advertisement</p>
+  </div>
   <!-- END D POST SLIDER -->
   {% include "components/posts_list.html" with posts=posts is_paginated=is_paginated page_obj=page_obj %}
   {% block js %}
@@ -20,5 +25,5 @@
     <script>
       localStorage.setItem("previousPage", window.location.href);
     </script>
-  {% endblock %}
-  {% endblock content%}
+  {% endblock js %}
+  {% endblock content %}
