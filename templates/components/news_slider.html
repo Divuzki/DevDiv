@@ -1,188 +1,25 @@
 {% load static %}
 {% for posts in posts %}
-  <!-- World -->
-    {% if posts.category == "world" %}
-      <div class="slider-element">
-        <a href="{%url 'users:post-detail' posts.id%}">
-        <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif not posts.upload_image %}
-    {{ posts.image_url }}
-    {% else %}{% static 'default.png' %}{% endif %})">
-        </a>
-        </div>
-            <a href="{%url 'users:post-detail' posts.id%}">
-          <div class="text-wrap">
-            <h2>
-                {{ posts.title }}
-              </h2>
-              <h3>
-                {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-              </h3>
-              <h3>
-                {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
-              </h3>
-            </div>
-          </a>
-          </div>
-          {% endif %}
-
-  <!-- Gossip -->
-    {% if posts.category == "gossip" %}
-    <div class="slider-element">
+<div class="slider-element" style="display: none">
+  <a href="{%url 'users:post-detail' posts.id%}">
+  <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
+{% elif not posts.upload_image %}
+{{ posts.image_url }}
+{% else %}{% static 'default.png' %}{% endif %})">
+  </a>
+  </div>
       <a href="{%url 'users:post-detail' posts.id%}">
-      <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif not posts.upload_image %}
-    {{ posts.image_url }}
-    {% else %}{% static 'default.png' %}{% endif %})">
-      </a>
+    <div class="text-wrap">
+      <h2>
+          {{ posts.title }}
+        </h2>
+        <h3>
+          {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
+        </h3>
+        <h3>
+          {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
+        </h3>
       </div>
-          <a href="{%url 'users:post-detail' posts.id%}">
-        <div class="text-wrap">
-          <h2>
-              {{ posts.title }}
-            </h2>
-            <h3>
-              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-            </h3>
-            <h3>
-              {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
-            </h3>
-          </div>
-        </a>
-        </div>
-        {% endif %}
-
-  <!-- Technology -->
-    {% if posts.category == "technology" %}
-    <div class="slider-element">
-      <a href="{%url 'users:post-detail' posts.id%}">
-      <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif not posts.upload_image %}
-    {{ posts.image_url }}
-    {% else %}{% static 'default.png' %}{% endif %})">
-      </a>
-      </div>
-          <a href="{%url 'users:post-detail' posts.id%}">
-        <div class="text-wrap">
-          <h2>
-              {{ posts.title }}
-            </h2>
-            <h3>
-              {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-            </h3>
-            <h3>
-              {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
-            </h3>
-          </div>
-        </a>
-        </div>
-      {% endif %}
-
-  <!-- Science -->
-  {% if posts.category == "education" %}
-  <div class="slider-element">
-    <a href="{%url 'users:post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif not posts.upload_image %}
-    {{ posts.image_url }}
-    {% else %}{% static 'default.png' %}{% endif %})">
     </a>
     </div>
-        <a href="{%url 'users:post-detail' posts.id%}">
-      <div class="text-wrap">
-        <h2>
-            {{ posts.title }}
-          </h2>
-          <h3>
-            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-          </h3>
-          <h3>
-            {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
-          </h3>
-        </div>
-      </a>
-      </div>
-      {% endif %}
-
-
-  <!-- Politics -->
-  {% if posts.category == "politics" %}
-  <div class="slider-element">
-    <a href="{%url 'users:post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif not posts.upload_image %}
-    {{ posts.image_url }}
-    {% else %}{% static 'default.png' %}{% endif %})">
-    </a>
-    </div>
-        <a href="{%url 'users:post-detail' posts.id%}">
-      <div class="text-wrap">
-        <h2>
-            {{ posts.title }}
-          </h2>
-          <h3>
-            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-          </h3>
-          <h3>
-            {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
-          </h3>
-        </div>
-      </a>
-      </div>
-      {% endif %}
-
-
-  <!-- Sports -->
-  {% if posts.category == "finace" %}
-  <div class="slider-element">
-    <a href="{%url 'users:post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif not posts.upload_image %}
-    {{ posts.image_url }}
-    {% else %}{% static 'default.png' %}{% endif %})">
-    </a>
-    </div>
-        <a href="{%url 'users:post-detail' posts.id%}">
-      <div class="text-wrap">
-        <h2>
-            {{ posts.title }}
-          </h2>
-          <h3>
-            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-          </h3>
-          <h3>
-            {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
-          </h3>
-        </div>
-      </a>
-    </div>
-    {% endif %}
-
-  <!-- How-To -->
-  {% if posts.category == "how-to" %}
-  <div class="slider-element">
-    <a href="{%url 'users:post-detail' posts.id%}">
-    <div class="img-wrap" style="background-image: url({% if posts.upload_image %}{{ posts.upload_image.url }}
-    {% elif not posts.upload_image %}
-    {{ posts.image_url }}
-    {% else %}{% static 'default.png' %}{% endif %})">
-    </a>
-    </div>
-        <a href="{%url 'users:post-detail' posts.id%}">
-      <div class="text-wrap">
-        <h2>
-            {{ posts.title }}
-          </h2>
-          <h3>
-            {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}
-          </h3>
-          <h3>
-            {{ posts.category }} {% if posts.hashtag.all %} | {{posts.hashtag.first}} {% endif %}
-          </h3>
-        </div>
-      </a>
-    </div>
-      {% endif %}
-
-
       {% endfor %}

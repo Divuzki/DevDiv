@@ -162,8 +162,9 @@ window.addEventListener("load", function() {
     setTimeout(()=>{
       if(loaderEl.parentNode)
 				  loaderEl.parentNode.removeChild(loaderEl);
-        else
+          else
           loaderEl.style.display = "none";
+          document.querySelector(".slider-element").style.display = "flex";
     }, 1000);
 });
   localStorage.setItem("currentPage", window.location.href);
@@ -176,6 +177,9 @@ window.addEventListener("load", function() {
   }
 #cookiescript_bottompart{
   display: none !important;
+}
+.opacity-0{
+  opacity: 0 !important;
 }
 </style>
 

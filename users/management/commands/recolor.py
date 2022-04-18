@@ -11,7 +11,10 @@ class Command(BaseCommand):
         
         posts = Post.objects.all()
         for post in posts:
-            post.image_color = get_image_color(post.image_url)
-            post.save()
-            print(f"{post.image_url} has been colored 😁")
+            if post.image_color is None:
+                post.image_color = get_image_color(post.image_url)
+                post.save()
+                print(f"{post.image_url} has been colored 😁")
+            else:
+                print("Nothing to do")
         self.stdout.write('Added Colors Sucessfully ✅')
