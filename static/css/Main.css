@@ -933,7 +933,7 @@ a:hover {
   padding: 15px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 365px) {
   .devdiv_posts-slider__item {
     width: 340px;
   }
