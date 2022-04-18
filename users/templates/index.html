@@ -1,29 +1,37 @@
-{% extends 'base.html' %}
-{% load static %}
-<title onload='document.getElementsByTagName(`title`)[0].innerHTML = `DevDiv`;'>{% block title %}Home{% endblock title %}</title>
-{% block content %}
-{% include "components/widgets.html" with usd='yes' ngn='yes' headline='yes' %}
+{% extends 'base.html' %} {% load static %}
+<title>{% block title %}Home{% endblock title %}</title>
+{% block content %} {% include "components/widgets.html" with usd='yes' ngn='yes' headline='yes' %}
 <div class="wrapper">
   <div class="section-content">
     <div class="row align-center">
       <div class="col medium-12" id="slick-container-shoutouts">
-  {% include 'components/news_slider.html' with posts=posts %}
+        {% include 'components/news_slider.html' with posts=posts %}
       </div>
-      </div>
+    </div>
   </div>
-  <div class="ad">
+  <div
+    class="ad"
+    style="
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+    "
+  >
     {% include 'users/ads/poster-720x90.html' %}
     <hr />
     <p class="text-center lead">Advertisement</p>
   </div>
   <!-- END D POST SLIDER -->
-  {% include "components/posts_list.html" with posts=posts is_paginated=is_paginated page_obj=page_obj %}
-  {% block js %}
+  {% include "components/posts_list.html" with posts=posts
+  is_paginated=is_paginated page_obj=page_obj %} {% block js %}
   <script>
-    document.getElementsByTagName("title").innerText = "DevDiv";
+    document.onload = () => {
+      document.getElementsByTagName("title").innerText = "DevDiv";
+    };
   </script>
-    <script>
-      localStorage.setItem("previousPage", window.location.href);
-    </script>
-  {% endblock js %}
-  {% endblock content %}
+  <script>
+    localStorage.setItem("previousPage", window.location.href);
+  </script>
+  {% endblock js %} {% endblock content %}
+</div>
