@@ -1,24 +1,35 @@
 from django.contrib import admin
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from users.models import Post, Comment, HashTag
 from .models import PostFlag
-from .custom_actions import (apply_foreign, apply_local, apply_sports, apply_politics, apply_technology,
-                             apply_science, apply_how_To, apply_finace, apply_lifeStyle, apply_education, apply_gossip)
-
-
-apply_local.short_description = 'Local As Category'
-apply_sports.short_description = 'Sports As Category'
-apply_politics.short_description = 'Politics As Category'
-apply_technology.short_description = 'Technology As Category'
-apply_science.short_description = 'Science As Category'
-apply_how_To.short_description = 'How-To As Category'
-apply_finace.short_description = 'Finace As Category'
-apply_lifeStyle.short_description = 'LifeStyle As Category'
-apply_education.short_description = 'Education As Category'
-apply_gossip.short_description = 'Gossip As Category'
-apply_foreign.short_description = 'Foreign As Category'
 
 
 class PostAdmin(admin.ModelAdmin):
+    actions = ['update_category']
+
+    def update_category(self, request, queryset):
+        # All requests here will actually be of type POST
+        # so we will need to check for our special key 'apply'
+        # rather than the actual request type
+        if 'apply' in request.POST:
+            # The user clicked submit on the intermediate form.
+            # Perform our update action:
+            queryset.update(category=request.POST["category"])
+
+            # Redirect to our admin view after our update has
+            # completed with a nice little info message saying
+            # our models have been updated:
+            self.message_user(request,
+                              "Changed Category on {} posts".format(queryset.count()))
+            return HttpResponseRedirect(request.get_full_path())
+
+        return render(request,
+                      'admin/post_intermediate.html',
+                      context={'posts': queryset})
+
+    update_category.short_description = "Update Category"
+
     list_display = [
         'title',
         'author',
@@ -35,8 +46,6 @@ class PostAdmin(admin.ModelAdmin):
         'hashtag__name',
         'category',
     ]
-    actions = [apply_foreign, apply_local, apply_sports, apply_politics, apply_technology, apply_science, apply_how_To,
-               apply_finace, apply_lifeStyle, apply_education, apply_gossip]  # <-- Add the list action function here
 
 
 class PostFlagAdmin(admin.ModelAdmin):
