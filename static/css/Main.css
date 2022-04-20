@@ -1021,7 +1021,7 @@ a:hover {
   color: #fff;
   border-radius: 10px;
   display: block;
-  transition: all 0.3s;
+  transition: color 0.1s;
 }
 
 @media screen and (min-width: 800px) {
@@ -1172,6 +1172,10 @@ a:hover {
   border-radius: 10px;
   height: 100%;
   width: 100%;
+  transition: transform 0.2s;
+}
+.devdiv_posts__img img:hover {
+  transform: scale(1.05);
 }
 
 .show {

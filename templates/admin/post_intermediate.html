@@ -1,0 +1,19 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+<p>
+Are you sure you want to execute this action on the selected items?
+</p>  
+  {% for order in orders %}
+    <p>
+      {{ order }}
+    </p>
+    <input type="hidden" name="_selected_action" value="{{ order.pk }}" />
+  {% endfor %}
+
+  <input type="hidden" name="action" value="update_status" />
+  <input type="submit" name="apply" value="Update status"/>
+</form>
+{% endblock %}
