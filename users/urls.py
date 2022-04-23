@@ -8,14 +8,18 @@ app_name = 'users'
 urlpatterns = [
     path('', views.PostListView.as_view(), name="home"),
     path('user/post/history/', HistoryList.as_view(), name='history'),
-    path('user/history/delete/<int:pk>/', HistoryDelete.as_view(), name='history_del'),
+    path('user/history/delete/<int:pk>/',
+         HistoryDelete.as_view(), name='history_del'),
 
     path('post/flag/<int:pk>/', views.post_flag_view, name="flag"),
-    path('post/flagging/<str:postuuid>/', views.post_flagging_view, name="flagging"),
+    path('post/flagging/<str:postuuid>/',
+         views.post_flagging_view, name="flagging"),
 
     # Api
-    path("post/comment/create/<int:pk>/", views.comment_create_view, name="create-comment"),
-    path("post/comment/list/<str:post>/", views.comment_list_view, name="list-comment"),
+    path("post/comment/create/<int:pk>/",
+         views.comment_create_view, name="create-comment"),
+    path("post/comment/list/<str:post>/",
+         views.comment_list_view, name="list-comment"),
     path('user/<str:username>', views.UserPostListView.as_view(), name="user-posts"),
 
     path('donate/', views.donate, name="donate"),

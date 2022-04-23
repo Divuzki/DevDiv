@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
 from users.models import Post
+from django.utils.text import slugify
 
 USER_1 = User.objects.get(pk=1)
 class Command(BaseCommand):
@@ -28,10 +29,13 @@ class Command(BaseCommand):
                 img = soup.find_all("div", class_="jeg_featured")
                 # getting the content
                 content = soup.find_all("div", class_="content-inner")
+                # getting the hashtags
+                tags = soup.find_all("div", class_="jeg_breadcrumbs")
                 desc_list = []
                 img_list = []
                 unwanted_list = []
                 content_list = []
+                tags_list = []
                 try:
                     for d in descs:
                         desc_list.append(d.find('h2').text)  # getting the discription
@@ -51,30 +55,46 @@ class Command(BaseCommand):
                         unwanted.extract()
                         for pr in pr:
                             content_list.append(pr)
+                    for tag in tags:
+                        tag = tag.find_all("span")
+                        for t in tag:
+                            tags = t.find_all('a')
+                            for tag in tags:
+                                tags_list.append(tag.text)
 
                 # print(content_list)
                 except:
                     desc_list = None
                     img_list = None
                     unwanted_list = None
+                    tags_list = None
 
                 # Getting the finished looped post details data
                 try:
                     discription = ' '.join([str(x) for x in desc_list])
                     image_url = ' '.join([str(x) for x in img_list])
                     content = '\n'.join([str(x) for x in content_list])
+                    tags_list = tags_list[1:]
+                    hashtags = tags_list[1:]
+                    # hashtags = ','.join([slugify(str(tag)) for tag in tags_list])
+                    # print(hashtags)
                     # content = '\n'.join([str(x) for x in content])
 
                     qs = Post.objects.filter(title=title)
                     if not qs.exists():
-                        Post.objects.create(
+                        qs = Post.objects.create(
                             title=title, 
                             description=discription,
                             content=content, 
                             author=USER_1,
+                            # hashtags=hashtags,
                             image_url=image_url,
                             scraped=True
                             )
+                        for tag in hashtags:
+                            qs.hashtags.add(slugify(tag))
+                        qs.save()
+                        
                         print('%s added' % (title,))
                     else:
                         print('%s already exists' % (title,))

@@ -324,6 +324,7 @@ def post_detail(request, pk, *args, **kwargs):
         "total_views": num_sum(total_views),
         "total_likes": total_likes,
         "total_dislikes": total_dislikes,
+        "related_articles" : qs.hashtags.similar_objects()
     }
     return render(request, "users/post_detail.html", context)
 

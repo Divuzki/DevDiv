@@ -1,18 +1,15 @@
-// DevDiv @2020
+// DevDiv Since 2020
 [].forEach.call(document.getElementById("div_id_hashtag").getElementsByTagName("div"), function (el) {
   el.classList.add("tags-input");
-  el.setAttribute('data-name', 'hashtag');
+  el.setAttribute('data-name', 'hashtags');
 
     let hiddenInput   = document.createElement("input"),
-        FirstHashTag   = document.createElement("input"),
         mainInput     = document.getElementById("id_hashtag"),
         tags = [];
     
-    FirstHashTag.setAttribute('type', 'hidden');
-    FirstHashTag.setAttribute('name', el.getAttribute('data-name'));
-
     hiddenInput.setAttribute('type', 'hidden');
     hiddenInput.setAttribute('id', 'hashtags');
+    hiddenInput.setAttribute('name', el.getAttribute('data-name'));
 
     mainInput.setAttribute('type', 'text');
     mainInput.setAttribute('name', '');
@@ -46,7 +43,6 @@
 
     el.appendChild(mainInput);
     el.appendChild(hiddenInput);
-    el.appendChild(FirstHashTag);
 
     function addTag (text) {
         let tag = {
@@ -81,11 +77,10 @@
         tags.forEach(function (t) {
             tagsList.push(t.text);
         });
-        FirstHashTag.value = tagsList[0];
         hiddenInput.value = tagsList.join(',');
         var form = $(this).closest("form");
         let tagtitle = document.getElementById("id_title");
-        if (hiddenInput.value.charAt(0) == "#") {
+        if (hiddenInput.value.charAt(0) == "#" && hiddenInput.value.length > 2) {
         $.ajax({
             method: "POST",
             url: "/hashtag/",
@@ -114,7 +109,7 @@
   $("#id_form").on("submit", function (e) {
     var form = $(this).closest("form");
     var tagtitle = document.getElementById("id_title");
-    if ($('#id_hashtag').val().charAt(0) == "#") {
+    if ($('#id_hashtag').val().charAt(0) == "#" && $('#id_hashtag').val().length >= 2) {
       $.ajax({
         method: "POST",
         url: "/hashtag/",
@@ -140,7 +135,7 @@ $('#id_hashtag').on('input', function () {
       return val.split( /,\s*/ );
     }
     $(this).autocomplete({
-      minLength: 1,
+      minLength: 2,
       source: '/hashtag/',
       select: function( event, ui ) {
         var terms = split( this.value );
