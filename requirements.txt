@@ -28,3 +28,4 @@ psycopg2-binary
 firebase_admin
 numpy
 opencv-python
+django-taggit
