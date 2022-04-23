@@ -66,7 +66,7 @@ def hashtag_view(request, tag_qs):
             hashtag_count = f"{hashtag_count[0]}M"
 
     return render(request, 'hashtags.html', {
-        'tag': tags,
+        'tag': tags.replace("-", " "),
         'posts': hashtag_posts,
         'total_tags': hashtag_count,  # getting how many tags that match the 'tags' query
     })
@@ -235,7 +235,8 @@ def hashtag_autocomplete(request, *args, **kwargs):
         names = []
         names = list(dict.fromkeys(names))
         for name in qs:
-            names.append(f"#{name.name}")
+            tag = f"#{name.name}"
+            names.append(tag.replace("-", " "))
 
         names = list(dict.fromkeys(names))
         return JsonResponse(names, safe=False)
@@ -317,6 +318,9 @@ def post_detail(request, pk, *args, **kwargs):
     total_views = qs.total_views()
     total_likes = qs.total_likes()
     total_dislikes = qs.total_dislikes()
+    tags = []
+    for tag in qs.hashtags.all():
+        tags.append(tag.name.replace("-", " "))
     context = {
         "posts": cat_menu,
         "cat_menu": cat_menu,
@@ -324,7 +328,8 @@ def post_detail(request, pk, *args, **kwargs):
         "total_views": num_sum(total_views),
         "total_likes": total_likes,
         "total_dislikes": total_dislikes,
-        "related_articles" : qs.hashtags.similar_objects()
+        "tags": tags,
+        "related_posts": qs.hashtags.similar_objects()
     }
     return render(request, "users/post_detail.html", context)
 
