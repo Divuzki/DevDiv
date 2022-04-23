@@ -103,7 +103,7 @@
     <style>
       #load-none,
       .load-none {
-        display: none;
+        visibility: hidden;
       }
     </style>
     <!-- SW REG -->
@@ -233,7 +233,9 @@
           setTimeout(() => {
             if (loaderEl.parentNode) loaderEl.parentNode.removeChild(loaderEl);
             else {
-              if(document.querySelector(".slider-element")) document.querySelector(".slider-element").style.display = "flex";
+              if (document.querySelector(".slider-element"))
+                document.querySelector(".slider-element").style.display =
+                  "flex";
               loaderEl.style.display = "none";
               if (document.querySelector(".load-none"))
                 document
@@ -248,7 +250,8 @@
         setTimeout(() => {
           if (loaderEl.parentNode) loaderEl.parentNode.removeChild(loaderEl);
           else {
-            if(document.querySelector(".slider-element")) document.querySelector(".slider-element").style.display = "flex";
+            if (document.querySelector(".slider-element"))
+              document.querySelector(".slider-element").style.display = "flex";
             loaderEl.style.display = "none";
             if (document.querySelector(".load-none"))
               document

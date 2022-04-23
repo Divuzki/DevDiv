@@ -1,6 +1,6 @@
 const CACHE_VERSION = 1;
 
-const DEBUG = false;
+const DEBUG = true;
 var host = "//" + self.location.host + "/static";
 if (DEBUG === false) {
   host = "https://d2rkspfokjrj1j.cloudfront.net/static";
