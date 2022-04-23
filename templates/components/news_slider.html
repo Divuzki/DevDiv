@@ -11,7 +11,7 @@
       <a href="{%url 'users:post-detail' posts.id%}">
     <div class="text-wrap">
       <h2>
-          {{ posts.title }}
+          {{ posts.title | truncatechars:25 | safe  }}
         </h2>
         <h3>
           {{posts.date_posted|date:"F"}} {{posts.date_posted|date:"d"}}, {{posts.date_posted|date:"Y"}}

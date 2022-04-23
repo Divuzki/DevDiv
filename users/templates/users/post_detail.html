@@ -11,6 +11,11 @@
 {% else %}{% static 'default.png' %}{% endif %}" />
 <meta property="og:description" content="{{object.description}} | {{ total_views }} views" />
 <meta property="og:site_name" content="DevDiv" />
+<script
+      type="text/javascript"
+      src="https://platform-api.sharethis.com/js/sharethis.js#property=621de1a5761d0f0019f2bfc3&product=inline-share-buttons"
+      async="async">
+</script>
 {% endblock head %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/__devdiv__video__style__.css'%}">
@@ -25,9 +30,9 @@
     <em style="text-transform: capitalize;">
       <a href="{% url 'users:category' object.category %}">in {{object.category}}</a>
     </em>
-    {% if object.hashtag.all %}
+    {% if object.hashtags.all %}
     |
-  {%for tag in object.hashtag.all%}
+  {%for tag in object.hashtags.all%}
   <em style="border: 1px solid;border-radius: 15px;padding: 10px;
   width: max-content;text-transform: lowercase;font-style: italic;"><a
         href="{% url 'users:hashtag' tag|slugify %}">{{tag}}</a></em>

@@ -18,7 +18,8 @@ from django.views.generic import (
     DeleteView
 )
 from django.http import JsonResponse, HttpResponse
-from .models import Post, Comment, HashTag
+from .models import Post, Comment
+from taggit.models import Tag as HashTag
 from posts.models import PostFlag
 from django.contrib.auth.models import User
 from history.mixins import ObjectViewMixin
@@ -34,17 +35,21 @@ import stripe
 # HashTag View
 
 
-def hashtag_view(request, tags):
-    tags = '#'+tags  # adding hashtag symbol '#' to query
+def hashtag_view(request, tag_qs):
+    tags = '#'+tag_qs  # adding hashtag symbol '#' to query
 
     # getting all the hashtags in django
-    hashtag_posts = Post.objects.filter(hashtag__name=tags)
+    tagsqs = []
+    hashtag_posts = Post.objects.all()
+    for qs in hashtag_posts:
+        qs = HashTag.objects.filter(name=tag_qs)
+        if qs:
+            for tag in qs:
+                tag = tag.name
+                tagsqs.append(tag)
+    hashtag_posts = Post.objects.filter(hashtags__name__in=tagsqs)
+    print(hashtag_posts)
     hashtag_count = hashtag_posts.count()
-
-    # Getting the first user to use the hashtag
-    hashtag_user = HashTag.objects.filter(name=tags).first().user
-    # double checking if the user is in my post user
-    hashtag_user = Post.objects.filter(author=hashtag_user).first().author
 
     # Checking if the hashtag_count is in thousands or millions
     if hashtag_count >= 1000:
@@ -61,8 +66,7 @@ def hashtag_view(request, tags):
             hashtag_count = f"{hashtag_count[0]}M"
 
     return render(request, 'hashtags.html', {
-        'tags': tags,
-        'first_user': hashtag_user,
+        'tag': tags,
         'posts': hashtag_posts,
         'total_tags': hashtag_count,  # getting how many tags that match the 'tags' query
     })
@@ -225,42 +229,42 @@ def DislikeView(request, pk, *args, **kwargs):
 def hashtag_autocomplete(request, *args, **kwargs):
     # Looking for data that
     if 'term' in request.GET:
-        qs = HashTag.objects.filter(name__istartswith=request.GET.get(
-            'term'))[:6]  # stat with the 'term' in the GET request
+        tag = request.GET.get('term').replace("#", "")
+        # stat with the 'term' in the GET request
+        qs = HashTag.objects.filter(name__istartswith=tag)[:5]
         names = []
         names = list(dict.fromkeys(names))
         for name in qs:
-            names.append(name.name)
+            names.append(f"#{name.name}")
 
         names = list(dict.fromkeys(names))
         return JsonResponse(names, safe=False)
 
     # if the user type it will automatically save to db for vase dict
     if request.method == 'POST':
-        user = request.user
         hashtag = request.POST['name']
         post = request.POST['post']
         hashtag = hashtag.split(",")
         hashtag.sort()
         for hashtags in hashtag:
             if hashtags[0] == "#":  # Checking if the hashtag text contains the '#' symbol at the begin
-                # checking if the hashtag exists to avoid double hashtag in db
-                if not HashTag.objects.filter(name__iexact=hashtags).exists():
-                    # returning it as json data for js to proccess
-                    HashTag.objects.create(
-                        user=user,
-                        post=post,
-                        name=hashtags
-                    )  # Add it to db
-                    ctx = {
-                        "data":
-                            {
-                                "tag": hashtag,
-                                "post": post
-                            }
-                    }
-                    return JsonResponse(ctx, safe=False)
-                    # then return as json data
+                if len(hashtags) > 2:
+                    # checking if the hashtag exists to avoid double hashtag in db
+                    if not HashTag.objects.filter(name__iexact=hashtags).exists():
+                        # returning it as json data for js to proccess
+                        HashTag.objects.create(
+                            name=hashtags.replace("#", "")
+                        )  # Add it to db
+                        ctx = {
+                            "data":
+                                {
+                                    "tag": hashtag,
+                                    "post": post
+                                }
+                        }
+                        # then return as json data
+                        return JsonResponse(ctx, safe=False)
+                return JsonResponse({"data": {"error": f"{hashtags} is too short"}}, safe=False)
             elif not hashtags[0] == "#":  # else error
                 return JsonResponse({"data": {"error": f"This is a hashtag, You need to add the symbol '#' in {hashtags}"}}, safe=False)
         return JsonResponse(hashtag, safe=False)
@@ -453,7 +457,7 @@ def search_result_view(request):
         Q(author__username__icontains=query) |
         Q(description__icontains=query) |
         Q(image_caption__icontains=query) |
-        Q(content__icontains=query) 
+        Q(content__icontains=query)
         # |Q(hashtag__icontains=query)
     )
     # pages = pagination(request, result, num=1)
@@ -630,7 +634,8 @@ def test(request):
 
             # Looking for post image link
             for img_url in img:
-                img_list.append(img_url.find('a')['href'])  # getting the image_url
+                # getting the image_url
+                img_list.append(img_url.find('a')['href'])
 
             # Looking for Unwanted Tags
             for p in content:

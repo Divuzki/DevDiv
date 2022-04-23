@@ -9,6 +9,8 @@ from ckeditor.fields import RichTextField
 from rest_framework.reverse import reverse as api_reverse
 from django.utils.translation import gettext_lazy as _
 from devdiv.utils import image_resize, check_for_tag, get_image_color
+from taggit.managers import TaggableManager
+from taggit.models import Tag
 
 STATIC_URL = settings.STATIC_URL
 MEDIA_URL = settings.MEDIA_URL
@@ -21,24 +23,6 @@ CategoryList = (('uncategorized', 'uncategorized'), ('foreign', 'foreign'), ('lo
                 ('science', 'science'), ('finace',
                                          'finace'), ('education', 'education'),
                 ('how-To', 'how-to'), ('lifeStyle', 'lifeStyle'), ('gossip', 'gossip'))
-
-
-class HashTag(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.CharField(max_length=255, null=True, blank=True)
-    name = models.CharField(max_length=150, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('users:home')
-
-    def serialize(self):
-        return {
-            "name": self.name,
-        }
-
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -73,32 +57,25 @@ class Profile(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=255, unique=True,
+    title         = models.CharField(max_length=255, unique=True,
                              help_text="Text limit is 250")
-    description = models.CharField(max_length=200,
+    description   = models.CharField(max_length=200,
                                    help_text="Text limit is 200, and know that this is the post snippet")
-    content = RichTextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, max_length=255)
-    upload_image = models.ImageField(
-        _("Image"), upload_to="post_media/image/%Y/%m/", blank=True, null=True)
-    image_url = models.CharField(
-        max_length=3038, null=True, blank=True)
-    image_color = models.CharField(
-        max_length=50, null=True, blank=True)
+    content       = RichTextField()
+    author        = models.ForeignKey(User, on_delete=models.CASCADE, max_length=255)
+    upload_image  = models.ImageField(_("Image"), upload_to="post_media/image/%Y/%m/", blank=True, null=True)
+    image_url     = models.CharField(max_length=3038, null=True, blank=True)
+    image_color   = models.CharField(max_length=50, null=True, blank=True)
     image_caption = models.CharField(max_length=100, null=True, blank=True,
                                      help_text="Text limit is 100, and know that this is the post image description")
-    video_url = models.CharField(max_length=3000, null=True, blank=True)
-    category = models.CharField(
-        choices=CategoryList, max_length=50, default='uncategorized')
-    hashtag = models.ManyToManyField(
-        HashTag, related_name="hashtag", blank=True)
-    # CharField(max_length=150, null=True, blank=True)
-    likes = models.ManyToManyField(User, related_name="likes", blank=True)
-    dislikes = models.ManyToManyField(
-        User, related_name="dislikes",  blank=True)
-    views = models.IntegerField(default=0, null=True, blank=True)
-    scraped = models.BooleanField(default=False)
-    date_posted = models.DateTimeField(default=timezone.now)
+    video_url     = models.CharField(max_length=3000, null=True, blank=True)
+    category      = models.CharField(choices=CategoryList, max_length=50, default='uncategorized')
+    hashtags      = TaggableManager(verbose_name=_("Hashtags"))
+    likes         = models.ManyToManyField(User, related_name="likes", blank=True)
+    dislikes      = models.ManyToManyField(User, related_name="dislikes",  blank=True)
+    views         = models.IntegerField(default=0, null=True, blank=True)
+    scraped       = models.BooleanField(default=False)
+    date_posted   = models.DateTimeField(default=timezone.now)
 
     class Meta:
         ordering = ['-id']
@@ -161,7 +138,11 @@ class Post(models.Model):
             self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
         if not self.upload_image and not self.image_url:
             self.image_url = f"{STATIC_URL}default.png"
-        self.image_color = get_image_color(self.image_url)
+        if self.upload_image or self.image_url:
+            if self.image_url:
+                self.image_color = get_image_color(self.image_url, link=True)
+            else: 
+                self.image_color = get_image_color(self.upload_image)
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
@@ -170,7 +151,7 @@ class Post(models.Model):
 
         if self.content:
             try:
-                self.content = check_for_tag(self.content, HashTag)
+                self.content = check_for_tag(self.content, Tag)
             except:
                 pass
 

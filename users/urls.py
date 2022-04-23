@@ -1,4 +1,4 @@
-from django.urls import path, include, re_path
+from django.urls import path
 from . import views
 from history.views import HistoryList, HistoryDelete
 from django.contrib.auth import views as auth_views
@@ -48,7 +48,7 @@ urlpatterns = [
 
 
     path('hashtag/', views.hashtag_autocomplete, name="autocomplete"),
-    path('hashtag/<str:tags>', views.hashtag_view, name="hashtag"),
+    path('hashtag/<str:tag_qs>', views.hashtag_view, name="hashtag"),
     path('profile/', views.profile, name="profile"),
     path('category/<str:cats>', views.category_view, name='category'),
     path('post/like/<int:pk>', views.LikeView, name="like_post"),

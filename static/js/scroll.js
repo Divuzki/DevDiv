@@ -12,7 +12,7 @@ var btn = document.querySelector(".back-to-top"),
   top_header = document.querySelector(".top"),
   docElem = document.documentElement,
   cd_header = document.querySelector(".cd-header"),
-  offset = 100,
+  offset = 200,
   scrollPos,
   docHeight,
   isFireFox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;

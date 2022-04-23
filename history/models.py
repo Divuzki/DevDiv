@@ -26,7 +26,7 @@ class History(models.Model):
 def object_viewed_receiver(sender, instance, request, *args, **kwargs):
     qs = History.objects.filter(user=request.user, content_type=ContentType.objects.get_for_model(sender), object_id=instance.pk).first()
     if qs is None:
-        new_history = History.objects.create(
+        History.objects.create(
             user=request.user,
             content_type=ContentType.objects.get_for_model(sender),
             object_id=instance.pk

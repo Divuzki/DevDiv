@@ -1,12 +1,11 @@
 from django.db.models import Q
 from django.conf import settings
 from .permissions import IsOwnerOrReadOnly
-from users.models import Post, HashTag
+from users.models import Post
 from .serializers import PostSerializer
 
 # Third Party
 from rest_framework import status
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -115,10 +114,11 @@ def api_create_post_view(request, *args, **kwargs):
 # post hashtag
 @api_view(['GET'])
 def api_post_hashtag_view(request, pk, *args, **kwargs):
-    data = {}
-    qs = Post.objects.filter(id=pk).first().title
-    qs = HashTag.objects.filter(post__iexact=qs).all()
-    if qs.exists():
-        data = [x.serialize() for x in qs]
-        return Response(data)
-    return Response(data, status=status.HTTP_404_NOT_FOUND)
+    pass
+    # data = {}
+    # qs = Post.objects.filter(id=pk).first().title
+    # qs = HashTag.objects.filter(post__iexact=qs).all()
+    # if qs.exists():
+    #     data = [x.serialize() for x in qs]
+    #     return Response(data)
+    # return Response(data, status=status.HTTP_404_NOT_FOUND)

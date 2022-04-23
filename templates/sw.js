@@ -9,7 +9,6 @@ if (DEBUG === false) {
 const BASE_CACHE_FILES = [
   // CSS
   `${host}/css/Main.css`,
-  `${host}/css/style.css`,
 
   // JAVASCRIPTS
   `${host}/js/main.js`,

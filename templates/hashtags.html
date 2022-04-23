@@ -1,98 +1,108 @@
-{% extends 'base.html' %}
-{% load static %}
-<title>{% block title %} {{tags}} {% endblock title %}</title>
+{% extends 'base.html' %} {% load static %}
+<title>{% block title %} {{tag}} {% endblock title %}</title>
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/reset.css'%}">
-<link rel="stylesheet" href="{% static 'css/post.css'%}">
-<div class="containter">
-    <div class="size-center">
-        <div class="col-ig-12">
-            <div class="heading">
-                <h1 style="text-transform: capitalize;">{{tags}} |
-                    <a href="{% url 'users:user-posts' first_user %}" style="color: rgba(127, 255, 212, 0.645);">{{first_user}}</a></h1>
-                <p>
-                    {{total_tags}}
-                </p>
-            </div>
-        </div>
+
+<div class="hashtag-containter">
+  <div class="size-center">
+    <div class="m-auto col-md-12">
+      <div class="hashtag-heading">
+        <h1>{{tag}}</h1>
+      </div>
     </div>
+    <p class="hashtags_founded">About {{total_tags}} results</p>
+  </div>
 
-
-
-    <div class="wrapper">
-        {% for obj in posts %}
-        <div class="col-lg-4" style="width: max-content;">
-            <div class="blog">
-                <div class="blog-inf">
-                    <h3>{{obj.title}}</h3>
-                    <span>by {{obj.author}}</span>
-                    {% if obj.description %}
-                    <p>{{obj.description | safe | truncatechars:50}}.
-                    </p>
-                    {% else %}
-                    <p>{{obj.content | truncatechars:150 | safe}}.
-                    </p>
-                    {% endif %}
-                    <a href="{% url 'users:post-detail' obj.id%}">Read More</a>
-                </div>
-            </div>
+  <div class="hashtag-wrapper">
+    {% for obj in posts %}
+    <div class="col-lg-4">
+      <div class="blog-hashtag">
+        <div class="blog-hashtag-info">
+          <h3>{{obj.title}}</h3>
+          <span>by {{obj.author}}</span>
+          {% if obj.description %}
+          <p>{{obj.description | truncatechars:50 | safe }}</p>
+          {% else %}
+          <p>{{obj.content | truncatechars:150 | safe}}</p>
+          {% endif %}
+          <a href="{% url 'users:post-detail' obj.id%}">Read More</a>
         </div>
-        {% endfor %}
+      </div>
     </div>
-
+    {% endfor %}
+  </div>
 </div>
 <style>
-    body {
-        font-size: 1rem !important;
-        line-height: 1.6 !important;
-        font-weight: 400 !important;
-    }
+  .hashtag-containter {
+    width: 100%;
+    height: 100%;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    font-weight: 400 !important;
+  }
+  .hashtags_founded {
+    font-size: x-small;
+    opacity: 0.8;
+    margin-bottom: 0;
+    margin-top: 9px;
+    margin-left: 22px;
+  }
+  .blog-hashtag {
+    margin: 15px 0;
+  }
 
-    .blog {
-        margin: 15px 0;
-    }
+  p.blog-hashtag-info,
+  p.hashtag-heading {
+    text-align: left;
+    opacity: 0.7;
+    line-height: 1.6;
+  }
 
-    p {
-        text-align: left;
-        opacity: 0.7;
-        line-height: 1.6;
-    }
+  .hashtag-heading {
+    padding: 20px 0;
+    background: #ffffca;
+    text-align: center;
+    display: flex;
+    flex-direction: column-reverse;
+    border-radius: 5px;
+    box-shadow: 6px 6px #333;
+    text-transform: uppercase;
+    font-weight: bolder;
+  }
 
-    .heading {
-        padding: 20px 0;
-    }
+  .hashtag-heading h1 {
+    font-size: 2rem;
+  }
+  .hashtag-heading p {
+    margin: 0 auto !important;
+  }
 
-    .heading h1 {
-        font-size: 2rem;
-    }
+  .blog-hashtag img {
+    width: 100%;
+    height: auto;
+    background-color: #c3c3c3;
+  }
 
-    .blog img {
-        width: 100%;
-        height: auto;
-        background-color: #c3c3c3;
-    }
+  .blog-hashtag-info {
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 20px;
+  }
 
-    .blog-inf {
-        background-color: #fff;
-        border: 1px solid #000;
-        padding: 20px;
-    }
+  .blog-hashtag-info h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    text-transform: capitalize;
+  }
 
-    .blog-inf h3 {
-        font-size: 1.5rem;
-        margin: 10px 0;
-        text-transform: capitalize;
-    }
-
-    .blog-inf span {
-        display: block;
-        margin: 20px 0;
-        color: #343a40;
-        text-transform: capitalize;
-        font-weight: 600;
-    }
+  .blog-hashtag-info span {
+    display: block;
+    margin: 20px 0;
+    color: #343a40;
+    text-transform: capitalize;
+    font-weight: 600;
+  }
 </style>
 <script>
-    localStorage.setItem("previousPage", window.location.href);
-  </script>
+  localStorage.setItem("previousPage", window.location.href);
+</script>
 {% endblock content %}

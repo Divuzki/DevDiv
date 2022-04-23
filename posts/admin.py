@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from users.models import Post, Comment, HashTag
+from users.models import Post, Comment
 from .models import PostFlag
 
 
@@ -66,6 +66,5 @@ class PostFlagAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Post, PostAdmin)
-admin.site.register(HashTag)
 admin.site.register(PostFlag, PostFlagAdmin)
 admin.site.register(Comment)

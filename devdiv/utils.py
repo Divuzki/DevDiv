@@ -121,19 +121,22 @@ def num_sum(num):
 
 
 # Getting Image Current Average Color
-def get_image_color(url):
+def get_image_color(url, link=False):
     import requests
     import io
     try:
-        response = requests.get(f"{url}")
-        image_bytes = io.BytesIO(response.content)
+        if link == True:
+            response = requests.get(f"{url}")
+            image_bytes = io.BytesIO(response.content)
+        else:
+            pass
     except:
         image_bytes = None
 
     img = Image.open(image_bytes)
     if image_bytes == None:
         img = Image.open(url)
-    colors = img.getpixel((320,240))
+    colors = img.getpixel((320, 240))
     color = f"rgb{colors}"
     img.close()
     return color
