@@ -291,7 +291,7 @@ class PostListView(ListView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post  # Getting Post Model in models.py
     fields = ['title', 'description', 'upload_image', 'image_url',
-              'image_caption', 'video_url', 'content', 'category']  # fields in the Form
+              'image_caption', 'video_url', 'content', 'category', 'hashtags']  # fields in the Form
     # Validating the form
 
     def form_valid(self, form):
@@ -608,50 +608,3 @@ def policy_en(request):
 
 def policy_fr(request):
     return render(request, "policy-fr.html")
-
-
-# from .functions import get_descriptions
-
-
-def test(request):
-    # collect html
-    html = requests.get('https://nairametrics.com/')
-    # convert to soup
-    soup = BeautifulSoup(html.content, 'html.parser')
-    # grab all postings
-    postings = soup.find_all("div", class_="jeg_postsmall")
-    post_list = []
-    for p in postings:
-        url = p.find('a')['href']
-        title = p.find('a').text
-        html = requests.get(url)
-        soup = BeautifulSoup(html.content, 'html.parser')
-        # post = soup.find_all("div", class_="jeg_inner_content")
-        descs = soup.find_all("div", class_="entry-header")
-        img = soup.find_all("div", class_="jeg_featured")
-        # getting the content
-        content = soup.find_all("div", class_="content-inner")
-        desc_list = []
-        img_list = []
-        unwanted_list = []
-        try:
-            for d in descs:
-                desc_list.append(d.find('h2').text)  # getting the discription
-
-            # Looking for post image link
-            for img_url in img:
-                # getting the image_url
-                img_list.append(img_url.find('a')['href'])
-
-            # Looking for Unwanted Tags
-            for p in content:
-                unwanted_list.append(p.find('div'))
-
-        # print(content_list)
-        except:
-            desc_list = None
-            img_list = None
-            unwanted_list = None
-        post_list.append((title, desc_list, content, img_list))
-    front_end_stuff = {'final_postings': post_list}
-    return render(request, 'test.html', context=front_end_stuff)

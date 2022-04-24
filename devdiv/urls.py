@@ -25,7 +25,7 @@ urlpatterns = [
     path('privacy-policy/fr/', views.policy_fr, name="policy_fr"),
     re_path(r'^sw(.*.js)$',
             views.devdiv_serviceworker, name='devdiv_sw'),
-    path('0u/blog/api/', include('core.api.urls', namespace="post-api")),
+    path('devdiv.api/', include('core.api.urls', namespace="post-api")),
     path("send/", send, name="send-web-notifications"),
     # path('/feeds/posts/summary/', include('core.api.urls'))
 ]

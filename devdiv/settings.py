@@ -55,8 +55,9 @@ INSTALLED_APPS = [
 # Store an environment variable called GOOGLE_APPLICATION_CREDENTIALS
 # which is a path that point to a json file with your credentials.
 # Additional arguments are available: credentials, options, name
-cred = credentials.Certificate(BASE_DIR / 'devdiv-web-firebase-adminsdk-5s41r-55c6390a1f.json')
-FIREBASE_APP  = firebase_admin.initialize_app(cred)
+cred = credentials.Certificate(
+    BASE_DIR / 'devdiv-web-firebase-adminsdk-5s41r-55c6390a1f.json')
+FIREBASE_APP = firebase_admin.initialize_app(cred)
 # To learn more, visit the docs here:
 # https://cloud.google.com/docs/authentication/getting-started>
 
@@ -171,8 +172,8 @@ if USE_S3:
     PRIVATE_FILE_STORAGE = 'core.storage_backends.PrivateMediaStorage'
 
 elif not USE_S3:
-    STATIC_URL = '/static/'
-    MEDIA_URL = '/media/'
+    STATIC_URL = f'{ALLOWED_HOSTS[1]}:8000/static/'
+    MEDIA_URL = f'{ALLOWED_HOSTS[1]}:8000/media/'
     STATIC_ROOT = BASE_DIR / "staticfiles"
     MEDIA_ROOT = BASE_DIR / "mediafiles"
 

@@ -167,13 +167,15 @@
   .news-card__text-wrapper {
     width: 100%;
   }
-  .recent-post {
-    width: 900px;
-  }
 </style>
 {% endblock content %}
 
 {% block js %}
+<script>
+  var recent_post = document.querySelector(".recent-post"),
+      recent_post_width = document.getElementById("blog-post").offsetWidth;
+      recent_post.style.width = `${recent_post_width}px`
+</script>
 {% if user.is_authenticated %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
 <script src="{% static 'js/post.js' %}"></script>

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from posts.views import test
 from history.views import HistoryList, HistoryDelete
 from django.contrib.auth import views as auth_views
 
@@ -58,6 +59,6 @@ urlpatterns = [
     path('post/like/<int:pk>', views.LikeView, name="like_post"),
     path('post/dislike/<int:pk>', views.DislikeView, name="dislike_post"),
     path('search/', views.search_result_view, name="search"),
-    path('t', views.test, name="test"),
+    path('t', test, name="test"),
 
 ]

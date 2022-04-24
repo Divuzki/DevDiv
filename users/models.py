@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -44,7 +45,7 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         if self.upload_image:
-            self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
+            self.image_url = f"{MEDIA_URL}{self.upload_image.url}".replace("//", "/")
         if not self.upload_image and not self.image_url:
             self.image_url = f"{STATIC_URL}default_jpg.png"
         # run save of parent class above to save original image to disk
@@ -134,15 +135,15 @@ class Post(models.Model):
                     kwargs={'pk': self.pk}, request=request)
 
     def save(self, *args, **kwargs):
-        if self.upload_image:
-            self.image_url = f"{MEDIA_URL}{self.upload_image.url}"
-        if not self.upload_image and not self.image_url:
-            self.image_url = f"{STATIC_URL}default.png"
         if self.upload_image or self.image_url:
             if self.image_url:
                 self.image_color = get_image_color(self.image_url, link=True)
             else: 
                 self.image_color = get_image_color(self.upload_image)
+        if self.upload_image:
+            image_url = f"{MEDIA_URL}{self.upload_image.url}".replace("//media", "/")
+        if not self.upload_image and not self.image_url:
+            self.image_url = f"{STATIC_URL}default.png"
         # run save of parent class above to save original image to disk
         super().save(*args, **kwargs)
 
@@ -192,3 +193,35 @@ def create_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, created, **kwargs):
     instance.profile.save()
+
+
+
+@receiver(models.signals.post_delete, sender=Post)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding `Post` object is deleted.
+    """
+    if instance.upload_image:
+        if os.path.isfile(instance.upload_image.path):
+            os.remove(instance.upload_image.path)
+
+@receiver(models.signals.pre_save, sender=Post)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+    """
+    Deletes old file from filesystem
+    when corresponding `Post` object is updated
+    with new file.
+    """
+    if not instance.pk:
+        return False
+
+    try:
+        old_file = Post.objects.get(pk=instance.pk).upload_image
+    except Post.DoesNotExist:
+        return False
+
+    new_file = instance.upload_image
+    if not old_file == new_file:
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)

@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
+from taggit.models import Tag
 
 
 User = settings.AUTH_USER_MODEL
@@ -31,12 +32,15 @@ class PostListAPI(generics.ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        qs = Post.objects.all().order_by('-date_posted')
+        qs = Post.objects.all()
         query = self.request.GET.get("q")
         if query is not None:
             qs = qs.filter(
+                Q(author__username__icontains=query) |
                 Q(title__icontains=query) |
-                Q(description__icontains=query)
+                Q(description__icontains=query) |
+                Q(hashtag__name__icontains=query) |
+                Q(content__icontains=query)
             ).distinct()
         return qs
 
@@ -61,12 +65,12 @@ def api_latest_post_view(request, *args, **kwargs):
     data = {}
     # Tech
     tech = Post.objects.filter(
-        category__iexact="tech").order_by('-date_posted').first()
+        category__iexact="technology").order_by('-date_posted').first()
     tech = PostSerializer(tech).data
 
     # News
     news = Post.objects.filter(
-        category__iexact="news").order_by('-date_posted').first()
+        category__iexact="local").order_by('-date_posted').first()
     news = PostSerializer(news).data
 
     # Sports
@@ -114,11 +118,10 @@ def api_create_post_view(request, *args, **kwargs):
 # post hashtag
 @api_view(['GET'])
 def api_post_hashtag_view(request, pk, *args, **kwargs):
-    pass
-    # data = {}
-    # qs = Post.objects.filter(id=pk).first().title
-    # qs = HashTag.objects.filter(post__iexact=qs).all()
-    # if qs.exists():
-    #     data = [x.serialize() for x in qs]
-    #     return Response(data)
-    # return Response(data, status=status.HTTP_404_NOT_FOUND)
+    data = {}
+    qs = Post.objects.filter(id=pk).first().title
+    qs = Tag.objects.filter(post__iexact=qs).all()
+    if qs.exists():
+        data = [x.serialize() for x in qs]
+        return Response(data)
+    return Response(data, status=status.HTTP_404_NOT_FOUND)
