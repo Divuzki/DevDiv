@@ -115,8 +115,9 @@
     function filterTag(tag) {
       return tag
         .replace(/[^\w -]/g, "#")
+        .replace(/\W+/g, "-")
         .trim()
-        .replace(/\W+/g, "");
+        ;
     }
   }
 );

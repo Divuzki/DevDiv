@@ -1,4 +1,5 @@
 import os
+
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -6,10 +7,13 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext_lazy as _
+from django.core.files.storage import default_storage
+from devdiv.utils import image_resize, check_for_tag, get_image_color
+
+# Third Parties modules
 from ckeditor.fields import RichTextField
 from rest_framework.reverse import reverse as api_reverse
-from django.utils.translation import gettext_lazy as _
-from devdiv.utils import image_resize, check_for_tag, get_image_color
 from taggit.managers import TaggableManager
 from taggit.models import Tag
 
@@ -45,7 +49,7 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         if self.upload_image:
-            self.image_url = f"{MEDIA_URL}{self.upload_image.url}".replace("//", "/")
+            self.image_url = self.upload_image.url.replace("//media", "/")
         if not self.upload_image and not self.image_url:
             self.image_url = f"{STATIC_URL}default_jpg.png"
         # run save of parent class above to save original image to disk
@@ -136,12 +140,13 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if self.upload_image or self.image_url:
-            if self.image_url:
-                self.image_color = get_image_color(self.image_url, link=True)
-            else: 
-                self.image_color = get_image_color(self.upload_image)
+            if not self.image_color:
+                if self.image_url:
+                    self.image_color = get_image_color(self.image_url, link=True)
+                else: 
+                    self.image_color = get_image_color(self.upload_image)
         if self.upload_image:
-            image_url = f"{MEDIA_URL}{self.upload_image.url}".replace("//media", "/")
+            self.image_url = self.upload_image.url.replace("//media", "/")
         if not self.upload_image and not self.image_url:
             self.image_url = f"{STATIC_URL}default.png"
         # run save of parent class above to save original image to disk
@@ -203,8 +208,12 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     when corresponding `Post` object is deleted.
     """
     if instance.upload_image:
-        if os.path.isfile(instance.upload_image.path):
+        try:
+            if os.path.isfile(instance.upload_image.path):
+                os.remove(instance.upload_image.path)
+        except:
             os.remove(instance.upload_image.path)
+
 
 @receiver(models.signals.pre_save, sender=Post)
 def auto_delete_file_on_change(sender, instance, **kwargs):
@@ -223,5 +232,8 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
 
     new_file = instance.upload_image
     if not old_file == new_file:
-        if os.path.isfile(old_file.path):
+        try:
+            if os.path.isfile(old_file.path):
+                os.remove(old_file.path)
+        except:
             os.remove(old_file.path)

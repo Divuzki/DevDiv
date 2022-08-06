@@ -127,13 +127,17 @@ def get_image_color(url, link=False):
 
     image_bytes = None
     if link == True:
-            response = requests.get(f"{url}")
-            image_bytes = io.BytesIO(response.content)
+        url = str(url)
+        response = requests.get(url)
+        image_bytes = io.BytesIO(response.content)
 
     if image_bytes == None:
         img = Image.open(url)
     else:
-        img = Image.open(image_bytes)
+        try:
+            img = Image.open(image_bytes)
+        except:
+            pass
     colors = img.getpixel((320, 240))
     color = f"rgb{colors}"
     img.close()

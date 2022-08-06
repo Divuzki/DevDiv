@@ -236,7 +236,7 @@ def hashtag_autocomplete(request, *args, **kwargs):
         names = list(dict.fromkeys(names))
         for name in qs:
             tag = f"#{name.name}"
-            names.append(tag.replace("-", " "))
+            names.append(tag.replace(" ", "-"))
 
         names = list(dict.fromkeys(names))
         return JsonResponse(names, safe=False)

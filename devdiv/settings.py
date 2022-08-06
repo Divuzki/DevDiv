@@ -172,8 +172,8 @@ if USE_S3:
     PRIVATE_FILE_STORAGE = 'core.storage_backends.PrivateMediaStorage'
 
 elif not USE_S3:
-    STATIC_URL = f'{ALLOWED_HOSTS[1]}:8000/static/'
-    MEDIA_URL = f'{ALLOWED_HOSTS[1]}:8000/media/'
+    STATIC_URL = f'http://{ALLOWED_HOSTS[1]}:8000/static/'
+    MEDIA_URL = f'http://{ALLOWED_HOSTS[1]}:8000/media/'
     STATIC_ROOT = BASE_DIR / "staticfiles"
     MEDIA_ROOT = BASE_DIR / "mediafiles"
 
