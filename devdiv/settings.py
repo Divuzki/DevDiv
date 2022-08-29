@@ -15,8 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', cast=bool)
-USE_S3 = os.getenv('USE_S3', cast=bool)
+DEBUG = 'True' in os.getenv('DEBUG')
+USE_S3 = 'True' in os.getenv('USE_S3')
 ALLOWED_HOSTS = ['devdiv.herokuapp.com', 'localhost']
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = "/login/"
