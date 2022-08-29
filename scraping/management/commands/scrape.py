@@ -19,8 +19,8 @@ class Command(BaseCommand):
         for p in postings:
             post = p.find("h3", {"class":"jeg_post_title"})
             url = post.find('a')['href']
-            title = post.text
-            qs = Post.objects.filter(title__iexact=title).first()
+            title = post.text.strip()
+            qs = Post.objects.filter(title=title).first()
             if not qs is None:
                 html = requests.get(url)
                 soup = BeautifulSoup(html.content, 'html.parser')
