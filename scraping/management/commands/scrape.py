@@ -80,8 +80,8 @@ class Command(BaseCommand):
                     # print(hashtags)
                     # content = '\n'.join([str(x) for x in content])
 
-                    qs = Post.objects.filter(title=title)
-                    if not qs.exists():
+                    qs = Post.objects.filter(title=title).first()
+                    if qs is None:
                         qs = Post.objects.create(
                             title=title, 
                             description=discription,
