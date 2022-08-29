@@ -1,9 +1,8 @@
 import dj_database_url
-from decouple import config
 from pathlib import Path
 import firebase_admin
 from firebase_admin import credentials
-
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,11 +12,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
-USE_S3 = config('USE_S3', cast=bool)
+DEBUG = os.getenv('DEBUG', cast=bool)
+USE_S3 = os.getenv('USE_S3', cast=bool)
 ALLOWED_HOSTS = ['devdiv.herokuapp.com', 'localhost']
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = "/login/"
@@ -144,10 +143,10 @@ USE_TZ = True
 
 if USE_S3:
     # aws settings
-    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-    AWS_DEFAULT_ACL = config('AWS_DEFAULT_ACL')
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_DEFAULT_ACL = os.getenv('AWS_DEFAULT_ACL')
     AWS_S3_CUSTOM_DOMAIN = f'd2rkspfokjrj1j.cloudfront.net'
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     AWS_S3_SECURE_URLS = True

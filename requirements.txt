@@ -20,8 +20,7 @@ boto3
 botocore 
 django-cleanup 
 django-storages 
-Pillow 
-python-decouple
+Pillow
 beautifulsoup4
 psycopg2
 psycopg2-binary
