@@ -14,9 +14,12 @@ Welcome to DevDiv, a cutting-edge and innovative news aggregation platform. DevD
 ## Installation
 
 To install and run DevDiv, follow these steps:
-### 1. Clone the repository: `git clone https://github.com/Divuzki/DevDiv-A-Web-News-Complex-Scraper.git`
+#### 1. Clone the repository: 
+```
+git clone https://github.com/Divuzki/DevDiv-A-Web-News-Complex-Scraper.git
+```
 
-### 2. Creating a Python Environment with virtualenv (Optional)
+#### 2. Creating a Python Environment with virtualenv (Optional)
 
 In DevDiv, we provide optional steps to create a Python environment using virtualenv. A virtual environment helps isolate project dependencies and ensures consistent package installations across different projects. If you prefer to use virtualenv, follow the steps below:
 
@@ -57,15 +60,15 @@ If you decide not to use virtualenv, make sure you have the necessary dependenci
 
 By following these optional steps, you can create a dedicated Python environment using virtualenv to manage your project's dependencies. However, remember that using virtualenv is not a requirement, and you are free to choose an alternative approach based on your preference or project needs.
 
-### 3. Install dependencies: 
+#### 3. Install dependencies: 
 ```
 pip install -r requirements.txt
 ```
-### 4. Apply database migrations: 
+#### 4. Apply database migrations: 
 ```
 python manage.py migrate
 ```
-### 5. Start the development server: 
+#### 5. Start the development server: 
 ```
 python manage.py runserver
 ```
@@ -88,7 +91,7 @@ Once DevDiv is installed and running, you can:
 
 ## License
 
-DevDiv is released under the MIT License. For more details, please see the [LICENSE] file.
+DevDiv is released under the MIT License. For more details, please see the [LICENSE](https://github.com/Divuzki/DevDiv/blob/master/LICENSE) file.
 
 ## Contact
 
